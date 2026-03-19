@@ -272,6 +272,7 @@
     },
     "accountWalletsMetadata": {},
     "activeQrCodeScanRequest": "null",
+    "lastQrScanCompletedSuccessfully": "null",
     "addressBook": {},
     "addressScanCache": {},
     "addressSecurityAlertResponses": {},

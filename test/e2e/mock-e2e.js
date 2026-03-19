@@ -13,6 +13,11 @@ const {
 const { TX_SENTINEL_URL } = require('../../shared/constants/transaction');
 const { DEFAULT_FIXTURE_ACCOUNT_LOWERCASE } = require('./constants');
 const { SECURITY_ALERTS_PROD_API_BASE_URL } = require('./tests/ppom/constants');
+const { SOLANA_WS_PORT } = require('./websocket/solana-mocks');
+const {
+  ACCOUNT_ACTIVITY_WS_PORT,
+} = require('./websocket/account-activity-mocks');
+const { PERPS_WS_PORT } = require('./websocket/perps-mocks');
 
 const { ALLOWLISTED_URLS } = require('./mock-e2e-allowlist');
 const {
@@ -75,18 +80,19 @@ const blocklistedHosts = [
   'arbitrum-mainnet.infura.io',
   'avalanche-mainnet.infura.io',
   'bsc-dataseed.binance.org',
+  'bsc-mainnet.infura.io',
+  'carrot.megaeth.com',
   'linea-mainnet.infura.io',
   'linea-sepolia.infura.io',
-  'testnet-rpc.monad.xyz',
-  'carrot.megaeth.com',
-  'sei-mainnet.infura.io',
   'mainnet.infura.io',
+  'optimism-mainnet.infura.io',
+  'sei-mainnet.infura.io',
   'sepolia.infura.io',
+  'testnet-rpc.monad.xyz',
 ];
 const {
   mockEmptyStalelistAndHotlist,
 } = require('./tests/phishing-controller/mocks');
-const { mockNotificationServices } = require('./tests/notifications/mocks');
 const { mockIdentityServices } = require('./tests/identity/mocks');
 
 const emptyHtmlPage = () => `<!DOCTYPE html>
@@ -158,6 +164,13 @@ async function setupMocking(
   const privacyReport = new Set();
   await server.forAnyRequest().thenPassThrough({
     beforeRequest: ({ headers: { host }, url }) => {
+      if (!host || !url) {
+        return {
+          response: {
+            statusCode: 200,
+          },
+        };
+      }
       if (blocklistedHosts.includes(host)) {
         return {
           url: 'http://localhost:8545',
@@ -1041,13 +1054,12 @@ async function setupMocking(
       };
     });
 
-  // Notification APIs
-  await mockNotificationServices(server);
-
-  // Override notification list with empty response to prevent unread dot
-  // Notification-specific tests re-register this endpoint via testSpecificMock
+  // Override notification list with empty response to prevent unread dot.
+  // .always() ensures every fetch returns [] (not just the first one).
+  // Notification-specific tests re-register this endpoint via testSpecificMock.
   await server
     .forPost('https://notification.api.cx.metamask.io/api/v3/notifications')
+    .always()
     .thenCallback(() => ({ statusCode: 200, json: [] }));
 
   // Identity APIs
@@ -1164,6 +1176,19 @@ async function setupMocking(
       };
     });
 
+  // On Ramp: Geolocation
+  await server
+    .forGet('https://on-ramp.api.cx.metamask.io/geolocation')
+    .thenCallback(() => {
+      return {
+        statusCode: 200,
+        body: 'US-TX',
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+        },
+      };
+    });
+
   // Snaps: Execution environment html
   await server
     .forGet(/^https:\/\/execution\.metamask\.io\/iframe\/[^/]+\/index\.html$/u)
@@ -1195,7 +1220,18 @@ async function setupMocking(
     .matching((req) =>
       /^wss:\/\/solana-(mainnet|devnet)\.infura\.io\//u.test(req.url),
     )
-    .thenForwardTo('ws://localhost:8088');
+    .thenForwardTo(`ws://localhost:${SOLANA_WS_PORT}`);
+
+  /**
+   * Backend WebSocket (AccountActivity, etc.)
+   * Forward gateway WebSocket connections to local mock server
+   */
+  await server
+    .forAnyWebSocket()
+    .matching((req) =>
+      /^wss:\/\/gateway\.api\.cx\.metamask\.io\//u.test(req.url),
+    )
+    .thenForwardTo(`ws://localhost:${ACCOUNT_ACTIVITY_WS_PORT}`);
 
   /**
    * Hyperliquid Perps Websocket
@@ -1205,7 +1241,7 @@ async function setupMocking(
   await server
     .forAnyWebSocket()
     .matching((req) => /^wss:\/\/api\.hyperliquid\.xyz\/ws/u.test(req.url))
-    .thenForwardTo('ws://localhost:8088');
+    .thenForwardTo(`ws://localhost:${PERPS_WS_PORT}`);
 
   /**
    * Hyperliquid REST API mocks for Perps E2E tests.

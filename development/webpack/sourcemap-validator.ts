@@ -1,8 +1,9 @@
 /**
  * @file Validates source maps for the webpack-built extension.
  *
- * Discovers all .js bundles in dist/chrome that have a .map file, then for each
- * bundle finds "new Error" in the built code and verifies the source map
+ * Discovers all .js bundles in dist/chrome that have a .map file in the
+ * selected location (sibling or dist/sourcemaps), then for each bundle finds
+ * "new Error" in the built code and verifies the source map
  * correctly maps those positions back to the original source containing "new Error".
  * If it's not working, it may error or print minified garbage.
  *
@@ -20,9 +21,29 @@ import type {
 import { SourceMapConsumer } from 'source-map';
 import { codeFrameColumns } from '@babel/code-frame';
 
-const PLATFORM = 'chrome';
+const PLATFORMS = ['chrome', 'firefox'] as const;
+const SOURCEMAPS_DIRNAME = 'sourcemaps';
+const CONTENTSCRIPT_RELATIVE_PATH = 'scripts/contentscript.js';
+const CONTENTSCRIPT_SOURCEMAP_REFERENCE =
+  '//# sourceMappingURL=contentscript.js.map';
 
 const TARGET_STRING = 'new Error';
+
+function toPosixPath(pathValue: string): string {
+  return pathValue.replace(/\\/gu, '/');
+}
+
+export const MAP_LOCATIONS = ['sibling', 'sourcemaps'] as const;
+export type MapLocation = (typeof MAP_LOCATIONS)[number];
+
+export type SourceMapValidatorOptions = {
+  mapLocation?: MapLocation;
+};
+
+type DiscoverWebpackBundlesOptions = {
+  mapLocation: MapLocation;
+  platform: string;
+};
 
 /**
  * Returns true if the bundle line at the given position is likely a comment
@@ -95,32 +116,99 @@ export type FilePair = {
 };
 
 /**
+ * Detects where webpack output stores source maps by checking whether
+ * scripts/contentscript.js ends with a sourceMappingURL reference.
+ *
+ * If the reference is present, maps are expected as sibling files.
+ * Otherwise maps are expected under dist/sourcemaps.
+ *
+ * @param platformDir - Absolute path to the platform build directory (e.g. dist/chrome or dist/firefox).
+ * @returns The detected map location.
+ * @throws If contentscript.js cannot be read.
+ */
+export async function detectMapLocationFromContentscript(
+  platformDir: string,
+): Promise<MapLocation> {
+  const contentScriptPath = join(platformDir, CONTENTSCRIPT_RELATIVE_PATH);
+  let contentscriptSource: string;
+  try {
+    contentscriptSource = await readFile(contentScriptPath, 'utf8');
+  } catch {
+    throw new Error(
+      `SourcemapValidator (webpack) - failed to read "${CONTENTSCRIPT_RELATIVE_PATH}" from ${platformDir}. Cannot auto-detect source map location.`,
+    );
+  }
+
+  return contentscriptSource
+    .trimEnd()
+    .endsWith(CONTENTSCRIPT_SOURCEMAP_REFERENCE)
+    ? 'sibling'
+    : 'sourcemaps';
+}
+
+/**
  * Entry point: discovers all webpack bundles in dist/chrome, validates each
  * bundle's source map, and exits with code 1 if any validation fails.
+ *
+ * @param options - Source map validation options.
+ * @param options.mapLocation - Optional override for where map files are expected for each bundle.
  */
-export async function main(): Promise<void> {
-  const chromeDir = join(process.cwd(), 'dist', PLATFORM);
-  let chromeDirExists = false;
-  try {
-    const st = await stat(chromeDir);
-    chromeDirExists = st.isDirectory();
-  } catch {
-    // ENOENT or other; treat as missing
+export async function main(
+  options: SourceMapValidatorOptions = {},
+): Promise<void> {
+  const distDir = join(process.cwd(), 'dist');
+  const availablePlatforms: string[] = [];
+
+  for (const platform of PLATFORMS) {
+    try {
+      const st = await stat(join(distDir, platform));
+      if (st.isDirectory()) {
+        availablePlatforms.push(platform);
+      }
+    } catch {
+      // ENOENT or other; treat as missing
+    }
   }
 
-  if (!chromeDirExists) {
+  if (availablePlatforms.length === 0) {
     console.error(
-      `SourcemapValidator (webpack) - dist/chrome/ does not exist or is not a directory. Run a webpack build first (e.g. yarn webpack). Exiting with code 1.`,
+      `SourcemapValidator (webpack) - no platform directories (${PLATFORMS.join(', ')}) found in dist/. Run a webpack build first (e.g. yarn webpack). Exiting with code 1.`,
     );
     process.exit(1);
+    return;
   }
 
-  const pairs = await discoverWebpackBundles();
+  // Sourcemaps in dist/sourcemaps/ are shared across platforms, so we only
+  // need to validate against one platform's bundles.
+  const platform = availablePlatforms[0];
+  const platformDir = join(distDir, platform);
+  console.log(`SourcemapValidator (webpack) - using platform: ${platform}`);
+
+  let mapLocation: MapLocation;
+  if (options.mapLocation === undefined) {
+    try {
+      mapLocation = await detectMapLocationFromContentscript(platformDir);
+      console.log(
+        `SourcemapValidator (webpack) - auto-detected map location "${mapLocation}" from "${CONTENTSCRIPT_RELATIVE_PATH}".`,
+      );
+    } catch (error) {
+      console.error(error);
+      process.exit(1);
+      return;
+    }
+  } else {
+    mapLocation = options.mapLocation;
+  }
+
+  const pairs = await discoverWebpackBundles({ mapLocation, platform });
   if (pairs.length === 0) {
+    const searchedLocation =
+      mapLocation === 'sibling' ? `dist/${platform}/` : 'dist/sourcemaps/';
     console.error(
-      'SourcemapValidator (webpack) - no .js+.map pairs found in dist/chrome/. Run a webpack build first and ensure bundles and their .map files are present. Exiting with code 1.',
+      `SourcemapValidator (webpack) - no .js+.map pairs found for ${platform} using map location "${mapLocation}" (${searchedLocation}). Run a webpack build first and ensure bundles and their .map files are present. Exiting with code 1.`,
     );
     process.exit(1);
+    return;
   }
 
   console.log(
@@ -138,6 +226,7 @@ export async function main(): Promise<void> {
       'SourcemapValidator (webpack) - one or more bundles failed validation. Exiting with code 1.',
     );
     process.exit(1);
+    return;
   }
 
   console.log(
@@ -146,13 +235,22 @@ export async function main(): Promise<void> {
 }
 
 /**
- * Recursively finds all .js files in dist/chrome that have a sibling .map file.
+ * Recursively finds all .js files in the platform directory that have a .map file in the
+ * configured location.
  * Skips directories whose names start with '_' or equal 'vendor'.
  *
- * @returns Sorted array of { jsPath, mapPath, label } for each bundle (label is path relative to dist/chrome).
+ * @param options - Source map discovery options.
+ * @param options.mapLocation - Where map files are expected for each bundle.
+ * @param options.platform - The platform directory name (e.g. 'chrome' or 'firefox').
+ * @returns Sorted array of { jsPath, mapPath, label } for each bundle.
  */
-export async function discoverWebpackBundles(): Promise<FilePair[]> {
-  const chromeDir = join(process.cwd(), 'dist', PLATFORM);
+export async function discoverWebpackBundles(
+  options: DiscoverWebpackBundlesOptions,
+): Promise<FilePair[]> {
+  const { mapLocation, platform } = options;
+  const distDir = join(process.cwd(), 'dist');
+  const platformDir = join(distDir, platform);
+  const sourcemapsDir = join(distDir, SOURCEMAPS_DIRNAME);
   const pairs: FilePair[] = [];
 
   /**
@@ -172,16 +270,21 @@ export async function discoverWebpackBundles(): Promise<FilePair[]> {
     for (const e of entries) {
       const full = join(dir, e.name);
       if (e.isFile() && e.name.endsWith('.js') && !e.name.endsWith('.min.js')) {
-        const mapPath = `${full}.map`;
+        const relativeBundlePath = toPosixPath(relative(platformDir, full));
+        const mapPath =
+          mapLocation === 'sourcemaps'
+            ? join(sourcemapsDir, `${relativeBundlePath}.map`)
+            : `${full}.map`;
+
         try {
           await access(mapPath);
           pairs.push({
             jsPath: full,
             mapPath,
-            label: relative(chromeDir, full),
+            label: relativeBundlePath,
           });
         } catch {
-          // no .map, skip
+          // no map for this bundle at the configured location
         }
       } else if (
         e.isDirectory() &&
@@ -193,7 +296,7 @@ export async function discoverWebpackBundles(): Promise<FilePair[]> {
     }
   }
 
-  await scanDir(chromeDir);
+  await scanDir(platformDir);
   return pairs.sort((a, b) => a.jsPath.localeCompare(b.jsPath));
 }
 

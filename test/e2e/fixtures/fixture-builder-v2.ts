@@ -1,14 +1,27 @@
 import { merge, cloneDeep } from 'lodash';
+import { toHex } from '@metamask/controller-utils';
 import type { AccountsControllerState } from '@metamask/accounts-controller';
 import type { AddressBookControllerState } from '@metamask/address-book-controller';
-import type { CurrencyRateState } from '@metamask/assets-controllers';
+import type {
+  CurrencyRateState,
+  TokenBalancesControllerState,
+  TokenListState,
+  TokensControllerState,
+} from '@metamask/assets-controllers';
 import type { KeyringControllerState } from '@metamask/keyring-controller';
+import { type NameControllerState, NameType } from '@metamask/name-controller';
+import type { PersistedSnapControllerState } from '@metamask/snaps-controllers';
 import type { NetworkEnablementControllerState } from '@metamask/network-enablement-controller';
+import type { SelectedNetworkControllerState } from '@metamask/selected-network-controller';
 import type {
   PermissionConstraint,
   PermissionControllerState,
 } from '@metamask/permission-controller';
-import type { NetworkState } from '@metamask/network-controller';
+import {
+  type NetworkState,
+  NetworkStatus,
+  RpcEndpointType,
+} from '@metamask/network-controller';
 import {
   type TransactionControllerState,
   type TransactionMeta,
@@ -24,16 +37,23 @@ import type {
 } from '../../../app/scripts/controllers/preferences-controller';
 import { CHAIN_IDS } from '../../../shared/constants/network';
 import {
+  DAPP_ONE_URL,
+  DAPP_TWO_URL,
   DAPP_URL,
   DAPP_URL_LOCALHOST,
   DEFAULT_FIXTURE_ACCOUNT_LOWERCASE,
-  DEFAULT_FIXTURE_SOLANA_ACCOUNT,
+  HARDWARE_WALLET_ACCOUNT_ID,
   LEDGER_FIXTURE_VAULT,
   LOCALHOST_NETWORK_CLIENT_ID,
+  MULTI_SRP_FIXTURE_VAULT,
   NETWORK_CLIENT_ID,
-  SOLANA_MAINNET_SCOPE,
+  SECOND_NODE_NETWORK_CLIENT_ID,
+  THIRD_NODE_NETWORK_CLIENT_ID,
+  TREZOR_ADDRESS,
+  TREZOR_VAULT,
 } from '../constants';
 import { KNOWN_PUBLIC_KEY_ADDRESSES } from '../../stub/keyring-bridge';
+import { SMART_CONTRACTS } from '../seeder/smart-contracts';
 import defaultFixtureJson from './default-fixture.json';
 import onboardingFixtureJson from './onboarding-fixture.json';
 
@@ -73,6 +93,11 @@ class FixtureBuilderV2 {
                           GENERIC  CONTROLLER METHODS
      ==================================================================
   */
+  withAccountsController(data: Partial<AccountsControllerState>): this {
+    merge(this.fixture.data.AccountsController, data);
+    return this;
+  }
+
   withAddressBookController(data: Partial<AddressBookControllerState>): this {
     if (!this.fixture.data.AddressBookController) {
       (this.fixture.data as Record<string, unknown>).AddressBookController = {
@@ -80,11 +105,6 @@ class FixtureBuilderV2 {
       };
     }
     merge(this.fixture.data.AddressBookController, data);
-    return this;
-  }
-
-  withAccountsController(data: Partial<AccountsControllerState>): this {
-    merge(this.fixture.data.AccountsController, data);
     return this;
   }
 
@@ -108,8 +128,20 @@ class FixtureBuilderV2 {
     return this;
   }
 
+  withNameController(data: Partial<NameControllerState>): this {
+    merge(this.fixture.data.NameController, data);
+    return this;
+  }
+
   withNetworkController(data: Partial<NetworkState>): this {
     merge(this.fixture.data.NetworkController, data);
+    return this;
+  }
+
+  withNetworkEnablementController(
+    data: Partial<NetworkEnablementControllerState>,
+  ): this {
+    merge(this.fixture.data.NetworkEnablementController, data);
     return this;
   }
 
@@ -134,182 +166,38 @@ class FixtureBuilderV2 {
     return this;
   }
 
-  /* ==================================================================
-                              CUSTOM METHODS
-     ==================================================================
-  */
-  withConversionRateDisabled(): this {
-    return this.withPreferencesController({
-      useCurrencyRateCheck: false,
-    });
-  }
-
-  withEnabledNetworks(
-    data: NetworkEnablementControllerState['enabledNetworkMap'],
+  withSelectedNetworkController(
+    data: Partial<SelectedNetworkControllerState>,
   ): this {
-    this.fixture.data.NetworkEnablementController.enabledNetworkMap =
-      data as FixtureType['data']['NetworkEnablementController']['enabledNetworkMap'];
+    merge(this.fixture.data.SelectedNetworkController, data);
     return this;
   }
 
-  withLedgerAccount(): this {
-    const ledgerAddressLower =
-      KNOWN_PUBLIC_KEY_ADDRESSES[0].address.toLowerCase();
-
-    this.withKeyringController({
-      vault: LEDGER_FIXTURE_VAULT,
-    })
-      .withAccountsController({
-        internalAccounts: {
-          accounts: {
-            'd5e45e4a-3b04-4a09-a5e1-39762e5c6be4': {
-              id: 'd5e45e4a-3b04-4a09-a5e1-39762e5c6be4',
-              address: DEFAULT_FIXTURE_ACCOUNT_LOWERCASE,
-              options: {
-                entropySource: '01JWZDDDB45SRHTRE5KYWZJK9W',
-                derivationPath: "m/44'/60'/0'/0/0",
-                groupIndex: 0,
-                entropy: {
-                  type: 'mnemonic',
-                  id: '01JWZDDDB45SRHTRE5KYWZJK9W',
-                  derivationPath: "m/44'/60'/0'/0/0",
-                  groupIndex: 0,
-                },
-              },
-              methods: [
-                'personal_sign',
-                'eth_sign',
-                'eth_signTransaction',
-                'eth_signTypedData_v1',
-                'eth_signTypedData_v3',
-                'eth_signTypedData_v4',
-              ],
-              type: 'eip155:eoa',
-              scopes: ['eip155:0'],
-              metadata: {
-                name: 'Account 1',
-                importTime: 1724486724986,
-                lastSelected: 1665507600000,
-                keyring: {
-                  type: 'HD Key Tree',
-                },
-              },
-            },
-            '221ecb67-0d29-4c04-83b2-dff07c263634': {
-              id: '221ecb67-0d29-4c04-83b2-dff07c263634',
-              address: ledgerAddressLower,
-              options: {},
-              methods: [
-                'personal_sign',
-                'eth_sign',
-                'eth_signTransaction',
-                'eth_signTypedData_v1',
-                'eth_signTypedData_v3',
-                'eth_signTypedData_v4',
-              ],
-              type: 'eip155:eoa',
-              scopes: ['eip155:0'],
-              metadata: {
-                name: 'Ledger 1',
-                importTime: 1724486729079,
-                keyring: {
-                  type: 'Ledger Hardware',
-                },
-                lastSelected: 1724486729083,
-              },
-            },
-          },
-          selectedAccount: '221ecb67-0d29-4c04-83b2-dff07c263634',
-        },
-      })
-      .withPreferencesController({
-        identities: {
-          [DEFAULT_FIXTURE_ACCOUNT_LOWERCASE]: {
-            address: DEFAULT_FIXTURE_ACCOUNT_LOWERCASE,
-            lastSelected: 1665507600000,
-            name: 'Account 1',
-          },
-          [ledgerAddressLower]: {
-            address: ledgerAddressLower,
-            lastSelected: 1665507800000,
-            name: 'Ledger 1',
-          },
-        } as unknown as PreferencesControllerState['identities'],
-        selectedAddress: ledgerAddressLower,
-      });
+  withSnapController(data: Partial<PersistedSnapControllerState>): this {
+    (this.fixture.data as Record<string, unknown>).SnapController ??= {};
+    merge(this.fixture.data.SnapController, data);
     return this;
   }
 
-  withSelectedNetwork(
-    networkClientId: NetworkClientIdValue = NETWORK_CLIENT_ID.MAINNET,
+  withTokenBalancesController(
+    data: Partial<TokenBalancesControllerState>,
   ): this {
-    return this.withNetworkController({
-      selectedNetworkClientId: networkClientId,
-    });
+    merge(this.fixture.data.TokenBalancesController, data);
+    return this;
   }
 
-  withPermissionControllerConnectedToTestDapp({
-    account = '',
-    useLocalhostHostname = false,
-  }: {
-    account?: string;
-    useLocalhostHostname?: boolean;
-  } = {}): this {
-    const selectedAccount = account
-      ? account.toLowerCase()
-      : DEFAULT_FIXTURE_ACCOUNT_LOWERCASE;
-    const dappUrl = useLocalhostHostname ? DAPP_URL_LOCALHOST : DAPP_URL;
+  withTokenListController(data: Partial<TokenListState>): this {
+    (this.fixture.data as Record<string, unknown>).TokenListController ??= {};
+    merge(
+      (this.fixture.data as Record<string, unknown>).TokenListController,
+      data,
+    );
+    return this;
+  }
 
-    // Derive optionalScopes from the EVM networks in state
-    const optionalScopes: Record<string, { accounts: string[] }> = {};
-
-    const networkConfigs =
-      this.fixture.data.NetworkController?.networkConfigurationsByChainId || {};
-    Object.entries(networkConfigs).forEach(([chainIdHex]) => {
-      // Convert hex chainId (0x1) to decimal for CAIP-2 format (eip155:1)
-      const chainId = parseInt(chainIdHex, 16);
-      const scopeKey = `eip155:${chainId}`;
-      optionalScopes[scopeKey] = {
-        accounts: [`${scopeKey}:${selectedAccount}`],
-      };
-    });
-
-    // Add Solana Mainnet scope
-    optionalScopes[SOLANA_MAINNET_SCOPE] = {
-      accounts: [`${SOLANA_MAINNET_SCOPE}:${DEFAULT_FIXTURE_SOLANA_ACCOUNT}`],
-    };
-
-    // Add wallet:eip155 scope
-    optionalScopes['wallet:eip155'] = {
-      accounts: [],
-    };
-
-    return this.withPermissionController({
-      subjects: {
-        [dappUrl]: {
-          origin: dappUrl,
-          permissions: {
-            'endowment:caip25': {
-              caveats: [
-                {
-                  type: 'authorizedScopes',
-                  value: {
-                    isMultichainOrigin: true,
-                    optionalScopes,
-                    requiredScopes: {},
-                    sessionProperties: {},
-                  },
-                },
-              ],
-              date: 1770296204693,
-              id: 'SFqk8nFLekiqC5O1cYCjT',
-              invoker: dappUrl,
-              parentCapability: 'endowment:caip25',
-            },
-          },
-        },
-      },
-    });
+  withTokensController(data: Partial<TokensControllerState>): this {
+    merge(this.fixture.data.TokensController, data);
+    return this;
   }
 
   withTransactionController(data: TransactionControllerFixtureInput): this {
@@ -333,6 +221,390 @@ class FixtureBuilderV2 {
     return this;
   }
 
+  /* ==================================================================
+                              CUSTOM METHODS
+     ==================================================================
+  */
+  withBadPreferencesControllerState(): this {
+    (this.fixture.data as Record<string, unknown>).PreferencesController = 5;
+    return this;
+  }
+
+  withConversionRateDisabled(): this {
+    return this.withPreferencesController({
+      useCurrencyRateCheck: false,
+    });
+  }
+
+  withEnabledNetworks(
+    data: NetworkEnablementControllerState['enabledNetworkMap'],
+  ): this {
+    this.fixture.data.NetworkEnablementController.enabledNetworkMap =
+      data as FixtureType['data']['NetworkEnablementController']['enabledNetworkMap'];
+    return this;
+  }
+
+  withKeyringControllerMultiSRP(): this {
+    return this.withKeyringController({
+      vault: MULTI_SRP_FIXTURE_VAULT,
+    });
+  }
+
+  withLedgerAccount(): this {
+    const ledgerAddressLower =
+      KNOWN_PUBLIC_KEY_ADDRESSES[0].address.toLowerCase();
+
+    this.withKeyringController({
+      vault: LEDGER_FIXTURE_VAULT,
+    }).withAccountsController({
+      internalAccounts: {
+        accounts: {
+          'd5e45e4a-3b04-4a09-a5e1-39762e5c6be4': {
+            id: 'd5e45e4a-3b04-4a09-a5e1-39762e5c6be4',
+            address: DEFAULT_FIXTURE_ACCOUNT_LOWERCASE,
+            options: {
+              entropySource: '01JWZDDDB45SRHTRE5KYWZJK9W',
+              derivationPath: "m/44'/60'/0'/0/0",
+              groupIndex: 0,
+              entropy: {
+                type: 'mnemonic',
+                id: '01JWZDDDB45SRHTRE5KYWZJK9W',
+                derivationPath: "m/44'/60'/0'/0/0",
+                groupIndex: 0,
+              },
+            },
+            methods: [
+              'personal_sign',
+              'eth_sign',
+              'eth_signTransaction',
+              'eth_signTypedData_v1',
+              'eth_signTypedData_v3',
+              'eth_signTypedData_v4',
+            ],
+            type: 'eip155:eoa',
+            scopes: ['eip155:0'],
+            metadata: {
+              name: 'Account 1',
+              importTime: 1724486724986,
+              lastSelected: 1665507600000,
+              keyring: {
+                type: 'HD Key Tree',
+              },
+            },
+          },
+          [HARDWARE_WALLET_ACCOUNT_ID]: {
+            id: HARDWARE_WALLET_ACCOUNT_ID,
+            address: ledgerAddressLower,
+            options: {},
+            methods: [
+              'personal_sign',
+              'eth_sign',
+              'eth_signTransaction',
+              'eth_signTypedData_v1',
+              'eth_signTypedData_v3',
+              'eth_signTypedData_v4',
+            ],
+            type: 'eip155:eoa',
+            scopes: ['eip155:0'],
+            metadata: {
+              name: 'Ledger 1',
+              importTime: 1724486729079,
+              keyring: {
+                type: 'Ledger Hardware',
+              },
+              lastSelected: 1724486729083,
+            },
+          },
+        },
+        selectedAccount: HARDWARE_WALLET_ACCOUNT_ID,
+      },
+    });
+    return this;
+  }
+
+  withNetworkControllerDoubleNode(): this {
+    const secondNodeChainId = '0x53a';
+    const secondNodeClientId = SECOND_NODE_NETWORK_CLIENT_ID;
+
+    return this.withNetworkController({
+      networkConfigurationsByChainId: {
+        [secondNodeChainId]: {
+          blockExplorerUrls: [],
+          chainId: secondNodeChainId,
+          defaultRpcEndpointIndex: 0,
+          name: 'Localhost 8546',
+          nativeCurrency: 'ETH',
+          rpcEndpoints: [
+            {
+              networkClientId: secondNodeClientId,
+              type: RpcEndpointType.Custom,
+              url: 'http://localhost:8546',
+            },
+          ],
+        },
+      },
+      networksMetadata: {
+        [secondNodeClientId]: {
+          EIPS: {},
+          status: NetworkStatus.Available,
+        },
+      },
+    });
+  }
+
+  withNetworkControllerTripleNode(): this {
+    const thirdNodeChainId = '0x3e8';
+    const thirdNodeClientId = THIRD_NODE_NETWORK_CLIENT_ID;
+
+    return this.withNetworkControllerDoubleNode().withNetworkController({
+      networkConfigurationsByChainId: {
+        [thirdNodeChainId]: {
+          blockExplorerUrls: [],
+          chainId: thirdNodeChainId,
+          defaultRpcEndpointIndex: 0,
+          name: 'Localhost 7777',
+          nativeCurrency: 'ETH',
+          rpcEndpoints: [
+            {
+              networkClientId: thirdNodeClientId,
+              type: RpcEndpointType.Custom,
+              url: 'http://localhost:7777',
+            },
+          ],
+        },
+      },
+      networksMetadata: {
+        [thirdNodeClientId]: {
+          EIPS: {},
+          status: NetworkStatus.Available,
+        },
+      },
+    });
+  }
+
+  withNoNames(): this {
+    // Direct assignment instead of merge so existing petname entries are cleared if any
+    this.fixture.data.NameController.names = {
+      [NameType.ETHEREUM_ADDRESS]: {},
+    };
+    return this;
+  }
+
+  withPermissionControllerConnectedToTestDapp({
+    account = DEFAULT_FIXTURE_ACCOUNT_LOWERCASE,
+    useLocalhostHostname = false,
+    numberOfDapps = 1,
+    chainIds = [1337],
+  }: {
+    account?: string | string[];
+    useLocalhostHostname?: boolean;
+    numberOfDapps?: number;
+    chainIds?: number[];
+  } = {}): this {
+    const MAX_DAPPS = 3;
+    if (numberOfDapps < 1 || numberOfDapps > MAX_DAPPS) {
+      throw new Error(
+        `numberOfDapps must be between 1 and ${MAX_DAPPS}, got ${numberOfDapps}`,
+      );
+    }
+
+    const resolvedAccounts = (Array.isArray(account) ? account : [account]).map(
+      (a) => a.toLowerCase(),
+    );
+
+    const dappUrls = [
+      useLocalhostHostname ? DAPP_URL_LOCALHOST : DAPP_URL,
+      DAPP_ONE_URL,
+      DAPP_TWO_URL,
+    ].slice(0, numberOfDapps);
+
+    // Build optionalScopes from the provided chainIds (default: localhost 1337)
+    const optionalScopes: Record<string, { accounts: string[] }> = {};
+    for (const chainId of chainIds) {
+      const scopeKey = `eip155:${chainId}`;
+      optionalScopes[scopeKey] = {
+        accounts: resolvedAccounts.map((a) => `${scopeKey}:${a}`),
+      };
+    }
+    optionalScopes['wallet:eip155'] = {
+      accounts: resolvedAccounts.map((a) => `wallet:eip155:${a}`),
+    };
+
+    // Unique random IDs for each dapp subject's permission
+    const permissionIds = [
+      'SFqk8nFLekiqC5O1cYCjT',
+      'Aqk7nGLdkiqC5O1cYCjU',
+      'Brl8oHMeliqC5O1cYCjV',
+    ];
+    const subjects: PermissionControllerState<PermissionConstraint>['subjects'] =
+      {};
+    for (let i = 0; i < dappUrls.length; i++) {
+      const dappUrl = dappUrls[i];
+      subjects[dappUrl] = {
+        origin: dappUrl,
+        permissions: {
+          'endowment:caip25': {
+            caveats: [
+              {
+                type: 'authorizedScopes',
+                value: {
+                  isMultichainOrigin: true,
+                  optionalScopes,
+                  requiredScopes: {},
+                  sessionProperties: {},
+                },
+              },
+            ],
+            date: 1770296204693,
+            id: permissionIds[i],
+            invoker: dappUrl,
+            parentCapability: 'endowment:caip25',
+          },
+        },
+      };
+    }
+
+    return this.withPermissionController({ subjects });
+  }
+
+  // NOTE: This method should only be used with EVM networks. Non-EVM networks (Bitcoin, Tron...) rely on Snaps that may not be ready at startup;
+  // Selecting one of them via fixtures may cause the extension to switch back to default network.
+  // For non-EVM networks, switch manually in the test after the Snap is ready.
+  withSelectedNetwork(
+    networkClientId: NetworkClientIdValue = NETWORK_CLIENT_ID.MAINNET,
+  ): this {
+    return this.withNetworkController({
+      selectedNetworkClientId: networkClientId,
+    });
+  }
+
+  withSelectedNetworkControllerPerDomain(): this {
+    return this.withSelectedNetworkController({
+      domains: {
+        [DAPP_URL]: LOCALHOST_NETWORK_CLIENT_ID,
+        [DAPP_ONE_URL]: SECOND_NODE_NETWORK_CLIENT_ID,
+      },
+    });
+  }
+
+  withShowNativeTokenAsMainBalanceDisabled(): this {
+    return this.withPreferencesController({
+      preferences: {
+        showNativeTokenAsMainBalance: false,
+      },
+    });
+  }
+
+  withShowNativeTokenAsMainBalanceEnabled(): this {
+    return this.withPreferencesController({
+      preferences: {
+        showNativeTokenAsMainBalance: true,
+      },
+    });
+  }
+
+  withSnapsPrivacyWarningAlreadyShown(): this {
+    return this.withAppStateController({
+      snapsInstallPrivacyWarningShown: true,
+    });
+  }
+
+  withSmartTransactionsOptedOut(): this {
+    return this.withPreferencesController({
+      preferences: {
+        smartTransactionsOptInStatus: false,
+      },
+    });
+  }
+
+  withTokensControllerERC20({ chainId = 1337 } = {}): this {
+    return this.withTokensController({
+      allTokens: {
+        [toHex(chainId)]: {
+          '0x5cfe73b6021e818b776b421b1c4db2474086a7e1': [
+            {
+              address: `__FIXTURE_SUBSTITUTION__CONTRACT${SMART_CONTRACTS.HST}`,
+              symbol: 'TST',
+              image: `https://static.cx.metamask.io/api/v1/tokenIcons/${chainId}/0x581c3c1a2a4ebde2a0df29b5cf4c116e42945947.png`,
+              isERC721: false,
+              decimals: 4,
+              aggregators: ['Metamask', 'Aave'],
+              name: 'test',
+            },
+          ],
+        },
+      },
+      allIgnoredTokens: {},
+      allDetectedTokens: {},
+    });
+  }
+
+  withTrezorAccount(): this {
+    return this.withAccountsController({
+      internalAccounts: {
+        accounts: {
+          'd5e45e4a-3b04-4a09-a5e1-39762e5c6be4': {
+            id: 'd5e45e4a-3b04-4a09-a5e1-39762e5c6be4',
+            address: DEFAULT_FIXTURE_ACCOUNT_LOWERCASE,
+            options: {
+              entropySource: '01KGHAX3WXGMX9H76THHSSV553',
+              derivationPath: "m/44'/60'/0'/0/0",
+              groupIndex: 0,
+              entropy: {
+                type: 'mnemonic',
+                id: '01KGHAX3WXGMX9H76THHSSV553',
+                derivationPath: "m/44'/60'/0'/0/0",
+                groupIndex: 0,
+              },
+            },
+            methods: [
+              'personal_sign',
+              'eth_sign',
+              'eth_signTransaction',
+              'eth_signTypedData_v1',
+              'eth_signTypedData_v3',
+              'eth_signTypedData_v4',
+            ],
+            type: 'eip155:eoa',
+            scopes: ['eip155:0'],
+            metadata: {
+              name: 'Account 1',
+              importTime: 1724486724986,
+              lastSelected: 1665507600000,
+              keyring: {
+                type: 'HD Key Tree',
+              },
+            },
+          },
+          [HARDWARE_WALLET_ACCOUNT_ID]: {
+            id: HARDWARE_WALLET_ACCOUNT_ID,
+            address: TREZOR_ADDRESS,
+            options: {},
+            methods: [
+              'personal_sign',
+              'eth_sign',
+              'eth_signTransaction',
+              'eth_signTypedData_v1',
+              'eth_signTypedData_v3',
+              'eth_signTypedData_v4',
+            ],
+            type: 'eip155:eoa',
+            scopes: ['eip155:0'],
+            metadata: {
+              name: 'Trezor 1',
+              importTime: 1724486729079,
+              keyring: {
+                type: 'Trezor Hardware',
+              },
+              lastSelected: 1724486729083,
+            },
+          },
+        },
+        selectedAccount: HARDWARE_WALLET_ACCOUNT_ID,
+      },
+    }).withKeyringController({ vault: TREZOR_VAULT });
+  }
+
   withTransactionControllerApprovedTransaction(): this {
     const txId = '13a01e77-a368-4bb9-aba9-e7435580e3b9';
     const approvedTx: TransactionMeta = {
@@ -354,10 +626,6 @@ class FixtureBuilderV2 {
       type: TransactionType.simpleSend,
     };
     return this.withTransactionController({ transactions: [approvedTx] });
-  }
-
-  withTransactionControllerCompletedAndIncomingTransaction(): this {
-    return this.withTransactionControllerCompletedTransaction().withTransactionControllerIncomingTransaction();
   }
 
   withTransactionControllerCompletedTransaction(): this {
@@ -414,27 +682,9 @@ class FixtureBuilderV2 {
     return this.withTransactionController({ transactions: [incomingTx] });
   }
 
-  withShowNativeTokenAsMainBalanceDisabled(): this {
+  withUseBasicFunctionalityDisabled(): this {
     return this.withPreferencesController({
-      preferences: {
-        showNativeTokenAsMainBalance: false,
-      },
-    });
-  }
-
-  withShowNativeTokenAsMainBalanceEnabled(): this {
-    return this.withPreferencesController({
-      preferences: {
-        showNativeTokenAsMainBalance: true,
-      },
-    });
-  }
-
-  withSmartTransactionsOptedOut(): this {
-    return this.withPreferencesController({
-      preferences: {
-        smartTransactionsOptInStatus: false,
-      },
+      useExternalServices: false,
     });
   }
 

@@ -5,7 +5,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { MetamaskNotificationsProvider } from '../../../contexts/metamask-notifications';
 // TODO: Remove restricted import
-// eslint-disable-next-line import/no-restricted-paths
+// eslint-disable-next-line import-x/no-restricted-paths
 import { getEnvironmentType } from '../../../../app/scripts/lib/util';
 import { ENVIRONMENT_TYPE_POPUP } from '../../../../shared/constants/app';
 import mockState from '../../../../test/data/mock-state.json';
@@ -119,11 +119,11 @@ describe('Security Tab', () => {
   });
 
   it('toggles Display NFT media enabled', async () => {
-    expect(await toggleCheckbox('displayNftMedia', true)).toBe(true);
+    expect(await toggleCheckbox('display-nft-media', true)).toBe(true);
   });
 
   it('toggles nft detection', async () => {
-    expect(await toggleCheckbox('useNftDetection', true)).toBe(true);
+    expect(await toggleCheckbox('use-nft-detection', true)).toBe(true);
   });
 
   it('toggles nft detection from another initial state', async () => {
@@ -133,7 +133,7 @@ describe('Security Tab', () => {
     const localMockStore = configureMockStore([thunk])(mockState);
     renderWithProviders(<SecurityTab />, localMockStore);
 
-    expect(await toggleCheckbox('useNftDetection', false, true)).toBe(true);
+    expect(await toggleCheckbox('use-nft-detection', false, true)).toBe(true);
   });
 
   it('toggles phishing detection', async () => {
@@ -149,7 +149,7 @@ describe('Security Tab', () => {
   });
 
   it('should toggle token detection', async () => {
-    expect(await toggleCheckbox('autoDetectTokens', true)).toBe(true);
+    expect(await toggleCheckbox('autodetect-tokens', true)).toBe(true);
   });
 
   it('toggles batch balance checks', async () => {

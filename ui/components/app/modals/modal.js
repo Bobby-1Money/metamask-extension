@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 // TODO: Remove restricted import
-// eslint-disable-next-line import/no-restricted-paths
+// eslint-disable-next-line import-x/no-restricted-paths
 import { getEnvironmentType } from '../../../../app/scripts/lib/util';
 import { ENVIRONMENT_TYPE_POPUP } from '../../../../shared/constants/app';
 import isMobileView from '../../../helpers/utils/is-mobile-view';
@@ -24,7 +24,6 @@ import HideTokenConfirmationModal from './hide-token-confirmation-modal';
 import QRScanner from './qr-scanner';
 import { HardwareWalletErrorModal } from './hardware-wallet-error-modal';
 
-import ConfirmRemoveAccount from './confirm-remove-account';
 import ConfirmResetAccount from './confirm-reset-account';
 
 import ConfirmDeleteNetwork from './confirm-delete-network';
@@ -105,19 +104,6 @@ const MODALS = {
 
   CONFIRM_RESET_ACCOUNT: {
     contents: <ConfirmResetAccount />,
-    mobileModalStyle: {
-      ...modalContainerMobileStyle,
-    },
-    laptopModalStyle: {
-      ...modalContainerLaptopStyle,
-    },
-    contentStyle: {
-      borderRadius: '8px',
-    },
-  },
-
-  CONFIRM_REMOVE_ACCOUNT: {
-    contents: <ConfirmRemoveAccount />,
     mobileModalStyle: {
       ...modalContainerMobileStyle,
     },

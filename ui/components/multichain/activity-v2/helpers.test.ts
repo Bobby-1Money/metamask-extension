@@ -3,6 +3,10 @@ import {
   type TransactionMeta,
 } from '@metamask/transaction-controller';
 import { NATIVE_TOKEN_ADDRESS } from '../../../../shared/constants/transaction';
+import {
+  MERKL_DISTRIBUTOR_ADDRESS,
+  MERKL_CLAIM_METHOD_ID,
+} from '../../app/musd/constants';
 import type {
   Token,
   TransactionGroup,
@@ -14,6 +18,9 @@ import {
   mergeAllTransactionsByTime,
   groupAndFlattenMergedTransactions,
   resolveTransactionType,
+  matchesApiTransaction,
+  matchesLocalTransaction,
+  matchesNonEvmTransaction,
 } from './helpers';
 
 const ethToken: Token = {
@@ -192,6 +199,81 @@ describe('groupAndFlattenMergedTransactions', () => {
   });
 });
 
+describe('matchesApiTransaction', () => {
+  it('matches when the from token address equals the given address', () => {
+    const tx = makeApiTx({
+      time: 1000,
+      amounts: { from: { amount: 1n, token: usdcToken } },
+    });
+    expect(
+      matchesApiTransaction(tx, {
+        kind: 'token',
+        tokenAddress: usdcToken.address,
+      }),
+    ).toBe(true);
+    expect(
+      matchesApiTransaction(tx, { kind: 'token', tokenAddress: '0xdeadbeef' }),
+    ).toBe(false);
+  });
+});
+
+describe('matchesLocalTransaction', () => {
+  it('matches when txParams.to equals the token address', () => {
+    const group = makeLocalGroup({
+      time: 1000,
+      txParams: { to: '0xABC', nonce: '0x0' } as TransactionMeta['txParams'],
+    });
+    expect(
+      matchesLocalTransaction(group, { kind: 'token', tokenAddress: '0xabc' }),
+    ).toBe(true);
+    expect(
+      matchesLocalTransaction(group, { kind: 'token', tokenAddress: '0x123' }),
+    ).toBe(false);
+  });
+});
+
+describe('matchesNonEvmTransaction', () => {
+  it('matches when a fungible asset type matches the token address', () => {
+    const tx = {
+      from: [{ asset: { fungible: true, type: 'solana:101/token:0xABC' } }],
+      to: [],
+    } as unknown as import('@metamask/keyring-api').Transaction;
+    expect(
+      matchesNonEvmTransaction(tx, {
+        kind: 'token',
+        tokenAddress: 'solana:101/token:0xABC',
+      }),
+    ).toBe(true);
+    expect(
+      matchesNonEvmTransaction(tx, {
+        kind: 'token',
+        tokenAddress: '0xdeadbeef',
+      }),
+    ).toBe(false);
+  });
+
+  it('matches native scope via caipAssetType', () => {
+    const tx = {
+      from: [{ asset: { fungible: true, type: 'solana:mainnet/slip44:501' } }],
+      to: [],
+    } as unknown as import('@metamask/keyring-api').Transaction;
+    expect(
+      matchesNonEvmTransaction(tx, {
+        kind: 'native',
+        caipAssetType: 'solana:mainnet/slip44:501',
+      }),
+    ).toBe(true);
+  });
+
+  it('returns false for native scope without caipAssetType', () => {
+    const tx = {
+      from: [{ asset: { fungible: true, type: 'solana:mainnet/slip44:501' } }],
+      to: [],
+    } as unknown as import('@metamask/keyring-api').Transaction;
+    expect(matchesNonEvmTransaction(tx, { kind: 'native' })).toBe(false);
+  });
+});
+
 describe('resolveTransactionType', () => {
   it('returns the correct transaction type for a valid transaction', () => {
     const result = resolveTransactionType(
@@ -284,5 +366,61 @@ describe('resolveTransactionType', () => {
       makeApiTx({ time: Date.now(), transactionType: 'ERC_1155_TRANSFER' }),
     );
     expect(result).toBe(TransactionType.tokenMethodTransferFrom);
+  });
+
+  it('returns musdClaim for a contract interaction to the Merkl distributor with claim method', () => {
+    const result = resolveTransactionType(
+      makeApiTx({
+        time: Date.now(),
+        txParams: {
+          from: '0x0000000000000000000000000000000000000000',
+          to: MERKL_DISTRIBUTOR_ADDRESS,
+          data: `${MERKL_CLAIM_METHOD_ID}0000000000000000`,
+        },
+      }),
+    );
+    expect(result).toBe(TransactionType.musdClaim);
+  });
+
+  it('returns contractInteraction for Merkl distributor with non-claim method', () => {
+    const result = resolveTransactionType(
+      makeApiTx({
+        time: Date.now(),
+        txParams: {
+          from: '0x0000000000000000000000000000000000000000',
+          to: MERKL_DISTRIBUTOR_ADDRESS,
+          data: '0x12345678', // Different method ID
+        },
+      }),
+    );
+    expect(result).toBe(TransactionType.contractInteraction);
+  });
+
+  it('does not override APPROVE transactions to the Merkl distributor', () => {
+    const result = resolveTransactionType(
+      makeApiTx({
+        time: Date.now(),
+        transactionCategory: 'APPROVE',
+        txParams: {
+          from: '0x0000000000000000000000000000000000000000',
+          to: MERKL_DISTRIBUTOR_ADDRESS,
+        },
+      }),
+    );
+    expect(result).toBe(TransactionType.tokenMethodApprove);
+  });
+
+  it('does not override SWAP transactions to the Merkl distributor', () => {
+    const result = resolveTransactionType(
+      makeApiTx({
+        time: Date.now(),
+        transactionCategory: 'SWAP',
+        txParams: {
+          from: '0x0000000000000000000000000000000000000000',
+          to: MERKL_DISTRIBUTOR_ADDRESS,
+        },
+      }),
+    );
+    expect(result).toBe(TransactionType.swap);
   });
 });

@@ -35,7 +35,6 @@
   },
   "AppStateController": {
     "activeQrCodeScanRequest": null,
-    "lastQrScanCompletedSuccessfully": null,
     "addressSecurityAlertResponses": "object",
     "browserEnvironment": { "browser": "string", "os": "string" },
     "canTrackWalletFundsObtained": false,
@@ -48,6 +47,7 @@
     "hasShownMultichainAccountsIntroModal": "boolean",
     "isRampCardClosed": false,
     "isWalletResetInProgress": "boolean",
+    "lastQrScanCompletedSuccessfully": null,
     "lastUpdatedAt": null,
     "lastViewedUserSurvey": null,
     "musdConversionDismissedCtaKeys": "object",

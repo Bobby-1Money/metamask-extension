@@ -89,6 +89,7 @@
     "accountsAssets": "object",
     "accountsByChainId": "object",
     "activeQrCodeScanRequest": null,
+    "lastQrScanCompletedSuccessfully": null,
     "addSnapAccountEnabled": "boolean",
     "addressBook": "object",
     "addressScanCache": "object",

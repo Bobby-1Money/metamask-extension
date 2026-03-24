@@ -169,6 +169,7 @@ export const PERPS_MARKET_LIST_ROUTE = '/perps/market-list';
 
 export const SHIELD_PLAN_ROUTE = '/shield-plan';
 export const REWARDS_ROUTE = '/rewards';
+export const OCAP_KERNEL_ROUTE = '/ocap-kernel';
 
 export const ROUTES = [
   { path: DEFAULT_ROUTE, label: 'Home', trackInAnalytics: true },

@@ -73,6 +73,7 @@ import {
   PERPS_ACTIVITY_ROUTE,
   CONTACTS_ROUTE,
   SETTINGS_V2_ROUTE,
+  OCAP_KERNEL_ROUTE,
 } from '../../helpers/constants/routes';
 import { MUSD_CONVERSION_ROUTE } from '../musd/constants/routes';
 import { getProviderConfig } from '../../../shared/lib/selectors/networks';
@@ -248,6 +249,7 @@ const PerpsOrderEntryPage = mmLazy(
   () => import('../perps/perps-order-entry-page.tsx'),
 );
 const MusdConversionPage = mmLazy(() => import('../musd/index.tsx'));
+const OcapKernelPage = mmLazy(() => import('../ocap-kernel/index.ts'));
 // End Lazy Routes
 
 const NotificationsSettingsRedirect = () => (
@@ -517,6 +519,13 @@ export const routeConfig = [
     authenticated: true,
     basicFunctionalityOpenPageCtaKey:
       'basicFunctionalityRequired_openMusdConversionPage',
+  }),
+  createRouteWithLayout({
+    path: OCAP_KERNEL_ROUTE,
+    component: OcapKernelPage,
+    layout: RootLayout,
+    authenticated: true,
+    basicFunctionalityRequired: false,
   }),
   createRouteWithLayout({
     path: PERMISSIONS,

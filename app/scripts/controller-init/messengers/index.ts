@@ -209,6 +209,7 @@ import { getClaimsServiceMessenger } from './claims/claims-service-messenger';
 import { getProfileMetricsControllerMessenger } from './profile-metrics-controller-messenger';
 import { getProfileMetricsServiceMessenger } from './profile-metrics-service-messenger';
 import { getStorageServiceMessenger } from './storage-service-messenger';
+import { getOcapKernelControllerMessenger } from './ocap-kernel-controller-messenger';
 import { getPerpsControllerMessenger } from './perps-controller-messenger';
 
 export type { AccountOrderControllerMessenger } from './account-order-controller-messenger';
@@ -333,6 +334,8 @@ export {
 } from './permission-controller-messenger';
 export type { PermissionLogControllerMessenger } from './permission-log-controller-messenger';
 export { getPermissionLogControllerMessenger } from './permission-log-controller-messenger';
+export type { OcapKernelControllerMessenger } from './ocap-kernel-controller-messenger';
+export { getOcapKernelControllerMessenger } from './ocap-kernel-controller-messenger';
 export type { PerpsControllerMessenger } from './perps-controller-messenger';
 export { getPerpsControllerMessenger } from './perps-controller-messenger';
 export type { PhishingControllerMessenger } from './phishing-controller-messenger';
@@ -786,6 +789,10 @@ export const CONTROLLER_MESSENGERS = {
   },
   NetworkOrderController: {
     getMessenger: getNetworkOrderControllerMessenger,
+    getInitMessenger: noop,
+  },
+  OcapKernelController: {
+    getMessenger: getOcapKernelControllerMessenger,
     getInitMessenger: noop,
   },
   NetworkEnablementController: {

@@ -383,6 +383,7 @@ import { TokenDetectionControllerInit } from './controller-init/token-detection-
 import { TokensControllerInit } from './controller-init/tokens-controller-init';
 import { TokenBalancesControllerInit } from './controller-init/token-balances-controller-init';
 import { StaticAssetsControllerInit } from './controller-init/static-assets-controller-init';
+import { OcapKernelControllerInit } from './controller-init/ocap-kernel-controller-init';
 import { RatesControllerInit } from './controller-init/rates-controller-init';
 import { CurrencyRateControllerInit } from './controller-init/currency-rate-controller-init';
 import { EnsControllerInit } from './controller-init/confirmations/ens-controller-init';
@@ -638,6 +639,7 @@ export default class MetamaskController extends EventEmitter {
       TokensController: TokensControllerInit,
       TokenBalancesController: TokenBalancesControllerInit,
       StaticAssetsController: StaticAssetsControllerInit,
+      OcapKernelController: OcapKernelControllerInit,
       // MultichainNetworkController and NetworkEnablementController must be initialized before TokenRatesController
       // because TokenRatesController depends on NetworkEnablementController:getState during construction.
       MultichainNetworkController: MultichainNetworkControllerInit,
@@ -797,6 +799,7 @@ export default class MetamaskController extends EventEmitter {
     this.claimsController = controllersByName.ClaimsController;
     this.claimsService = controllersByName.ClaimsService;
     this.profileMetricsController = controllersByName.ProfileMetricsController;
+    this.ocapKernelController = controllersByName.OcapKernelController;
     this.backup = new Backup({
       preferencesController: this.preferencesController,
       addressBookController: this.addressBookController,

@@ -27,6 +27,7 @@ import {
   PERMISSIONS,
   GATOR_PERMISSIONS,
   CONTACTS_ROUTE,
+  OCAP_KERNEL_ROUTE,
 } from '../../../helpers/constants/routes';
 import {
   lockMetamask,
@@ -434,6 +435,12 @@ export function useGlobalMenuSections(
           label: t('snaps'),
           to: `${SNAPS_ROUTE}?from=${encodeURIComponent(location.pathname)}`,
           showInfoDot: snapsUpdatesAvailable,
+        },
+        {
+          id: 'global-menu-ocap-kernel',
+          iconName: IconName.Global,
+          label: t('ocapKernel'),
+          to: OCAP_KERNEL_ROUTE,
         },
       ],
     };

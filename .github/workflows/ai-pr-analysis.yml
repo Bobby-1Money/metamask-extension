@@ -1,5 +1,5 @@
 # Reusable workflow: built-in `pr-risk-analysis` only (comments + labels).
-# Invoked from `main.yml` for non-fork pull requests.
+# Invoked from `main.yml` when the PR is non-fork, not draft, and targets `main` or `release/*`.
 
 name: AI PR Risk Analysis
 
@@ -12,24 +12,19 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    env:
-      AI_PR_CLAUDE_API_KEY: ${{ secrets.AI_PR_CLAUDE_API_KEY }}
-      AI_PR_OPENAI_API_KEY: ${{ secrets.AI_PR_OPENAI_API_KEY }}
-      AI_PR_GEMINI_API_KEY: ${{ secrets.AI_PR_GEMINI_API_KEY }}
-      E2E_CLAUDE_API_KEY: ${{ secrets.E2E_CLAUDE_API_KEY }}
-      E2E_OPENAI_API_KEY: ${{ secrets.E2E_OPENAI_API_KEY }}
-      E2E_GEMINI_API_KEY: ${{ secrets.E2E_GEMINI_API_KEY }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # Release tag for MetaMask/ai-analyzer
+      # https://github.com/MetaMask/ai-analyzer/releases
       - name: Checkout AI Analyzer
         uses: actions/checkout@v4
         with:
           repository: MetaMask/ai-analyzer
-          ref: refactor/bash-to-js-action-scripts
+          ref: v1
           path: .ai-analyzer-action
           token: ${{ secrets.AI_ANALYZER_TOKEN || secrets.GITHUB_TOKEN }}
 

@@ -28,7 +28,6 @@ jobs:
       - name: Run AI PR Analysis
         uses: ./.ai-analyzer-action
         env:
-          # gh CLI resolves PR file lists; explicit token matches GitHub Actions best practice
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           mode: pr-risk-analysis

@@ -12,7 +12,6 @@ on:
       - opened
       - reopened
       - synchronize
-      - ready_for_review
     branches-ignore:
       - stable
   merge_group:

@@ -1,6 +1,3 @@
-# Reusable workflow: built-in `pr-risk-analysis` only (comments + labels).
-# Invoked from `main.yml` when the PR is non-fork, not draft, and targets `main` or `release/*`.
-
 name: AI PR Risk Analysis
 
 on:

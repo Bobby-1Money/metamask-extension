@@ -1,3 +1,6 @@
+# Reusable workflow: built-in `pr-risk-analysis` only (comments + labels).
+# Invoked from `main.yml` for non-fork pull requests.
+
 name: AI PR Risk Analysis
 
 on:
@@ -25,6 +28,8 @@ jobs:
 
       - name: Run AI PR Analysis
         uses: ./.ai-analyzer-action
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           mode: pr-risk-analysis
           add-comment: true

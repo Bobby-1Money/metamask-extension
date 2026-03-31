@@ -1,0 +1,5 @@
+# Required for CI: tells the analyzer which GitHub repo to use when resolving PR
+repo: MetaMask/metamask-extension
+
+modes:
+  - pr-risk-analysis

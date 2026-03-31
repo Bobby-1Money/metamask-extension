@@ -13,6 +13,9 @@ jobs:
       contents: read
       pull-requests: write
     env:
+      AI_PR_CLAUDE_API_KEY: ${{ secrets.AI_PR_CLAUDE_API_KEY }}
+      AI_PR_OPENAI_API_KEY: ${{ secrets.AI_PR_OPENAI_API_KEY }}
+      AI_PR_GEMINI_API_KEY: ${{ secrets.AI_PR_GEMINI_API_KEY }}
       E2E_CLAUDE_API_KEY: ${{ secrets.E2E_CLAUDE_API_KEY }}
       E2E_OPENAI_API_KEY: ${{ secrets.E2E_OPENAI_API_KEY }}
       E2E_GEMINI_API_KEY: ${{ secrets.E2E_GEMINI_API_KEY }}
@@ -33,12 +36,13 @@ jobs:
       - name: Run AI PR Analysis
         uses: ./.ai-analyzer-action
         env:
+          # gh CLI resolves PR file lists; explicit token matches GitHub Actions best practice
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           mode: pr-risk-analysis
           add-comment: true
           add-label: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          claude-api-key: ${{ secrets.E2E_CLAUDE_API_KEY }}
-          openai-api-key: ${{ secrets.E2E_OPENAI_API_KEY }}
-          google-api-key: ${{ secrets.E2E_GEMINI_API_KEY }}
+          claude-api-key: ${{ secrets.AI_PR_CLAUDE_API_KEY || secrets.E2E_CLAUDE_API_KEY }}
+          openai-api-key: ${{ secrets.AI_PR_OPENAI_API_KEY || secrets.E2E_OPENAI_API_KEY }}
+          google-api-key: ${{ secrets.AI_PR_GEMINI_API_KEY || secrets.E2E_GEMINI_API_KEY }}

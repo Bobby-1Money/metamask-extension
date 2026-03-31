@@ -3,23 +3,19 @@ repo: MetaMask/metamask-extension
 
 critical:
   files:
-    # Root configs that affect the entire build
     - package.json
     - yarn.lock
     - babel.config.js
     - tsconfig.json
     - builds.yml
-    # Extension manifest sources
     - app/manifest/v2/_base.json
     - app/manifest/v3/_base.json
-    # Core entry points
     - app/scripts/metamask-controller.js
     - app/scripts/background.js
     - app/service-worker.ts
     - app/scripts/ui.js
     - app/scripts/contentscript.js
     - app/scripts/inpage.js
-    # State migrations index
     - app/scripts/migrations/index.js
 
   keywords:

@@ -1,0 +1,36 @@
+
+name: AI PR Risk Analysis
+
+on:
+  workflow_call:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout AI Analyzer
+        uses: actions/checkout@v4
+        with:
+          repository: MetaMask/ai-analyzer
+          ref: fix/install-all-deps
+          path: .ai-analyzer-action
+          token: ${{ secrets.AI_ANALYZER_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Run AI PR Analysis
+        uses: ./.ai-analyzer-action
+        with:
+          mode: pr-risk-analysis
+          add-comment: true
+          add-label: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          claude-api-key: ${{ secrets.E2E_CLAUDE_API_KEY }}
+          openai-api-key: ${{ secrets.E2E_OPENAI_API_KEY }}
+          google-api-key: ${{ secrets.E2E_GEMINI_API_KEY }}

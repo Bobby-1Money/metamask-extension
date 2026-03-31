@@ -46,6 +46,15 @@ jobs:
     name: Get workflow and job requirements
     uses: ./.github/workflows/get-requirements.yml
 
+  ai-pr-risk-analysis:
+    name: AI PR risk analysis
+    if: ${{ github.event_name == 'pull_request' && !(github.event.pull_request.head.repo.fork || github.event.repository.fork) }}
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: ./.github/workflows/ai-pr-analysis.yml
+    secrets: inherit
+
   locales-changed-only:
     name: Locales changed only checks
     needs:

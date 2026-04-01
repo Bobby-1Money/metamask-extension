@@ -12,6 +12,7 @@ on:
       - opened
       - reopened
       - synchronize
+      - ready_for_review
     branches-ignore:
       - stable
   merge_group:
@@ -45,19 +46,6 @@ jobs:
   get-requirements:
     name: Get workflow and job requirements
     uses: ./.github/workflows/get-requirements.yml
-
-  ai-pr-risk-analysis:
-    name: AI PR risk analysis
-    if: >-
-      github.event_name == 'pull_request'
-      && !(github.event.pull_request.head.repo.fork || github.event.repository.fork)
-      && github.event.pull_request.draft == false
-      && (github.event.pull_request.base.ref == 'main' || startsWith(github.event.pull_request.base.ref, 'release/'))
-    permissions:
-      contents: read
-      pull-requests: write
-    uses: ./.github/workflows/ai-pr-analysis.yml
-    secrets: inherit
 
   locales-changed-only:
     name: Locales changed only checks

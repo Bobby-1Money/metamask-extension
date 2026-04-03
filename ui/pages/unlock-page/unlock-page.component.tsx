@@ -54,6 +54,12 @@ import LoginErrorModal from '../onboarding-flow/welcome/login-error-modal';
 import { LOGIN_ERROR } from '../onboarding-flow/welcome/types';
 import ConnectionsRemovedModal from '../../components/app/connections-removed-modal';
 import { captureException } from '../../../shared/lib/sentry';
+import {
+  prepareAssertionParams,
+  decryptPasswordFromAssertion,
+} from '@metamask/passkey-controller';
+import { PasskeyCeremonyExtensionAdapter } from '../../../shared/lib/passkey/PasskeyCeremonyExtensionAdapter';
+import { getPasskeyRecord, isPasskeyEnrolled } from '../../store/actions';
 import { getCaretCoordinates } from './unlock-page.util';
 import ResetPasswordModal from './reset-password-modal';
 import FormattedCounter from './formatted-counter';
@@ -87,6 +93,8 @@ type UnlockPageState = {
   unlockDelayPeriod: number;
   showLoginErrorModal: boolean;
   showConnectionsRemovedModal: boolean;
+  passkeyAvailable: boolean;
+  passkeyInProgress: boolean;
 };
 
 type UnlockPageContext = {
@@ -200,6 +208,8 @@ class UnlockPage extends Component<UnlockPageProps, UnlockPageState> {
     unlockDelayPeriod: 0,
     showLoginErrorModal: false,
     showConnectionsRemovedModal: false,
+    passkeyAvailable: false,
+    passkeyInProgress: false,
   };
 
   // TODO: Fix in https://github.com/MetaMask/metamask-extension/issues/31860
@@ -239,6 +249,12 @@ class UnlockPage extends Component<UnlockPageProps, UnlockPageState> {
 
   async componentDidMount() {
     const { isOnboardingCompleted, isSocialLoginFlow } = this.props;
+    try {
+      const enrolled = await isPasskeyEnrolled();
+      this.setState({ passkeyAvailable: enrolled });
+    } catch {
+      this.setState({ passkeyAvailable: false });
+    }
     if (isOnboardingCompleted) {
       await this.props.checkIsSeedlessPasswordOutdated();
     } else if (isSocialLoginFlow) {
@@ -515,6 +531,37 @@ class UnlockPage extends Component<UnlockPageProps, UnlockPageState> {
     );
   };
 
+  handlePasskeyUnlock = async () => {
+    if (this.state.isLocked || this.state.isSubmitting || this.state.passkeyInProgress) {
+      return;
+    }
+    this.setState({ error: null, passkeyInProgress: true });
+    try {
+      const record = await getPasskeyRecord();
+      if (!record) {
+        this.setState({ error: (this.context as UnlockPageContext).t('passkeyUnlockFailed'), passkeyInProgress: false });
+        return;
+      }
+      const adapter = new PasskeyCeremonyExtensionAdapter();
+      const params = prepareAssertionParams(record);
+      const assertion = await adapter.getAssertion(params);
+      const password = await decryptPasswordFromAssertion(record, assertion);
+      await this.props.onSubmit(password);
+      (this.context as UnlockPageContext).trackEvent?.({
+        category: MetaMetricsEventCategory.Navigation,
+        event: MetaMetricsEventName.AppUnlocked,
+        properties: { method: 'passkey' },
+      });
+    } catch (err) {
+      const message = err instanceof Error
+        ? err.message
+        : (this.context as UnlockPageContext).t('passkeyUnlockFailed');
+      this.setState({ error: message, passkeyInProgress: false });
+    } finally {
+      this.setState({ passkeyInProgress: false });
+    }
+  };
+
   onForgotPasswordOrLoginWithDiffMethods = async () => {
     const { isSocialLoginFlow, navigate, isOnboardingCompleted } = this.props;
 
@@ -709,6 +756,23 @@ class UnlockPage extends Component<UnlockPageProps, UnlockPageState> {
             >
               {this.context.t('unlock')}
             </Button>
+
+            {this.state.passkeyAvailable && (
+              <Button
+                variant={ButtonVariant.Secondary}
+                size={ButtonSize.Lg}
+                block
+                type="button"
+                data-testid="unlock-with-passkey"
+                disabled={isLocked || this.state.isSubmitting || this.state.passkeyInProgress}
+                onClick={this.handlePasskeyUnlock}
+                marginBottom={6}
+              >
+                {this.state.passkeyInProgress
+                  ? t('unlocking')
+                  : t('unlockWithPasskey')}
+              </Button>
+            )}
 
             <Button
               variant={ButtonVariant.Link}

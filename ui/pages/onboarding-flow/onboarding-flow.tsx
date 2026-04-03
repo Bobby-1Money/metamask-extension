@@ -49,6 +49,7 @@ import {
   restoreSocialBackupAndGetSeedPhrase,
   createNewVaultAndSyncWithSocial,
   setCompletedOnboarding,
+  setPasskeyRecord,
 } from '../../store/actions';
 import {
   getFirstTimeFlowType,
@@ -226,6 +227,22 @@ export default function OnboardingFlow() {
 
       if (newSecretRecoveryPhrase) {
         setSecretRecoveryPhrase(newSecretRecoveryPhrase);
+      }
+
+      try {
+        const { prepareCreationParams, buildPasskeyRecord } = await import(
+          '@metamask/passkey-controller'
+        );
+        const { PasskeyCeremonyExtensionAdapter } = await import(
+          '../../../shared/lib/passkey/PasskeyCeremonyExtensionAdapter'
+        );
+        const adapter = new PasskeyCeremonyExtensionAdapter();
+        const params = prepareCreationParams();
+        const result = await adapter.createCredential(params);
+        const record = await buildPasskeyRecord(password, result, params.prfSalt);
+        await dispatch(setPasskeyRecord(record));
+      } catch {
+        // User cancelled or authenticator unavailable — continue without passkey
       }
     } finally {
       setIsLoading(false);

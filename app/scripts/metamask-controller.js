@@ -168,6 +168,7 @@ import {
   getStorageItem,
   setStorageItem,
 } from '../../shared/lib/storage-helpers';
+import { PasskeyController } from '@metamask/passkey-controller';
 import {
   getTokenIdParam,
   fetchTokenBalance,
@@ -393,6 +394,7 @@ import {
 import { ConnectivityControllerInit } from './controller-init/connectivity';
 import { AccountTrackerControllerInit } from './controller-init/account-tracker-controller-init';
 import { OnboardingControllerInit } from './controller-init/onboarding-controller-init';
+import { PasskeyControllerInit } from './controller-init/passkey-controller-init';
 import { RemoteFeatureFlagControllerInit } from './controller-init/remote-feature-flag-controller-init';
 import { BridgeControllerInit } from './controller-init/bridge-controller-init';
 import { BridgeStatusControllerInit } from './controller-init/bridge-status-controller-init';
@@ -596,6 +598,7 @@ export default class MetamaskController extends EventEmitter {
       SubjectMetadataController: SubjectMetadataControllerInit,
       AppStateController: AppStateControllerInit,
       OnboardingController: OnboardingControllerInit,
+      PasskeyController: PasskeyControllerInit,
       RemoteFeatureFlagController: RemoteFeatureFlagControllerInit,
       NetworkController: NetworkControllerInit,
       MetaMetricsController: MetaMetricsControllerInit,
@@ -732,6 +735,7 @@ export default class MetamaskController extends EventEmitter {
     this.ppomController = controllersByName.PPOMController;
     this.phishingController = controllersByName.PhishingController;
     this.onboardingController = controllersByName.OnboardingController;
+    this.passkeyController = controllersByName.PasskeyController;
     this.accountTrackerController = controllersByName.AccountTrackerController;
     this.txController = controllersByName.TransactionController;
     this.smartTransactionsController =
@@ -2743,6 +2747,12 @@ export default class MetamaskController extends EventEmitter {
       // vault management
       submitPassword: this.submitPassword.bind(this),
       verifyPassword: this.verifyPassword.bind(this),
+
+      // passkey (state management — UI does ceremony + crypto, then stores record)
+      setPasskeyRecord: this.passkeyController.setPasskeyRecord.bind(this.passkeyController),
+      getPasskeyRecord: this.passkeyController.getPasskeyRecord.bind(this.passkeyController),
+      isPasskeyEnrolled: this.passkeyController.isPasskeyEnrolled.bind(this.passkeyController),
+      removePasskey: this.passkeyController.removePasskey.bind(this.passkeyController),
 
       // network management
       setActiveNetwork: async (id) => {

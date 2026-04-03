@@ -1143,6 +1143,24 @@ export function submitPassword(password: string): Promise<void> {
   return submitRequestToBackground('submitPassword', [password]);
 }
 
+export function setPasskeyRecord(
+  record: import('@metamask/passkey-controller').PasskeyRecord,
+): Promise<void> {
+  return submitRequestToBackground('setPasskeyRecord', [record]);
+}
+
+export function getPasskeyRecord(): Promise<import('@metamask/passkey-controller').PasskeyRecord | null> {
+  return submitRequestToBackground('getPasskeyRecord', []);
+}
+
+export function isPasskeyEnrolled(): Promise<boolean> {
+  return submitRequestToBackground<boolean>('isPasskeyEnrolled', []);
+}
+
+export function removePasskey(): Promise<void> {
+  return submitRequestToBackground('removePasskey', []);
+}
+
 /**
  * Creates a seed phrase backup in the metadata store for seedless onboarding flow.
  *

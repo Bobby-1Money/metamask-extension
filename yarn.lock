@@ -6208,6 +6208,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@metamask/design-tokens@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "@metamask/design-tokens@npm:7.1.0"
+  checksum: 10/a4f1379bdf5f6b99c9a228ce4f5bb07ace4ed5abc61384e7f04cf5bdf943b32dd13ec9676a88f6b6c7314cdba6e2967b9fd99707a64a645865f21f8d8a2566d9
+  languageName: node
+  linkType: hard
+
 "@metamask/eip-5792-middleware@npm:3.0.3":
   version: 3.0.3
   resolution: "@metamask/eip-5792-middleware@npm:3.0.3"

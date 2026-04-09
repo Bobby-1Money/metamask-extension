@@ -1336,7 +1336,7 @@ export default class MetamaskController extends EventEmitter {
       DeFiPositionsController: this.deFiPositionsController,
       ProfileMetricsController: this.profileMetricsController,
       ...resetOnRestartStore,
-      ...controllerPersistedState,
+      ...messengerClientPersistedState,
     });
 
     this.memStore = new ComposableObservableStore({
@@ -1403,7 +1403,7 @@ export default class MetamaskController extends EventEmitter {
         ClaimsService: this.claimsService,
         ProfileMetricsController: this.profileMetricsController,
         ...resetOnRestartStore,
-        ...controllerMemState,
+        ...messengerClientMemState,
       },
       controllerMessenger: this.controllerMessenger,
     });

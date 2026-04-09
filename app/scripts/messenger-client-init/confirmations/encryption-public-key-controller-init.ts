@@ -11,7 +11,7 @@ import {
  * @param request - The request object.
  * @param request.controllerMessenger - The messenger to use for the controller.
  * @param request.initMessenger - The messenger to use for initialization.
- * @param request.getController - Function to get other initialized controllers.
+ * @param request.getMessengerClient - Function to get other initialized controllers.
  * @param request.getUIState - Function to get the UI state.
  * @returns The initialized controller.
  */

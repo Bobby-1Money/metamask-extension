@@ -7,7 +7,7 @@ import { NftDetectionControllerMessenger } from '../messengers/assets';
  *
  * @param request - The request object.
  * @param request.controllerMessenger - The messenger to use for the controller.
- * @param request.getController - The function to get the controller.
+ * @param request.getMessengerClient - The function to get the controller.
  * @returns The initialized controller.
  */
 export const NftDetectionControllerInit: MessengerClientInitFunction<

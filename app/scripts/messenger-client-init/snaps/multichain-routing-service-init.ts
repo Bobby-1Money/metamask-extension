@@ -11,7 +11,7 @@ import { KeyringType } from '../../../../shared/constants/keyring';
  *
  * @param request - The request object.
  * @param request.controllerMessenger - The messenger to use for the service.
- * @param request.getController
+ * @param request.getMessengerClient
  * @returns The initialized service.
  */
 export const MultichainRoutingServiceInit: MessengerClientInitFunction<

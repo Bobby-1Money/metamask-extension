@@ -68,7 +68,7 @@ export const DelegationControllerInit: MessengerClientInitFunction<
  * Awaits for the transaction with txMeta to be confirmed, then
  * deletes the delegation entry with `hash`.
  *
- * @param controller - The DelegationController.
+ * @param messengerClient - The DelegationController.
  * @param initMessenger - The initialization messenger for the controller.
  * @param options
  * @param options.hash - The hash of the delegation entry to delete.

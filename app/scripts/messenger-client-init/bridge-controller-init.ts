@@ -20,7 +20,7 @@ import { BridgeControllerInitMessenger } from './messengers';
  * @param request - The request object.
  * @param request.controllerMessenger - The messenger to use for the controller.
  * @param request.initMessenger - The messenger to use for initialization.
- * @param request.getController
+ * @param request.getMessengerClient
  * @returns The initialized controller.
  */
 export const BridgeControllerInit: MessengerClientInitFunction<

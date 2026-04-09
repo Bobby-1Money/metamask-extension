@@ -39,7 +39,7 @@ import {
  * @param request.keyringOverrides - Optional overrides for keyring classes and
  * bridges.
  * @param request.encryptor - Optional encryptor to use for the controller.
- * @param request.getController - Function to get other controllers.
+ * @param request.getMessengerClient - Function to get other controllers.
  * @returns The initialized controller.
  */
 export const KeyringControllerInit: MessengerClientInitFunction<

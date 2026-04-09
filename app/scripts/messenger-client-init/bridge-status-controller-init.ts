@@ -14,7 +14,7 @@ import { MessengerClientInitFunction } from './types';
  *
  * @param request - The request object.
  * @param request.controllerMessenger - The messenger to use for the controller.
- * @param request.getController - Function to get other initialized controllers.
+ * @param request.getMessengerClient - Function to get other initialized controllers.
  * @param request.persistedState - The persisted state for the controller.
  * @returns The initialized controller.
  */

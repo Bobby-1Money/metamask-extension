@@ -12,7 +12,7 @@ import {
  * @param request.controllerMessenger - The messenger to use for the controller.
  * @param request.initMessenger - The messenger to use for initialization.
  * @param request.persistedState - The persisted state.
- * @param request.getController - Function to get other controllers.
+ * @param request.getMessengerClient - Function to get other controllers.
  * @returns The initialized controller.
  */
 export const UserOperationControllerInit: MessengerClientInitFunction<

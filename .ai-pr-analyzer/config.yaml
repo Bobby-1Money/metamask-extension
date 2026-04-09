@@ -63,8 +63,8 @@ searchDirs:
   - .github/
 
 models:
-  default: anthropic/claude-haiku-4-5
-  escalation: anthropic/claude-sonnet-4-6
+  default: azure/grok-4-fast-reasoning
+  escalation: claude-sonnet-4-6
   escalationThreshold: 3
 
 modes:

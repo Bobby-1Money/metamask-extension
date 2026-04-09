@@ -215,6 +215,22 @@ describe('Browser Runtime Utils', () => {
   });
 
   describe('isFirefoxBrowser', () => {
+    it('uses window.navigator defaults when called with no arguments', () => {
+      const getParserSpy = jest.spyOn(Bowser, 'getParser');
+      const explicit = BrowserRuntimeUtil.isFirefoxBrowser(
+        Bowser.getParser(window.navigator.userAgent),
+        window.navigator,
+      );
+      getParserSpy.mockClear();
+
+      const implicit = BrowserRuntimeUtil.isFirefoxBrowser();
+
+      expect(getParserSpy).toHaveBeenCalledTimes(1);
+      expect(getParserSpy).toHaveBeenCalledWith(window.navigator.userAgent);
+      expect(implicit).toBe(explicit);
+      getParserSpy.mockRestore();
+    });
+
     it('returns true for Firefox user agent', () => {
       const bowser = Bowser.getParser(
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0',
@@ -231,6 +247,22 @@ describe('Browser Runtime Utils', () => {
   });
 
   describe('getChromiumCameraSettingsUrl', () => {
+    it('uses window.navigator defaults when called with no arguments', () => {
+      const getParserSpy = jest.spyOn(Bowser, 'getParser');
+      const explicit = BrowserRuntimeUtil.getChromiumCameraSettingsUrl(
+        Bowser.getParser(window.navigator.userAgent),
+        window.navigator,
+      );
+      getParserSpy.mockClear();
+
+      const implicit = BrowserRuntimeUtil.getChromiumCameraSettingsUrl();
+
+      expect(getParserSpy).toHaveBeenCalledTimes(1);
+      expect(getParserSpy).toHaveBeenCalledWith(window.navigator.userAgent);
+      expect(implicit).toBe(explicit);
+      getParserSpy.mockRestore();
+    });
+
     it('returns Brave URL when navigator exposes brave', () => {
       const ua =
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36';

@@ -20,9 +20,34 @@ import { MetaMetricsContext } from '../../../../contexts/metametrics';
 import { createHardwareWalletError } from '../../../../contexts/hardware-wallets/errors';
 import { HardwareWalletType } from '../../../../contexts/hardware-wallets/types';
 import configureStore from '../../../../store/store';
+import {
+  getChromiumCameraSettingsUrl,
+  isFirefoxBrowser,
+} from '../../../../../shared/lib/browser-runtime.utils';
 import { HardwareWalletErrorModal } from './hardware-wallet-error-modal';
 
 const mockTrackEvent = jest.fn();
+
+jest.mock('../../../../../shared/lib/browser-runtime.utils', () => {
+  const actual = jest.requireActual<
+    typeof import('../../../../../shared/lib/browser-runtime.utils')
+  >('../../../../../shared/lib/browser-runtime.utils');
+  return {
+    ...actual,
+    isFirefoxBrowser: jest.fn(() => false),
+    getChromiumCameraSettingsUrl: jest.fn(
+      () => 'chrome://settings/content/camera',
+    ),
+    getMozExtensionOriginForDisplay: jest.fn(
+      () => 'moz-extension://mock-display',
+    ),
+  };
+});
+
+const mockIsFirefoxBrowser = jest.mocked(isFirefoxBrowser);
+const mockGetChromiumCameraSettingsUrl = jest.mocked(
+  getChromiumCameraSettingsUrl,
+);
 
 const mockHideModal = jest.fn();
 jest.mock('../../../../hooks/useModalProps', () => ({
@@ -120,6 +145,10 @@ describe('HardwareWalletErrorModal', () => {
     mockUseHardwareWalletConfig.mockReturnValue({
       walletType: HardwareWalletType.Ledger,
     });
+    mockIsFirefoxBrowser.mockReturnValue(false);
+    mockGetChromiumCameraSettingsUrl.mockReturnValue(
+      'chrome://settings/content/camera',
+    );
   });
 
   describe('Error Display', () => {
@@ -387,6 +416,82 @@ describe('HardwareWalletErrorModal', () => {
       expect(
         getByText('[hardwareWalletErrorUnknownErrorDescription]'),
       ).toBeInTheDocument();
+    });
+  });
+
+  describe('QR camera permission errors', () => {
+    it('renders blocked camera content when permission is denied', () => {
+      const error = createTestError(
+        ErrorCode.PermissionCameraDenied,
+        'Camera denied',
+        'Camera access denied.',
+      );
+
+      const { getByTestId, queryByText } = renderWithMetrics(
+        <HardwareWalletErrorModal error={error} />,
+      );
+
+      expect(getByTestId('qr-camera-access-blocked')).toBeInTheDocument();
+      expect(
+        queryByText('[hardwareWalletErrorReconnectButton]'),
+      ).not.toBeInTheDocument();
+    });
+
+    it('opens Chromium camera settings when Open settings is clicked', async () => {
+      const openTabSpy = jest
+        .spyOn(global.platform, 'openTab')
+        .mockResolvedValue({ id: 1 } as Awaited<
+          ReturnType<typeof global.platform.openTab>
+        >);
+      const error = createTestError(
+        ErrorCode.PermissionCameraDenied,
+        'Camera denied',
+        'Camera access denied.',
+      );
+
+      const { getByTestId } = renderWithMetrics(
+        <HardwareWalletErrorModal error={error} />,
+      );
+
+      await act(async () => {
+        fireEvent.click(getByTestId('qr-camera-open-settings'));
+      });
+
+      expect(mockGetChromiumCameraSettingsUrl).toHaveBeenCalled();
+      expect(openTabSpy).toHaveBeenCalledWith({
+        url: 'chrome://settings/content/camera',
+      });
+
+      openTabSpy.mockRestore();
+    });
+
+    it('renders needed camera content when the permission prompt was dismissed', () => {
+      const error = createTestError(
+        ErrorCode.PermissionCameraPromptDismissed,
+        'Prompt dismissed',
+        'Prompt dismissed.',
+      );
+
+      const { getByTestId } = renderWithMetrics(
+        <HardwareWalletErrorModal error={error} />,
+      );
+
+      expect(getByTestId('qr-camera-access-needed')).toBeInTheDocument();
+    });
+
+    it('renders Firefox instructions when blocked and browser is Firefox', () => {
+      mockIsFirefoxBrowser.mockReturnValue(true);
+      const error = createTestError(
+        ErrorCode.PermissionCameraDenied,
+        'Camera denied',
+        'Camera access denied.',
+      );
+
+      const { getByTestId } = renderWithMetrics(
+        <HardwareWalletErrorModal error={error} />,
+      );
+
+      expect(getByTestId('qr-camera-firefox-instructions')).toBeInTheDocument();
     });
   });
 

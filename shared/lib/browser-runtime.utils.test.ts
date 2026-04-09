@@ -68,6 +68,22 @@ describe('Browser Runtime Utils', () => {
     });
   });
 
+  describe('checkForLastErrorAndWarn', () => {
+    it('warns and returns error if error was found', () => {
+      mockRuntimeLastError = { ...mockLastError };
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
+        // noop
+      });
+
+      const result = BrowserRuntimeUtil.checkForLastErrorAndWarn();
+
+      expect(warnSpy).toHaveBeenCalledWith(result);
+      expect(result).toStrictEqual(mockLastError);
+
+      warnSpy.mockRestore();
+    });
+  });
+
   describe('getIsBrowserPrerenderBroken', () => {
     it('calls Bowser.getParser when no parameter is passed', () => {
       const spy = jest.spyOn(Bowser, 'getParser');
@@ -249,6 +265,19 @@ describe('Browser Runtime Utils', () => {
         } as Navigator),
       ).toBe('chrome://settings/content/camera');
     });
+
+    it('returns Edge URL when getBrowserName returns Microsoft Edge', () => {
+      const mockBowser = {
+        getBrowserName: jest.fn().mockReturnValue('Microsoft Edge'),
+      } as unknown as Bowser.Parser.Parser;
+      const nav = {
+        userAgent: 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1)',
+      } as Navigator;
+
+      expect(
+        BrowserRuntimeUtil.getChromiumCameraSettingsUrl(mockBowser, nav),
+      ).toBe('edge://settings/content/camera');
+    });
   });
 
   describe('getMozExtensionOriginForDisplay', () => {
@@ -259,6 +288,39 @@ describe('Browser Runtime Utils', () => {
       expect(BrowserRuntimeUtil.getMozExtensionOriginForDisplay()).toBe(
         'moz-extension://ab5f75ae…0d4aa03',
       );
+    });
+
+    it('returns the full getURL string when it is not a moz-extension origin', () => {
+      const chromeUrl = 'chrome-extension://abcdefghijklmnopqrstuvwxyz012345/';
+      mockGetURL.mockReturnValue(chromeUrl);
+
+      expect(BrowserRuntimeUtil.getMozExtensionOriginForDisplay()).toBe(
+        chromeUrl,
+      );
+    });
+
+    it('returns full moz-extension URL when the id is short after removing hyphens', () => {
+      mockGetURL.mockReturnValue('moz-extension://abc-def-ghi/');
+
+      expect(BrowserRuntimeUtil.getMozExtensionOriginForDisplay()).toBe(
+        'moz-extension://abc-def-ghi',
+      );
+    });
+
+    it('returns full moz-extension URL when compact id length is exactly 15', () => {
+      mockGetURL.mockReturnValue('moz-extension://abcdefghijklmno/');
+
+      expect(BrowserRuntimeUtil.getMozExtensionOriginForDisplay()).toBe(
+        'moz-extension://abcdefghijklmno',
+      );
+    });
+
+    it('returns empty string when runtime.getURL throws', () => {
+      mockGetURL.mockImplementation(() => {
+        throw new Error('unavailable');
+      });
+
+      expect(BrowserRuntimeUtil.getMozExtensionOriginForDisplay()).toBe('');
     });
   });
 });

@@ -16,7 +16,7 @@ export const AppMetadataControllerInit: MessengerClientInitFunction<
   AppMetadataController,
   AppMetadataControllerMessenger
 > = ({ controllerMessenger, persistedState, currentMigrationVersion }) => {
-  const controller = new AppMetadataController({
+  const messengerClient = new AppMetadataController({
     state: persistedState.AppMetadataController,
     messenger: controllerMessenger,
     currentAppVersion: process.env.METAMASK_VERSION,
@@ -24,6 +24,6 @@ export const AppMetadataControllerInit: MessengerClientInitFunction<
   });
 
   return {
-    controller,
+    messengerClient,
   };
 };

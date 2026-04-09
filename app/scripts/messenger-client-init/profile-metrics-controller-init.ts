@@ -21,19 +21,19 @@ const initialDelayDuration = isTestEnvironment ? 1000 : 10 * 60 * 1000;
 export const ProfileMetricsControllerInit: MessengerClientInitFunction<
   ProfileMetricsController,
   ProfileMetricsControllerMessenger
-> = ({ controllerMessenger, persistedState, getController }) => {
-  const remoteFeatureFlagController = getController(
+> = ({ controllerMessenger, persistedState, getMessengerClient }) => {
+  const remoteFeatureFlagController = getMessengerClient(
     'RemoteFeatureFlagController',
   );
-  const metaMetricsController = getController('MetaMetricsController');
-  const appStateController = getController('AppStateController');
+  const metaMetricsController = getMessengerClient('MetaMetricsController');
+  const appStateController = getMessengerClient('AppStateController');
   const assertUserOptedIn = () =>
     remoteFeatureFlagController.state.remoteFeatureFlags.extensionUxPna25 ===
       true &&
     appStateController.state.pna25Acknowledged === true &&
     metaMetricsController.state.participateInMetaMetrics === true;
 
-  const controller = new ProfileMetricsController({
+  const messengerClient = new ProfileMetricsController({
     messenger: controllerMessenger,
     state: persistedState.ProfileMetricsController,
     interval: isTestEnvironment ? 1000 : 10 * 1000,
@@ -43,6 +43,6 @@ export const ProfileMetricsControllerInit: MessengerClientInitFunction<
   });
 
   return {
-    controller,
+    messengerClient,
   };
 };

@@ -111,7 +111,12 @@ export const AssetsControllerInit: MessengerClientInitFunction<
   AssetsController,
   AssetsControllerMessenger,
   AssetsControllerInitMessenger
-> = ({ controllerMessenger, persistedState, initMessenger, getController }) => {
+> = ({
+  controllerMessenger,
+  persistedState,
+  initMessenger,
+  getMessengerClient,
+}) => {
   /**
    * Check if the AssetsController feature is enabled based on the remote feature flag.
    *
@@ -119,7 +124,7 @@ export const AssetsControllerInit: MessengerClientInitFunction<
    */
   const isEnabled = (): boolean => {
     try {
-      const remoteFeatureFlagController = getController(
+      const remoteFeatureFlagController = getMessengerClient(
         'RemoteFeatureFlagController',
       );
       const featureFlag = remoteFeatureFlagController.state.remoteFeatureFlags[
@@ -159,7 +164,7 @@ export const AssetsControllerInit: MessengerClientInitFunction<
 
   // Create the controller - it now creates all data sources internally.
   // queryApiClient is cast to the package's type to avoid duplicate @metamask/core-backend type conflicts.
-  const controller = new AssetsController({
+  const messengerClient = new AssetsController({
     messenger: controllerMessenger,
     state: persistedState.AssetsController,
     isEnabled,
@@ -182,5 +187,5 @@ export const AssetsControllerInit: MessengerClientInitFunction<
     trace,
   });
 
-  return { controller };
+  return { messengerClient };
 };

@@ -15,7 +15,7 @@ import { BridgeControllerInit } from './bridge-controller-init';
 
 jest.mock('@metamask/bridge-controller', () => {
   return {
-    ...jest.requireActual('@metamask/bridge-controller'),
+    ...jest.requireActual('@metamask/bridge-messengerClient'),
     BridgeController: jest.fn(),
   };
 });
@@ -42,12 +42,12 @@ describe('BridgeControllerInit', () => {
     process.env.METAMASK_VERSION = 'MOCK_VERSION';
   });
 
-  it('initializes the controller', () => {
-    const { controller } = BridgeControllerInit(getInitRequestMock());
-    expect(controller).toBeInstanceOf(BridgeController);
+  it('initializes the messengerClient', () => {
+    const { messengerClient } = BridgeControllerInit(getInitRequestMock());
+    expect(messengerClient).toBeInstanceOf(BridgeController);
   });
 
-  it('passes the proper arguments to the controller', () => {
+  it('passes the proper arguments to the messengerClient', () => {
     BridgeControllerInit(getInitRequestMock());
 
     const controllerMock = jest.mocked(BridgeController);

@@ -17,13 +17,13 @@ export const MetaMetricsDataDeletionControllerInit: MessengerClientInitFunction<
   MetaMetricsDataDeletionControllerMessenger
 > = ({ controllerMessenger, persistedState }) => {
   const dataDeletionService = new DataDeletionService();
-  const controller = new MetaMetricsDataDeletionController({
+  const messengerClient = new MetaMetricsDataDeletionController({
     messenger: controllerMessenger,
     state: persistedState.MetaMetricsDataDeletionController,
     dataDeletionService,
   });
 
   return {
-    controller,
+    messengerClient,
   };
 };

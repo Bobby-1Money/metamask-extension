@@ -19,11 +19,16 @@ export const EncryptionPublicKeyControllerInit: MessengerClientInitFunction<
   EncryptionPublicKeyController,
   EncryptionPublicKeyControllerMessenger,
   EncryptionPublicKeyControllerInitMessenger
-> = ({ controllerMessenger, initMessenger, getController, getUIState }) => {
-  const manager = getController('EncryptionPublicKeyManager');
-  const keyringController = getController('KeyringController');
+> = ({
+  controllerMessenger,
+  initMessenger,
+  getMessengerClient,
+  getUIState,
+}) => {
+  const manager = getMessengerClient('EncryptionPublicKeyManager');
+  const keyringController = getMessengerClient('KeyringController');
 
-  const controller = new EncryptionPublicKeyController({
+  const messengerClient = new EncryptionPublicKeyController({
     messenger: controllerMessenger,
     manager,
     getState: getUIState,
@@ -45,6 +50,6 @@ export const EncryptionPublicKeyControllerInit: MessengerClientInitFunction<
   return {
     persistedStateKey: null,
     memStateKey: null,
-    controller,
+    messengerClient,
   };
 };

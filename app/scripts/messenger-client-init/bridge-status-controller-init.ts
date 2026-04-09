@@ -21,11 +21,11 @@ import { MessengerClientInitFunction } from './types';
 export const BridgeStatusControllerInit: MessengerClientInitFunction<
   BridgeStatusController,
   BridgeStatusControllerMessenger
-> = ({ controllerMessenger, persistedState, getController }) => {
-  const transactionController = getController('TransactionController');
-  const keyringController = getController('KeyringController');
+> = ({ controllerMessenger, persistedState, getMessengerClient }) => {
+  const transactionController = getMessengerClient('TransactionController');
+  const keyringController = getMessengerClient('KeyringController');
 
-  const controller = new BridgeStatusController({
+  const messengerClient = new BridgeStatusController({
     messenger: controllerMessenger,
     state: persistedState.BridgeStatusController,
     clientId: BridgeClientId.EXTENSION,
@@ -64,6 +64,6 @@ export const BridgeStatusControllerInit: MessengerClientInitFunction<
   });
 
   return {
-    controller,
+    messengerClient,
   };
 };

@@ -27,8 +27,8 @@ export const BridgeControllerInit: MessengerClientInitFunction<
   BridgeController,
   BridgeControllerMessenger,
   BridgeControllerInitMessenger
-> = ({ controllerMessenger, initMessenger, getController }) => {
-  const transactionController = getController(
+> = ({ controllerMessenger, initMessenger, getMessengerClient }) => {
+  const transactionController = getMessengerClient(
     'TransactionController',
   ) as TransactionController;
 
@@ -38,7 +38,7 @@ export const BridgeControllerInit: MessengerClientInitFunction<
     );
   }
 
-  const controller = new BridgeController({
+  const messengerClient = new BridgeController({
     messenger: controllerMessenger,
     clientId: BridgeClientId.EXTENSION,
     clientVersion: process.env.METAMASK_VERSION,
@@ -109,6 +109,6 @@ export const BridgeControllerInit: MessengerClientInitFunction<
   return {
     persistedStateKey: null,
     memStateKey: null,
-    controller,
+    messengerClient,
   };
 };

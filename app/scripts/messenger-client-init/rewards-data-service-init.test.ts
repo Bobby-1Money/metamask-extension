@@ -46,7 +46,7 @@ describe('RewardsDataServiceInit', () => {
 
   it('should return controller instance', () => {
     const requestMock = buildInitRequestMock();
-    expect(RewardsDataServiceInit(requestMock).controller).toBeInstanceOf(
+    expect(RewardsDataServiceInit(requestMock).messengerClient).toBeInstanceOf(
       RewardsDataService,
     );
   });

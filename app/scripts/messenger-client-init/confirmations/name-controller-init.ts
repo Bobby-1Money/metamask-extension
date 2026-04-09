@@ -25,14 +25,19 @@ export const NameControllerInit: MessengerClientInitFunction<
   NameController,
   NameControllerMessenger,
   NameControllerInitMessenger
-> = ({ controllerMessenger, initMessenger, persistedState, getController }) => {
-  const ensController = getController('EnsController');
-  const snapsNameProvider = getController('SnapsNameProvider');
+> = ({
+  controllerMessenger,
+  initMessenger,
+  persistedState,
+  getMessengerClient,
+}) => {
+  const ensController = getMessengerClient('EnsController');
+  const snapsNameProvider = getMessengerClient('SnapsNameProvider');
 
   const isExternalNameSourcesEnabled = () =>
     initMessenger.call('PreferencesController:getState').useExternalNameSources;
 
-  const controller = new NameController({
+  const messengerClient = new NameController({
     messenger: controllerMessenger,
     state: persistedState.NameController,
     providers: [
@@ -52,6 +57,6 @@ export const NameControllerInit: MessengerClientInitFunction<
   });
 
   return {
-    controller,
+    messengerClient,
   };
 };

@@ -17,7 +17,7 @@ export const MetaMetricsControllerInit: MessengerClientInitFunction<
   MetaMetricsController,
   MetaMetricsControllerMessenger
 > = ({ controllerMessenger, extension, persistedState }) => {
-  const controller = new MetaMetricsController({
+  const messengerClient = new MetaMetricsController({
     state: persistedState.MetaMetricsController,
     messenger: controllerMessenger,
     version: process.env.METAMASK_VERSION as string,
@@ -28,6 +28,6 @@ export const MetaMetricsControllerInit: MessengerClientInitFunction<
   });
 
   return {
-    controller,
+    messengerClient,
   };
 };

@@ -17,10 +17,15 @@ export const DecryptMessageControllerInit: MessengerClientInitFunction<
   DecryptMessageController,
   DecryptMessageControllerMessenger,
   DecryptMessageControllerInitMessenger
-> = ({ controllerMessenger, initMessenger, getController, getUIState }) => {
-  const manager = getController('DecryptMessageManager');
+> = ({
+  controllerMessenger,
+  initMessenger,
+  getMessengerClient,
+  getUIState,
+}) => {
+  const manager = getMessengerClient('DecryptMessageManager');
 
-  const controller = new DecryptMessageController({
+  const messengerClient = new DecryptMessageController({
     messenger: controllerMessenger,
     manager,
     getState: getUIState,
@@ -33,6 +38,6 @@ export const DecryptMessageControllerInit: MessengerClientInitFunction<
   return {
     persistedStateKey: null,
     memStateKey: null,
-    controller,
+    messengerClient,
   };
 };

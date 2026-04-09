@@ -32,11 +32,16 @@ export const PermissionControllerInit: MessengerClientInitFunction<
   >,
   PermissionControllerMessenger,
   PermissionControllerInitMessenger
-> = ({ controllerMessenger, persistedState, initMessenger, getController }) => {
-  const approvalController = getController('ApprovalController');
-  const keyringController = getController('KeyringController');
+> = ({
+  controllerMessenger,
+  persistedState,
+  initMessenger,
+  getMessengerClient,
+}) => {
+  const approvalController = getMessengerClient('ApprovalController');
+  const keyringController = getMessengerClient('KeyringController');
 
-  const controller = new PermissionController({
+  const messengerClient = new PermissionController({
     state: persistedState.PermissionController,
     // @ts-expect-error: The permission controller needs certain actions that
     // are not declared in the messenger's type.
@@ -71,6 +76,6 @@ export const PermissionControllerInit: MessengerClientInitFunction<
   });
 
   return {
-    controller,
+    messengerClient,
   };
 };

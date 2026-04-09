@@ -7,10 +7,19 @@ const mockLastError = { message: 'error', stack: [] as string[] };
 
 let mockRuntimeLastError: { message: string; stack?: string[] } | undefined;
 
+const mockGetURL = browser.runtime.getURL as jest.MockedFunction<
+  typeof browser.runtime.getURL
+>;
+
 jest.mock('webextension-polyfill', () => ({
-  runtime: {
-    get lastError() {
-      return mockRuntimeLastError;
+  // eslint-disable-next-line @typescript-eslint/naming-convention -- Jest ESM interop
+  __esModule: true,
+  default: {
+    runtime: {
+      get lastError() {
+        return mockRuntimeLastError;
+      },
+      getURL: jest.fn(),
     },
   },
 }));
@@ -18,6 +27,7 @@ jest.mock('webextension-polyfill', () => ({
 describe('Browser Runtime Utils', () => {
   beforeEach(() => {
     mockRuntimeLastError = undefined;
+    mockGetURL.mockReset();
   });
 
   describe('checkForLastError', () => {
@@ -185,6 +195,70 @@ describe('Browser Runtime Utils', () => {
         brave: {},
       } as unknown as Navigator);
       expect(result).toStrictEqual('Brave');
+    });
+  });
+
+  describe('isFirefoxBrowser', () => {
+    it('returns true for Firefox user agent', () => {
+      const bowser = Bowser.getParser(
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0',
+      );
+      expect(BrowserRuntimeUtil.isFirefoxBrowser(bowser)).toBe(true);
+    });
+
+    it('returns false for Chrome user agent', () => {
+      const bowser = Bowser.getParser(
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      );
+      expect(BrowserRuntimeUtil.isFirefoxBrowser(bowser)).toBe(false);
+    });
+  });
+
+  describe('getChromiumCameraSettingsUrl', () => {
+    it('returns Brave URL when navigator exposes brave', () => {
+      const ua =
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36';
+      const bowser = Bowser.getParser(ua);
+      const nav = {
+        userAgent: ua,
+        brave: {},
+      } as unknown as Navigator;
+      expect(BrowserRuntimeUtil.getChromiumCameraSettingsUrl(bowser, nav)).toBe(
+        'brave://settings/content/camera',
+      );
+    });
+
+    it('returns Edge URL for Edge user agent', () => {
+      const ua =
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0';
+      const bowser = Bowser.getParser(ua);
+      expect(
+        BrowserRuntimeUtil.getChromiumCameraSettingsUrl(bowser, {
+          userAgent: ua,
+        } as Navigator),
+      ).toBe('edge://settings/content/camera');
+    });
+
+    it('returns Chrome URL for Chrome user agent', () => {
+      const ua =
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+      const bowser = Bowser.getParser(ua);
+      expect(
+        BrowserRuntimeUtil.getChromiumCameraSettingsUrl(bowser, {
+          userAgent: ua,
+        } as Navigator),
+      ).toBe('chrome://settings/content/camera');
+    });
+  });
+
+  describe('getMozExtensionOriginForDisplay', () => {
+    it('returns a truncated moz-extension origin', () => {
+      mockGetURL.mockReturnValue(
+        'moz-extension://ab5f75ae-cfd3-4ace-830e-155830d4aa03/',
+      );
+      expect(BrowserRuntimeUtil.getMozExtensionOriginForDisplay()).toBe(
+        'moz-extension://ab5f75ae…0d4aa03',
+      );
     });
   });
 });

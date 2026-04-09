@@ -7,16 +7,30 @@ import { QrAdapter } from './QrAdapter';
 jest.mock('../webConnectionUtils', () => ({
   ...jest.requireActual('../webConnectionUtils'),
   checkCameraPermission: jest.fn(),
+  openCameraVideoStream: jest.fn(),
+  stopMediaStreamTracks: jest.fn(),
 }));
 
 const mockCheckCameraPermission =
   webConnectionUtils.checkCameraPermission as jest.MockedFunction<
     typeof webConnectionUtils.checkCameraPermission
   >;
+const mockOpenCameraVideoStream =
+  webConnectionUtils.openCameraVideoStream as jest.MockedFunction<
+    typeof webConnectionUtils.openCameraVideoStream
+  >;
+const mockStopMediaStreamTracks =
+  webConnectionUtils.stopMediaStreamTracks as jest.MockedFunction<
+    typeof webConnectionUtils.stopMediaStreamTracks
+  >;
 
 describe('QrAdapter', () => {
   let adapter: QrAdapter;
   let mockOptions: HardwareWalletAdapterOptions;
+
+  const mockStream = {
+    getTracks: () => [{ stop: jest.fn() }],
+  };
 
   const createMockOptions = (): HardwareWalletAdapterOptions => ({
     onDisconnect: jest.fn(),
@@ -30,10 +44,14 @@ describe('QrAdapter', () => {
     jest.clearAllMocks();
     mockOptions = createMockOptions();
     adapter = new QrAdapter(mockOptions);
+    mockOpenCameraVideoStream.mockResolvedValue(
+      mockStream as unknown as MediaStream,
+    );
+    mockStopMediaStreamTracks.mockImplementation(() => undefined);
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    jest.restoreAllMocks();
     adapter.destroy();
   });
 
@@ -64,9 +82,13 @@ describe('QrAdapter', () => {
     expect(mockOptions.onDisconnect).toHaveBeenCalledWith(handlerError);
   });
 
-  it('ensureDeviceReady returns true when camera permission is granted', async () => {
+  it('ensureDeviceReady returns true when permission is granted and getUserMedia succeeds', async () => {
     mockCheckCameraPermission.mockResolvedValue(CameraPermissionState.Granted);
+
     await expect(adapter.ensureDeviceReady()).resolves.toBe(true);
+
+    expect(mockOpenCameraVideoStream).toHaveBeenCalledTimes(1);
+    expect(mockStopMediaStreamTracks).toHaveBeenCalledWith(mockStream);
   });
 
   it('ensureDeviceReady does not call connect again when already connected', async () => {
@@ -80,13 +102,14 @@ describe('QrAdapter', () => {
     connectSpy.mockRestore();
   });
 
-  it('ensureDeviceReady throws PermissionCameraDenied when camera permission is denied', async () => {
+  it('ensureDeviceReady throws PermissionCameraDenied when permission query is denied without calling getUserMedia', async () => {
     mockCheckCameraPermission.mockResolvedValue(CameraPermissionState.Denied);
 
     await expect(adapter.ensureDeviceReady()).rejects.toThrow(
       HardwareWalletError,
     );
 
+    expect(mockOpenCameraVideoStream).not.toHaveBeenCalled();
     expect(mockOptions.onDeviceEvent).toHaveBeenCalledWith(
       expect.objectContaining({
         event: DeviceEvent.ConnectionFailed,
@@ -97,16 +120,27 @@ describe('QrAdapter', () => {
     );
   });
 
-  it('ensureDeviceReady throws PermissionCameraPromptDismissed when camera permission is prompt', async () => {
+  it('ensureDeviceReady returns true when permission is prompt and getUserMedia succeeds', async () => {
     mockCheckCameraPermission.mockResolvedValue(CameraPermissionState.Prompt);
+
+    await expect(adapter.ensureDeviceReady()).resolves.toBe(true);
+
+    expect(mockOpenCameraVideoStream).toHaveBeenCalledTimes(1);
+  });
+
+  it('ensureDeviceReady throws PermissionCameraPromptDismissed when getUserMedia fails with NotAllowedError and permission stays prompt', async () => {
+    mockCheckCameraPermission.mockResolvedValue(CameraPermissionState.Prompt);
+    const notAllowed = new Error('denied');
+    notAllowed.name = 'NotAllowedError';
+    mockOpenCameraVideoStream.mockRejectedValueOnce(notAllowed);
 
     await expect(adapter.ensureDeviceReady()).rejects.toThrow(
       HardwareWalletError,
     );
 
+    expect(mockCheckCameraPermission).toHaveBeenCalledTimes(2);
     expect(mockOptions.onDeviceEvent).toHaveBeenCalledWith(
       expect.objectContaining({
-        event: DeviceEvent.ConnectionFailed,
         error: expect.objectContaining({
           code: ErrorCode.PermissionCameraPromptDismissed,
         }),
@@ -114,7 +148,28 @@ describe('QrAdapter', () => {
     );
   });
 
-  it('maps unexpected errors to hardware wallet errors and emits device event', async () => {
+  it('ensureDeviceReady throws PermissionCameraDenied when getUserMedia fails with NotAllowedError and permission becomes denied', async () => {
+    mockCheckCameraPermission
+      .mockResolvedValueOnce(CameraPermissionState.Prompt)
+      .mockResolvedValueOnce(CameraPermissionState.Denied);
+    const notAllowed = new Error('denied');
+    notAllowed.name = 'NotAllowedError';
+    mockOpenCameraVideoStream.mockRejectedValueOnce(notAllowed);
+
+    await expect(adapter.ensureDeviceReady()).rejects.toThrow(
+      HardwareWalletError,
+    );
+
+    expect(mockOptions.onDeviceEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        error: expect.objectContaining({
+          code: ErrorCode.PermissionCameraDenied,
+        }),
+      }),
+    );
+  });
+
+  it('maps unexpected errors from checkCameraPermission to hardware wallet errors and emits device event', async () => {
     mockCheckCameraPermission.mockRejectedValue(
       new Error('Unable to read camera permission'),
     );

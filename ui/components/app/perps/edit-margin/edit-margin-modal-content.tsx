@@ -28,8 +28,18 @@ import { getPerpsStreamManager } from '../../../../providers/perps';
 import { useFormatters } from '../../../../hooks/useFormatters';
 import { usePerpsEligibility } from '../../../../hooks/perps';
 import { usePerpsMarginCalculations } from '../../../../hooks/perps/usePerpsMarginCalculations';
-import type { Position, AccountState } from '../types';
+import { PERPS_TOAST_KEYS, usePerpsToast } from '../perps-toast';
+import type { Position, AccountState, PerpsBackgroundResult } from '../types';
 import { PerpsSlider } from '../perps-slider';
+import { getDisplayName } from '../utils';
+
+const MARGIN_PRESETS = [25, 50, 100] as const;
+const MARGIN_FAILED_FALLBACK_ERROR_PATTERNS = [
+  /^an unknown error occurred$/iu,
+  /^failed to update margin$/iu,
+  /^unknown error$/iu,
+  /^error$/iu,
+];
 
 export type EditMarginModalContentProps = {
   position: Position;
@@ -76,10 +86,10 @@ export const EditMarginModalContent: React.FC<EditMarginModalContentProps> = ({
   const t = useI18nContext();
   const { formatNumber, formatCurrencyWithMinThreshold } = useFormatters();
   const { isEligible } = usePerpsEligibility();
+  const { replacePerpsToastByKey } = usePerpsToast();
 
   const [marginAmount, setMarginAmount] = useState<string>('');
   const [isSaving, setIsSaving] = useState(false);
-  const [marginError, setMarginError] = useState<string | null>(null);
 
   const calculations = usePerpsMarginCalculations({
     position,
@@ -240,21 +250,20 @@ export const EditMarginModalContent: React.FC<EditMarginModalContentProps> = ({
 
     setIsSaving(true);
     onSavingChange?.(true);
-    setMarginError(null);
 
     try {
       const signedAmount =
         marginMode === 'add' ? rawMarginAmount : `-${rawMarginAmount}`;
 
-      const result = await submitRequestToBackground<{
-        success: boolean;
-        error?: string;
-      }>('perpsUpdateMargin', [
-        {
-          symbol: position.symbol,
-          amount: signedAmount,
-        },
-      ]);
+      const result = await submitRequestToBackground<PerpsBackgroundResult>(
+        'perpsUpdateMargin',
+        [
+          {
+            symbol: position.symbol,
+            amount: signedAmount,
+          },
+        ],
+      );
 
       if (!result.success) {
         throw new Error(result.error || 'Failed to update margin');
@@ -266,13 +275,34 @@ export const EditMarginModalContent: React.FC<EditMarginModalContentProps> = ({
         [{ skipCache: true }],
       );
       streamManager.pushPositionsWithOverrides(freshPositions);
+      const displaySymbol = getDisplayName(position.symbol);
+
+      replacePerpsToastByKey({
+        key:
+          marginMode === 'add'
+            ? PERPS_TOAST_KEYS.MARGIN_ADD_SUCCESS
+            : PERPS_TOAST_KEYS.MARGIN_REMOVE_SUCCESS,
+        messageParams: [marginAmount, displaySymbol],
+      });
 
       setMarginAmount('');
       onClose();
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'An unknown error occurred';
-      setMarginError(errorMessage);
+      const normalizedErrorMessage = errorMessage.trim();
+      const shouldUseFallbackDescription =
+        normalizedErrorMessage.length === 0 ||
+        MARGIN_FAILED_FALLBACK_ERROR_PATTERNS.some((pattern) =>
+          pattern.test(normalizedErrorMessage),
+        );
+
+      replacePerpsToastByKey({
+        key: PERPS_TOAST_KEYS.MARGIN_ADJUSTMENT_FAILED,
+        description: shouldUseFallbackDescription
+          ? t('perpsToastMarginAdjustmentFailedDescriptionFallback')
+          : normalizedErrorMessage,
+      });
     } finally {
       setIsSaving(false);
       onSavingChange?.(false);
@@ -285,6 +315,8 @@ export const EditMarginModalContent: React.FC<EditMarginModalContentProps> = ({
     position.symbol,
     onClose,
     onSavingChange,
+    replacePerpsToastByKey,
+    t,
   ]);
 
   const showRiskWarning =
@@ -478,25 +510,6 @@ export const EditMarginModalContent: React.FC<EditMarginModalContentProps> = ({
           />
           <Text variant={TextVariant.BodySm} color={TextColor.WarningDefault}>
             {t('perpsMarginRiskWarning')}
-          </Text>
-        </Box>
-      )}
-
-      {/* Error message */}
-      {marginError && (
-        <Box
-          className="bg-error-muted rounded-lg px-3 py-2"
-          flexDirection={BoxFlexDirection.Row}
-          alignItems={BoxAlignItems.Center}
-          gap={2}
-        >
-          <Icon
-            name={IconName.Warning}
-            size={IconSize.Sm}
-            color={IconColor.ErrorDefault}
-          />
-          <Text variant={TextVariant.BodySm} color={TextColor.ErrorDefault}>
-            {marginError}
           </Text>
         </Box>
       )}

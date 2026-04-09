@@ -209,7 +209,9 @@ describe('WebcamUtils', () => {
     });
 
     it('returns state and permissionStatus when supported', async () => {
-      const permissionStatus = { state: 'denied' as PermissionState };
+      const permissionStatus = {
+        state: 'denied',
+      } as PermissionStatus;
       (
         window.navigator.permissions.query as jest.MockedFunction<
           typeof window.navigator.permissions.query

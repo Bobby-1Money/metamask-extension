@@ -26,8 +26,8 @@ function getInitRequestMock(): jest.Mocked<
     initMessenger: getPermissionControllerInitMessenger(baseMessenger),
   };
 
-  // @ts-expect-error: Partial implementation.
   requestMock.getMessengerClient.mockImplementation(
+    // @ts-expect-error: Partial implementation.
     (controllerName: string) => {
       if (controllerName === 'ApprovalController') {
         return {

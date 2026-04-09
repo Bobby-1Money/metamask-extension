@@ -64,7 +64,7 @@ searchDirs:
 
 models:
   default: azure/grok-4-fast-reasoning
-  escalation: claude-sonnet-4-6
+  escalation: anthropic/claude-sonnet-4-6
   escalationThreshold: 3
 
 modes:

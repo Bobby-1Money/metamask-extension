@@ -2,7 +2,7 @@ import { ErrorCode } from '@metamask/hw-wallet-sdk';
 import { IconName, IconColor } from '@metamask/design-system-react';
 import {
   getHardwareWalletErrorCode,
-  type HardwareWalletType,
+  HardwareWalletType,
 } from '../../../../contexts/hardware-wallets';
 
 /** Discriminant values for {@link ErrorContent}; use for comparisons and `buildErrorContent` returns. */

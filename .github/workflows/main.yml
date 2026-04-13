@@ -57,8 +57,8 @@ jobs:
 
       - run: printenv
 
-      - name: Debugging with tmate
-        uses: ./.github/actions/actions-tmate
+      # - name: Debugging with tmate
+      #   uses: ./.github/actions/actions-tmate
 
   get-requirements:
     name: Get workflow and job requirements

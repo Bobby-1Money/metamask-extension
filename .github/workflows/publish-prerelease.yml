@@ -128,6 +128,16 @@ jobs:
       BUILDS_FROM_RUN: ${{ inputs.builds-from-run }}
       TEST_PLAN_VERSION: ${{ needs.generate-test-plan.outputs.test_plan_version }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - run: printenv
+
+      - name: Debugging with tmate
+        uses: ./.github/actions/actions-tmate
+
       - name: Checkout and setup high risk environment
         uses: MetaMask/action-checkout-and-setup@v3
         with:

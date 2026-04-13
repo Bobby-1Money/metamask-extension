@@ -166,7 +166,7 @@ describe('ReversePositionModal', () => {
         'perps-reverse-position-modal-save',
       );
       expect(submitButton).toBeInTheDocument();
-      expect(submitButton).toHaveTextContent('Confirm');
+      expect(submitButton).toHaveTextContent(messages.confirm.message);
     });
 
     it('shows computed estimated fee', () => {

@@ -69,6 +69,9 @@
   "about": {
     "message": "情報"
   },
+  "aboutMetaMask": {
+    "message": "MetaMaskについて"
+  },
   "accept": {
     "message": "同意する"
   },
@@ -339,8 +342,17 @@
   "addWallet": {
     "message": "ウォレットを追加"
   },
+  "addedProtectionDescription": {
+    "message": "不明なアドレスとやり取りしています。これにより悪質なトランザクションを防ぐことができます。"
+  },
   "addedProtectionOptionalBadge": {
     "message": "オプション"
+  },
+  "addedProtectionTitle": {
+    "message": "保護機能が追加されました"
+  },
+  "addedProtectionTooltip": {
+    "message": "最終的なトランザクションがこのプレビューと一致しない場合、処理は実行されません。ネットワーク手数料のみを支払うことになります。"
   },
   "additionalNetworks": {
     "message": "他のネットワーク"
@@ -1404,9 +1416,6 @@
   "clearActivityButton": {
     "message": "アクティビティタブのデータを消去"
   },
-  "clearActivityDescription": {
-    "message": "これによりアカウントのナンスがリセットされ、ウォレットのアクティビティタブからデータが消去されます。現在のアカウントとネットワークだけが影響を受けます。残高と受信トランザクションへの変更はありません。"
-  },
   "clearFilters": {
     "message": "フィルターを消去"
   },
@@ -2023,6 +2032,12 @@
   "dappConnections": {
     "message": "DAppの接続"
   },
+  "dappScanMaliciousTitle": {
+    "message": "悪質なWebサイトが検出されました"
+  },
+  "dappScanMaliciousWarning": {
+    "message": "このWebサイトは、危険な可能性があるとフラグ付けされています。シークレットリカバリーフレーズを明かした場合、資金が危険に晒される可能性があります。"
+  },
   "dappSuggested": {
     "message": "おすすめのサイト"
   },
@@ -2179,6 +2194,12 @@
   },
   "deepLink_theOnboardingPage": {
     "message": "オンボーディングページ"
+  },
+  "deepLink_thePerpsMarketDetailPage": {
+    "message": "パーペチュアル市場ページ"
+  },
+  "deepLink_thePerpsMarketListPage": {
+    "message": "パーペチュアル市場一覧ページ"
   },
   "deepLink_thePerpsPage": {
     "message": "パーペチュアルのページ"
@@ -3103,10 +3124,6 @@
   },
   "hardwareWalletErrorRecoveryTitle": {
     "message": "引き続き次のことを確認します:"
-  },
-  "hardwareWalletErrorRecoveryUnlock1": {
-    "message": "$1のロックが解除されていること",
-    "description": "$1 is the hardware wallet type"
   },
   "hardwareWalletErrorRecoveryUnlock2": {
     "message": "イーサリアムアプリが開いていること"
@@ -4033,6 +4050,18 @@
     "message": "$1が$2 Snapの使用を求めています",
     "description": "$1 is the dapp and $2 is the number of snaps it wants to connect to."
   },
+  "musdBonusExplanation": {
+    "message": "お持ちのステーブルコインをmUSDに換えて、\n年換算で最大$1%のボーナスを獲得しましょう。\nこのボーナスは毎日請求できます。$2",
+    "description": "$1 is the bonus APY percentage, $2 is the 'Terms apply' link"
+  },
+  "musdBonusPoweredByRelay": {
+    "message": "Powered by Relay",
+    "description": "Attribution shown below mUSD bonus explanation on the conversion confirmation info popover"
+  },
+  "musdBoostDescription": {
+    "message": "お持ちのステーブルコインをmUSDに換えて、年換算$1%のボーナスを獲得しましょう。",
+    "description": "$1 is the bonus percentage (e.g., 3)"
+  },
   "musdBoostTitle": {
     "message": "ステーブルコインで$1%をゲット",
     "description": "$1 is the bonus percentage (e.g., 3)"
@@ -4052,9 +4081,17 @@
     "message": "mUSDを保有することで獲得した年換算のボーナスです。ボーナスはLineaで毎日請求できます。$1",
     "description": "$1 is the 'Terms apply' link"
   },
+  "musdClaimableBonusTooltipAria": {
+    "message": "請求可能なボーナスの詳細",
+    "description": "Accessible name for the info control that opens the claimable bonus explanation popover"
+  },
   "musdConversionActivityTitle": {
     "message": "$1をmUSDに変換",
     "description": "$1 is the source token symbol (e.g., USDC)"
+  },
+  "musdConversionBonusTooltipAria": {
+    "message": "ボーナスの詳細",
+    "description": "Accessible name for the info control that opens the mUSD conversion bonus explanation popover"
   },
   "musdConversionTitle": {
     "message": "mUSDへの変換完了",
@@ -4067,6 +4104,12 @@
     "message": "$1 → mUSDに変換中",
     "description": "$1 is the source token symbol (e.g., USDC)"
   },
+  "musdConversionToastSuccess": {
+    "message": "mUSDへの換算が完了しました"
+  },
+  "musdConversionToastSuccessDescription": {
+    "message": "ボーナスは1日以内に請求できます。"
+  },
   "musdConvert": {
     "message": "変換"
   },
@@ -4074,11 +4117,15 @@
     "message": "換金して$1%獲得",
     "description": "$1 is the bonus percentage (e.g., 3)"
   },
+  "musdEarnBonusPercentage": {
+    "message": "$1%のボーナスを獲得",
+    "description": "$1 is the bonus percentage (e.g., 3). Subtitle on the home token list mUSD Buy/Get CTA."
+  },
   "musdEducationGetStarted": {
     "message": "利用を開始する"
   },
   "musdEducationHeadline": {
-    "message": "ステーブルコインで$1%をゲット",
+    "message": "ステーブルコインで\n$1%をゲット",
     "description": "$1 is the bonus APY percentage. Line break between ON and STABLECOINS matches splash layout."
   },
   "musdEducationNotNow": {
@@ -4090,6 +4137,10 @@
   },
   "musdGetMusd": {
     "message": "mUSDを入手"
+  },
+  "musdMetaMaskUsd": {
+    "message": "MetaMask USD",
+    "description": "Product name shown as the title line on the home token list mUSD Buy/Get CTA"
   },
   "musdTermsApply": {
     "message": "諸条件が適用されます。"
@@ -5306,6 +5357,9 @@
     "message": "使用可能",
     "description": "is the available balance amount"
   },
+  "perpsAvailableBalance": {
+    "message": "使用可能なパーペチュアル残高: "
+  },
   "perpsAvailableToClose": {
     "message": "クローズに利用可能"
   },
@@ -5362,7 +5416,7 @@
     "message": "方向"
   },
   "perpsDisclaimer": {
-    "message": "パーペチュアル取引には大きなリスクが伴い、最初の投資額を超える金額を失う可能性があります。これは投資助言ではありません。"
+    "message": "パーペチュアル契約は大きなリスクを伴い、予告なく突然、投資額全額を失う可能性があります。取引はすべてお客様の責任で行ってください。このサービスはHyperliquid、価格チャートはTradingViewにより提供されています。"
   },
   "perpsEmptyDescription": {
     "message": "レバレッジをかけたパーペチュアル取引が可能です。最初のポジションをオープンして始めましょう。"
@@ -5372,6 +5426,14 @@
   },
   "perpsEstSize": {
     "message": "推定サイズ"
+  },
+  "perpsEstimatedPnlAtStopLoss": {
+    "message": "ストップロスでの予想損益",
+    "description": "Label for estimated profit or loss when stop loss is hit"
+  },
+  "perpsEstimatedPnlAtTakeProfit": {
+    "message": "利益確定での予想損益",
+    "description": "Label for estimated profit or loss when take profit is hit"
   },
   "perpsExploreMarkets": {
     "message": "市場を探索"
@@ -5432,6 +5494,12 @@
   },
   "perpsLimitPrice": {
     "message": "リミット価格"
+  },
+  "perpsLimitPriceAboveCurrentPrice": {
+    "message": "リミット価格が現在の価格を上回っています"
+  },
+  "perpsLimitPriceBelowCurrentPrice": {
+    "message": "リミット価格が現在の価格を下回っています"
   },
   "perpsLiquidationDistance": {
     "message": "清算価格との距離"
@@ -5525,6 +5593,9 @@
   },
   "perpsReduceExposureDescriptionShort": {
     "message": "ショートポジションのサイズを減らします"
+  },
+  "perpsRemoveFromFavorites": {
+    "message": "お気に入りから削除"
   },
   "perpsRemoveMargin": {
     "message": "証拠金を減額"
@@ -5670,6 +5741,25 @@
   },
   "perpsWithdraw": {
     "message": "出金"
+  },
+  "perpsWithdrawEstimatedTime": {
+    "message": "推定所要時間"
+  },
+  "perpsWithdrawFee": {
+    "message": "プロバイダーの手数料"
+  },
+  "perpsWithdrawMinutesApprox": {
+    "message": "~$1分",
+    "description": "$1 is the estimated number of minutes"
+  },
+  "perpsWithdrawReceive": {
+    "message": "受取"
+  },
+  "perpsWithdrawToastErrorTitle": {
+    "message": "出金失敗"
+  },
+  "perpsYouReceive": {
+    "message": "受け取る"
   },
   "perpsYouWillReceive": {
     "message": "受取額"
@@ -6655,8 +6745,15 @@
   "settings": {
     "message": "設定"
   },
+  "settingsSearchCantFindSetting": {
+    "message": "設定が見つかりませんか？$1",
+    "description": "$1 is a link to request a setting"
+  },
   "settingsSearchMatchingNotFound": {
     "message": "一致する結果が見つかりませんでした。"
+  },
+  "settingsSearchRequestHere": {
+    "message": "ここでリクエスト"
   },
   "shieldClaim": {
     "message": "請求を送信"
@@ -7724,7 +7821,7 @@
     "message": "エラーが発生しました。ページを再度読み込んでみてください。"
   },
   "somethingWentWrong": {
-    "message": "申し訳ありません。問題が発生しました。"
+    "message": "このページを読み込めませんでした。"
   },
   "sortBy": {
     "message": "並べ替え基準"
@@ -8616,6 +8713,9 @@
   "transactionErrorNoContract": {
     "message": "コントラクトではないアドレスに対して関数の呼び出しを試みています。"
   },
+  "transactionFailed": {
+    "message": "トランザクション失敗"
+  },
   "transactionFee": {
     "message": "トランザクション手数料"
   },
@@ -8655,6 +8755,9 @@
   },
   "transactionShield": {
     "message": "Transaction Shield"
+  },
+  "transactionSubmitted": {
+    "message": "トランザクションが送信されました"
   },
   "transactionTotalGasFee": {
     "message": "ガス代合計",

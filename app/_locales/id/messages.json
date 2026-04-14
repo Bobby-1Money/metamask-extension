@@ -69,6 +69,9 @@
   "about": {
     "message": "Tentang"
   },
+  "aboutMetaMask": {
+    "message": "Seputar MetaMask"
+  },
   "accept": {
     "message": "Terima"
   },
@@ -339,8 +342,17 @@
   "addWallet": {
     "message": "Tambahkan dompet"
   },
+  "addedProtectionDescription": {
+    "message": "Anda berinteraksi dengan alamat yang tidak dikenal. Ini membantu mencegah transaksi berbahaya."
+  },
   "addedProtectionOptionalBadge": {
     "message": "Opsional"
+  },
+  "addedProtectionTitle": {
+    "message": "Perlindungan tambahan"
+  },
+  "addedProtectionTooltip": {
+    "message": "Jika transaksi akhir tidak sesuai dengan pratinjau ini, transaksi tidak akan diproses. Anda hanya membayar biaya jaringan."
   },
   "additionalNetworks": {
     "message": "Jaringan tambahan"
@@ -1404,9 +1416,6 @@
   "clearActivityButton": {
     "message": "Hapus data tab aktivitas"
   },
-  "clearActivityDescription": {
-    "message": "Tindakan ini mereset nonce akun dan menghapus data dari tab aktivitas di dompet Anda. Hanya akun dan jaringan saat ini yang akan terpengaruh. Saldo dan transaksi masuk Anda tidak akan berubah."
-  },
   "clearFilters": {
     "message": "Hapus filter"
   },
@@ -2023,6 +2032,12 @@
   "dappConnections": {
     "message": "Koneksi Dapp"
   },
+  "dappScanMaliciousTitle": {
+    "message": "Situs web berbahaya terdeteksi"
+  },
+  "dappScanMaliciousWarning": {
+    "message": "Situs web ini ditandai sebagai berpotensi berbahaya. Jika Anda mengungkapkan Frasa Pemulihan Rahasia, ada risiko dana Anda akan hilang."
+  },
   "dappSuggested": {
     "message": "Situs yang disarankan"
   },
@@ -2179,6 +2194,12 @@
   },
   "deepLink_theOnboardingPage": {
     "message": "halaman orientasi"
+  },
+  "deepLink_thePerpsMarketDetailPage": {
+    "message": "halaman pasar perp"
+  },
+  "deepLink_thePerpsMarketListPage": {
+    "message": "halaman daftar pasar perp"
   },
   "deepLink_thePerpsPage": {
     "message": "halaman perp"
@@ -3103,10 +3124,6 @@
   },
   "hardwareWalletErrorRecoveryTitle": {
     "message": "Lanjut untuk memastikan:"
-  },
-  "hardwareWalletErrorRecoveryUnlock1": {
-    "message": "$1 sudah dibuka",
-    "description": "$1 is the hardware wallet type"
   },
   "hardwareWalletErrorRecoveryUnlock2": {
     "message": "Aplikasi Ethereum sudah dibuka"
@@ -4033,6 +4050,18 @@
     "message": "$1 ingin menggunakan Snap $2",
     "description": "$1 is the dapp and $2 is the number of snaps it wants to connect to."
   },
+  "musdBonusExplanation": {
+    "message": "Konversikan stablecoin Anda ke mUSD dan dapatkan\nbonus tahunan hingga $1% yang dapat Anda\nklaim setiap hari. $2",
+    "description": "$1 is the bonus APY percentage, $2 is the 'Terms apply' link"
+  },
+  "musdBonusPoweredByRelay": {
+    "message": "Didukung oleh Relay",
+    "description": "Attribution shown below mUSD bonus explanation on the conversion confirmation info popover"
+  },
+  "musdBoostDescription": {
+    "message": "Konversikan stablecoin Anda ke mUSD dan dapatkan bonus tahunan sebesar $1%.",
+    "description": "$1 is the bonus percentage (e.g., 3)"
+  },
   "musdBoostTitle": {
     "message": "Dapatkan $1% untuk stablecoin Anda",
     "description": "$1 is the bonus percentage (e.g., 3)"
@@ -4049,12 +4078,20 @@
     "description": "Label for the claimable bonus row in the mUSD conversion confirmation screen"
   },
   "musdClaimableBonusTooltip": {
-    "message": "Bonus tahunan yang Anda peroleh karena memiliki mUSD. Bonus dapat diklaim setiap hari di Linea. $1",
+    "message": "Bonus tahunan yang Anda peroleh karena memiliki mUSD. Bonus Anda dapat diklaim setiap hari di Linea. $1",
     "description": "$1 is the 'Terms apply' link"
+  },
+  "musdClaimableBonusTooltipAria": {
+    "message": "Detail bonus yang dapat diklaim",
+    "description": "Accessible name for the info control that opens the claimable bonus explanation popover"
   },
   "musdConversionActivityTitle": {
     "message": "Konversikan $1 ke mUSD",
     "description": "$1 is the source token symbol (e.g., USDC)"
+  },
+  "musdConversionBonusTooltipAria": {
+    "message": "Detail bonus",
+    "description": "Accessible name for the info control that opens the mUSD conversion bonus explanation popover"
   },
   "musdConversionTitle": {
     "message": "Dikonversi ke mUSD",
@@ -4067,6 +4104,12 @@
     "message": "Mengonversi $1 → mUSD",
     "description": "$1 is the source token symbol (e.g., USDC)"
   },
+  "musdConversionToastSuccess": {
+    "message": "Konversi mUSD berhasil"
+  },
+  "musdConversionToastSuccessDescription": {
+    "message": "Bonus dapat diklaim dalam waktu satu hari."
+  },
   "musdConvert": {
     "message": "Konversikan"
   },
@@ -4074,11 +4117,15 @@
     "message": "Konversikan dan dapatkan $1%",
     "description": "$1 is the bonus percentage (e.g., 3)"
   },
+  "musdEarnBonusPercentage": {
+    "message": "Dapatkan bonus sebesar $1%",
+    "description": "$1 is the bonus percentage (e.g., 3). Subtitle on the home token list mUSD Buy/Get CTA."
+  },
   "musdEducationGetStarted": {
     "message": "Mulai"
   },
   "musdEducationHeadline": {
-    "message": "DAPATKAN $1% UNTUK STABLECOIN",
+    "message": "DAPATKAN $1% UNTUK\nSTABLECOIN",
     "description": "$1 is the bonus APY percentage. Line break between ON and STABLECOINS matches splash layout."
   },
   "musdEducationNotNow": {
@@ -4090,6 +4137,10 @@
   },
   "musdGetMusd": {
     "message": "Dapatkan mUSD"
+  },
+  "musdMetaMaskUsd": {
+    "message": "MetaMask USD",
+    "description": "Product name shown as the title line on the home token list mUSD Buy/Get CTA"
   },
   "musdTermsApply": {
     "message": "Syarat berlaku."
@@ -5306,6 +5357,9 @@
     "message": "tersedia",
     "description": "is the available balance amount"
   },
+  "perpsAvailableBalance": {
+    "message": "Saldo Perp yang tersedia: "
+  },
   "perpsAvailableToClose": {
     "message": "Tersedia untuk ditutup"
   },
@@ -5362,7 +5416,7 @@
     "message": "Petunjuk"
   },
   "perpsDisclaimer": {
-    "message": "Perdagangan perpetual melibatkan risiko yang signifikan. Anda mungkin akan kehilangan lebih dari nilai investasi awal. Ini bukanlah nasihat keuangan."
+    "message": "Kontrak berjangka sangat berisiko, dan Anda bisa tiba-tiba kehilangan seluruh investasi Anda tanpa pemberitahuan. Anda berdagang dengan risiko yang sepenuhnya ditanggung sendiri. Didukung oleh Hyperliquid. Grafik harga didukung oleh TradingView."
   },
   "perpsEmptyDescription": {
     "message": "Perdagangkan perpetual dengan leverage. Buka posisi pertama Anda untuk memulai."
@@ -5372,6 +5426,14 @@
   },
   "perpsEstSize": {
     "message": "Est. ukuran"
+  },
+  "perpsEstimatedPnlAtStopLoss": {
+    "message": "Estimasi P&L pada stop loss",
+    "description": "Label for estimated profit or loss when stop loss is hit"
+  },
+  "perpsEstimatedPnlAtTakeProfit": {
+    "message": "Estimasi P&L pada take profit",
+    "description": "Label for estimated profit or loss when take profit is hit"
   },
   "perpsExploreMarkets": {
     "message": "Jelajahi pasar"
@@ -5432,6 +5494,12 @@
   },
   "perpsLimitPrice": {
     "message": "Harga Limit"
+  },
+  "perpsLimitPriceAboveCurrentPrice": {
+    "message": "Harga limit berada di atas harga saat ini"
+  },
+  "perpsLimitPriceBelowCurrentPrice": {
+    "message": "Harga limit berada di bawah harga saat ini"
   },
   "perpsLiquidationDistance": {
     "message": "Jarak likuidasi"
@@ -5525,6 +5593,9 @@
   },
   "perpsReduceExposureDescriptionShort": {
     "message": "Kurangi ukuran posisi short"
+  },
+  "perpsRemoveFromFavorites": {
+    "message": "Hapus dari favorit"
   },
   "perpsRemoveMargin": {
     "message": "Hapus margin"
@@ -5670,6 +5741,25 @@
   },
   "perpsWithdraw": {
     "message": "Tarik"
+  },
+  "perpsWithdrawEstimatedTime": {
+    "message": "Estimasi waktu"
+  },
+  "perpsWithdrawFee": {
+    "message": "Biaya Penyedia"
+  },
+  "perpsWithdrawMinutesApprox": {
+    "message": "~$1 mnt",
+    "description": "$1 is the estimated number of minutes"
+  },
+  "perpsWithdrawReceive": {
+    "message": "Terima"
+  },
+  "perpsWithdrawToastErrorTitle": {
+    "message": "Penarikan gagal"
+  },
+  "perpsYouReceive": {
+    "message": "Anda menerima"
   },
   "perpsYouWillReceive": {
     "message": "Anda akan menerima"
@@ -6471,7 +6561,7 @@
     "message": "Keamanan dan kata sandi"
   },
   "securityAndPrivacy": {
-    "message": "Keamanan & privasi"
+    "message": "Keamanan dan privasi"
   },
   "securityChangePassword": {
     "message": "Ubah kata sandi"
@@ -6655,8 +6745,15 @@
   "settings": {
     "message": "Pengaturan"
   },
+  "settingsSearchCantFindSetting": {
+    "message": "Tidak dapat menemukan pengaturan? $1",
+    "description": "$1 is a link to request a setting"
+  },
   "settingsSearchMatchingNotFound": {
     "message": "Tidak menemukan hasil yang cocok."
+  },
+  "settingsSearchRequestHere": {
+    "message": "Minta di sini"
   },
   "shieldClaim": {
     "message": "Ajukan klaim"
@@ -7724,7 +7821,7 @@
     "message": "Terjadi kesalahan. Coba muat ulang halaman."
   },
   "somethingWentWrong": {
-    "message": "Ups! Terjadi kesalahan."
+    "message": "Kami tidak dapat memuat halaman ini."
   },
   "sortBy": {
     "message": "Urutkan sesuai"
@@ -8616,6 +8713,9 @@
   "transactionErrorNoContract": {
     "message": "Mencoba memanggil fungsi pada alamat nonkontrak."
   },
+  "transactionFailed": {
+    "message": "Transaksi gagal"
+  },
   "transactionFee": {
     "message": "Biaya transaksi"
   },
@@ -8655,6 +8755,9 @@
   },
   "transactionShield": {
     "message": "Transaction Shield"
+  },
+  "transactionSubmitted": {
+    "message": "Transaksi dikirim"
   },
   "transactionTotalGasFee": {
     "message": "Total biaya gas",

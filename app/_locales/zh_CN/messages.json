@@ -69,6 +69,9 @@
   "about": {
     "message": "关于"
   },
+  "aboutMetaMask": {
+    "message": "MetaMask 简介"
+  },
   "accept": {
     "message": "接受"
   },
@@ -339,8 +342,17 @@
   "addWallet": {
     "message": "添加钱包"
   },
+  "addedProtectionDescription": {
+    "message": "您正在与一个未知地址交互。这有助于防止恶意交易。"
+  },
   "addedProtectionOptionalBadge": {
     "message": "可选"
+  },
+  "addedProtectionTitle": {
+    "message": "增强保护"
+  },
+  "addedProtectionTooltip": {
+    "message": "如果最终交易与当前预览不一致，交易将不会执行。您只需支付网络费。"
   },
   "additionalNetworks": {
     "message": "其他网络"
@@ -1404,9 +1416,6 @@
   "clearActivityButton": {
     "message": "清除活动选项卡数据"
   },
-  "clearActivityDescription": {
-    "message": "这将会重置账户的 nonce，并删除钱包中的活动选项卡数据。只有当前账户和网络会受到影响。您的余额和传入的交易不会改变。"
-  },
   "clearFilters": {
     "message": "清除筛选条件"
   },
@@ -2023,6 +2032,12 @@
   "dappConnections": {
     "message": "去中心化应用连接"
   },
+  "dappScanMaliciousTitle": {
+    "message": "检测到恶意网站"
+  },
+  "dappScanMaliciousWarning": {
+    "message": "该网站被标记为可能存在风险。如果您泄露了私钥助记词，您的资金可能会面临风险。"
+  },
   "dappSuggested": {
     "message": "建议的网站"
   },
@@ -2179,6 +2194,12 @@
   },
   "deepLink_theOnboardingPage": {
     "message": "入门引导页"
+  },
+  "deepLink_thePerpsMarketDetailPage": {
+    "message": "永续合约市场页面"
+  },
+  "deepLink_thePerpsMarketListPage": {
+    "message": "永续合约市场列表页面"
   },
   "deepLink_thePerpsPage": {
     "message": "永续合约页面"
@@ -3103,10 +3124,6 @@
   },
   "hardwareWalletErrorRecoveryTitle": {
     "message": "继续以确保："
-  },
-  "hardwareWalletErrorRecoveryUnlock1": {
-    "message": "您的 $1 已解锁",
-    "description": "$1 is the hardware wallet type"
   },
   "hardwareWalletErrorRecoveryUnlock2": {
     "message": "以太坊应用已打开"
@@ -4033,6 +4050,18 @@
     "message": "$1 想连接 $2 个 snap。",
     "description": "$1 is the dapp and $2 is the number of snaps it wants to connect to."
   },
+  "musdBonusExplanation": {
+    "message": "将您的稳定币兑换为 mUSD，即可赚取高达 $1% 的年化奖励，该奖励每日可领取。$2",
+    "description": "$1 is the bonus APY percentage, $2 is the 'Terms apply' link"
+  },
+  "musdBonusPoweredByRelay": {
+    "message": "由 Relay 提供技术支持",
+    "description": "Attribution shown below mUSD bonus explanation on the conversion confirmation info popover"
+  },
+  "musdBoostDescription": {
+    "message": "将您的稳定币兑换为 mUSD，即可获得 $1% 的年化奖励。",
+    "description": "$1 is the bonus percentage (e.g., 3)"
+  },
   "musdBoostTitle": {
     "message": "获得稳定币的 $1% 奖励",
     "description": "$1 is the bonus percentage (e.g., 3)"
@@ -4049,12 +4078,20 @@
     "description": "Label for the claimable bonus row in the mUSD conversion confirmation screen"
   },
   "musdClaimableBonusTooltip": {
-    "message": "您持有 mUSD 所获得的年化奖励。该奖励可在 Linea 上每日领取。$1",
+    "message": "您因持有 mUSD 而获得的年化奖励。您可以在 Linea 上每日领取奖励。$1",
     "description": "$1 is the 'Terms apply' link"
+  },
+  "musdClaimableBonusTooltipAria": {
+    "message": "可领取奖励详情",
+    "description": "Accessible name for the info control that opens the claimable bonus explanation popover"
   },
   "musdConversionActivityTitle": {
     "message": "将 $1 兑换为 mUSD",
     "description": "$1 is the source token symbol (e.g., USDC)"
+  },
+  "musdConversionBonusTooltipAria": {
+    "message": "奖励详情",
+    "description": "Accessible name for the info control that opens the mUSD conversion bonus explanation popover"
   },
   "musdConversionTitle": {
     "message": "已兑换为 mUSD",
@@ -4067,12 +4104,22 @@
     "message": "正在将 $1 兑换为 mUSD",
     "description": "$1 is the source token symbol (e.g., USDC)"
   },
+  "musdConversionToastSuccess": {
+    "message": "mUSD 兑换成功"
+  },
+  "musdConversionToastSuccessDescription": {
+    "message": "奖励将在一天内可领取。"
+  },
   "musdConvert": {
     "message": "兑换"
   },
   "musdConvertAndGetBonus": {
     "message": "兑换并获得 $1%",
     "description": "$1 is the bonus percentage (e.g., 3)"
+  },
+  "musdEarnBonusPercentage": {
+    "message": "获得 $1% 的奖励",
+    "description": "$1 is the bonus percentage (e.g., 3). Subtitle on the home token list mUSD Buy/Get CTA."
   },
   "musdEducationGetStarted": {
     "message": "开始使用"
@@ -4090,6 +4137,10 @@
   },
   "musdGetMusd": {
     "message": "获取 mUSD"
+  },
+  "musdMetaMaskUsd": {
+    "message": "MetaMask USD",
+    "description": "Product name shown as the title line on the home token list mUSD Buy/Get CTA"
   },
   "musdTermsApply": {
     "message": "具体条款适用。"
@@ -5306,6 +5357,9 @@
     "message": "可用",
     "description": "is the available balance amount"
   },
+  "perpsAvailableBalance": {
+    "message": "可用永续合约余额： "
+  },
   "perpsAvailableToClose": {
     "message": "可平仓"
   },
@@ -5362,7 +5416,7 @@
     "message": "方向"
   },
   "perpsDisclaimer": {
-    "message": "交易永续合约存在重大风险。您可能损失超过初始投资的金额。本文不构成财务建议。"
+    "message": "永续合约交易存在很大风险，您可能会在毫无预警的情况下瞬间损失全部投资。交易风险完全由您自行承担。技术支持由 Hyperliquid 提供。价格图表由 TradingView 提供。"
   },
   "perpsEmptyDescription": {
     "message": "使用杠杆交易永续合约。开设您的首个仓位即可开始。"
@@ -5372,6 +5426,14 @@
   },
   "perpsEstSize": {
     "message": "预估规模"
+  },
+  "perpsEstimatedPnlAtStopLoss": {
+    "message": "预估止损盈亏",
+    "description": "Label for estimated profit or loss when stop loss is hit"
+  },
+  "perpsEstimatedPnlAtTakeProfit": {
+    "message": "预估止盈盈亏",
+    "description": "Label for estimated profit or loss when take profit is hit"
   },
   "perpsExploreMarkets": {
     "message": "探索市场"
@@ -5432,6 +5494,12 @@
   },
   "perpsLimitPrice": {
     "message": "限价"
+  },
+  "perpsLimitPriceAboveCurrentPrice": {
+    "message": "限价高于当前价格"
+  },
+  "perpsLimitPriceBelowCurrentPrice": {
+    "message": "限价低于当前价格"
   },
   "perpsLiquidationDistance": {
     "message": "清算距离"
@@ -5525,6 +5593,9 @@
   },
   "perpsReduceExposureDescriptionShort": {
     "message": "减少空头仓位规模"
+  },
+  "perpsRemoveFromFavorites": {
+    "message": "从收藏夹中移除"
   },
   "perpsRemoveMargin": {
     "message": "移除保证金"
@@ -5670,6 +5741,25 @@
   },
   "perpsWithdraw": {
     "message": "提取"
+  },
+  "perpsWithdrawEstimatedTime": {
+    "message": "预计时间"
+  },
+  "perpsWithdrawFee": {
+    "message": "服务商费用"
+  },
+  "perpsWithdrawMinutesApprox": {
+    "message": "~$1 分钟",
+    "description": "$1 is the estimated number of minutes"
+  },
+  "perpsWithdrawReceive": {
+    "message": "收款"
+  },
+  "perpsWithdrawToastErrorTitle": {
+    "message": "提款失败"
+  },
+  "perpsYouReceive": {
+    "message": "您收到"
   },
   "perpsYouWillReceive": {
     "message": "您将收到"
@@ -6655,8 +6745,15 @@
   "settings": {
     "message": "设置"
   },
+  "settingsSearchCantFindSetting": {
+    "message": "找不到设置吗？$1",
+    "description": "$1 is a link to request a setting"
+  },
   "settingsSearchMatchingNotFound": {
     "message": "未找到匹配结果。"
+  },
+  "settingsSearchRequestHere": {
+    "message": "在这里请求"
   },
   "shieldClaim": {
     "message": "提交索赔"
@@ -7724,7 +7821,7 @@
     "message": "出错了。尝试重新加载页面。"
   },
   "somethingWentWrong": {
-    "message": "哎呀！出了点问题。"
+    "message": "我们无法加载此页面。"
   },
   "sortBy": {
     "message": "排序方式"
@@ -8616,6 +8713,9 @@
   "transactionErrorNoContract": {
     "message": "试图在非合约地址上调用函数。"
   },
+  "transactionFailed": {
+    "message": "交易失败"
+  },
   "transactionFee": {
     "message": "交易费用"
   },
@@ -8655,6 +8755,9 @@
   },
   "transactionShield": {
     "message": "交易防护"
+  },
+  "transactionSubmitted": {
+    "message": "已提交交易"
   },
   "transactionTotalGasFee": {
     "message": "燃料费总额",

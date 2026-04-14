@@ -69,6 +69,9 @@
   "about": {
     "message": "정보"
   },
+  "aboutMetaMask": {
+    "message": "MetaMask 소개"
+  },
   "accept": {
     "message": "동의"
   },
@@ -339,8 +342,17 @@
   "addWallet": {
     "message": "지갑 추가"
   },
+  "addedProtectionDescription": {
+    "message": "알 수 없는 주소에 접근하고 있습니다. 이는 악성 트랜잭션을 방지하는 데 도움이 됩니다."
+  },
   "addedProtectionOptionalBadge": {
     "message": "선택 사항"
+  },
+  "addedProtectionTitle": {
+    "message": "보안 강화"
+  },
+  "addedProtectionTooltip": {
+    "message": "최종 트랜잭션이 이 미리보기와 일치하지 않는다면 진행되지 않습니다. 이 경우 네트워크 수수료만 지불하게 됩니다."
   },
   "additionalNetworks": {
     "message": "추가 네트워크"
@@ -1404,9 +1416,6 @@
   "clearActivityButton": {
     "message": "활동 탭 데이터 지우기"
   },
-  "clearActivityDescription": {
-    "message": "이는 계정의 논스를 초기화하고 지갑의 활동 탭에 있는 데이터를 지웁니다. 이렇게 하면 현재 계정과 네트워크만 변경될 뿐 잔액과 입금 트랜잭션에는 영향을 미치지 않습니다."
-  },
   "clearFilters": {
     "message": "필터 초기화"
   },
@@ -2023,6 +2032,12 @@
   "dappConnections": {
     "message": "디앱 연결"
   },
+  "dappScanMaliciousTitle": {
+    "message": "악성 웹사이트 감지됨"
+  },
+  "dappScanMaliciousWarning": {
+    "message": "이 사이트는 위험할 수 있는 사이트로 표시되었습니다. 비밀복구구문을 공개하면 자산이 탈취될 수 있습니다."
+  },
   "dappSuggested": {
     "message": "사이트 제안"
   },
@@ -2179,6 +2194,12 @@
   },
   "deepLink_theOnboardingPage": {
     "message": "온보딩 페이지"
+  },
+  "deepLink_thePerpsMarketDetailPage": {
+    "message": "무기한 선물 시장 페이지"
+  },
+  "deepLink_thePerpsMarketListPage": {
+    "message": "무기한 선물 시장 목록 페이지"
   },
   "deepLink_thePerpsPage": {
     "message": "무기한 선물 페이지"
@@ -3103,10 +3124,6 @@
   },
   "hardwareWalletErrorRecoveryTitle": {
     "message": "이어서 다음 사항을 확인하세요."
-  },
-  "hardwareWalletErrorRecoveryUnlock1": {
-    "message": "$1 잠금이 해제되었습니다",
-    "description": "$1 is the hardware wallet type"
   },
   "hardwareWalletErrorRecoveryUnlock2": {
     "message": "이더리움 앱이 열려 있습니다"
@@ -4033,6 +4050,18 @@
     "message": "$1에서 $2 Snap 사용을 원합니다.",
     "description": "$1 is the dapp and $2 is the number of snaps it wants to connect to."
   },
+  "musdBonusExplanation": {
+    "message": "스테이블코인을 mUSD로 환전하면 최대 $1%의 연 환산 보너스를 벌 수 있고 이를 매일 수령할 수 있습니다. $2",
+    "description": "$1 is the bonus APY percentage, $2 is the 'Terms apply' link"
+  },
+  "musdBonusPoweredByRelay": {
+    "message": "제공자: Relay",
+    "description": "Attribution shown below mUSD bonus explanation on the conversion confirmation info popover"
+  },
+  "musdBoostDescription": {
+    "message": "스테이블코인을 mUSD로 환전하고 $1%의 연 환산 보너스를 받으세요.",
+    "description": "$1 is the bonus percentage (e.g., 3)"
+  },
   "musdBoostTitle": {
     "message": "스테이블코인의 $1% 받기",
     "description": "$1 is the bonus percentage (e.g., 3)"
@@ -4049,12 +4078,20 @@
     "description": "Label for the claimable bonus row in the mUSD conversion confirmation screen"
   },
   "musdClaimableBonusTooltip": {
-    "message": "mUSD를 보유하여 받은 연환산 보너스입니다. 보너스는 Linea에서 매일 청구할 수 있습니다. $1",
+    "message": "mUSD를 보유하여 받은 연 환산 보너스입니다. 보너스는 Linea에서 매일 수령할 수 있습니다. $1",
     "description": "$1 is the 'Terms apply' link"
+  },
+  "musdClaimableBonusTooltipAria": {
+    "message": "수령 가능한 보너스 정보",
+    "description": "Accessible name for the info control that opens the claimable bonus explanation popover"
   },
   "musdConversionActivityTitle": {
     "message": "$1을(를) mUSD로 전환",
     "description": "$1 is the source token symbol (e.g., USDC)"
+  },
+  "musdConversionBonusTooltipAria": {
+    "message": "보너스 정보",
+    "description": "Accessible name for the info control that opens the mUSD conversion bonus explanation popover"
   },
   "musdConversionTitle": {
     "message": "mUSD로 전환 완료",
@@ -4067,6 +4104,12 @@
     "message": "$1 → mUSD 전환 중",
     "description": "$1 is the source token symbol (e.g., USDC)"
   },
+  "musdConversionToastSuccess": {
+    "message": "mUSD 환전 성공"
+  },
+  "musdConversionToastSuccessDescription": {
+    "message": "보너스는 하루 이내에 청구할 수 있습니다."
+  },
   "musdConvert": {
     "message": "전환"
   },
@@ -4074,11 +4117,15 @@
     "message": "전환하고 $1% 받기",
     "description": "$1 is the bonus percentage (e.g., 3)"
   },
+  "musdEarnBonusPercentage": {
+    "message": "$1% 보너스 받기",
+    "description": "$1 is the bonus percentage (e.g., 3). Subtitle on the home token list mUSD Buy/Get CTA."
+  },
   "musdEducationGetStarted": {
     "message": "시작하기"
   },
   "musdEducationHeadline": {
-    "message": "스테이블 코인의 $1% 받기",
+    "message": "스테이블 코인의\n$1% 받기",
     "description": "$1 is the bonus APY percentage. Line break between ON and STABLECOINS matches splash layout."
   },
   "musdEducationNotNow": {
@@ -4090,6 +4137,10 @@
   },
   "musdGetMusd": {
     "message": "mUSD 받기"
+  },
+  "musdMetaMaskUsd": {
+    "message": "MetaMask USD",
+    "description": "Product name shown as the title line on the home token list mUSD Buy/Get CTA"
   },
   "musdTermsApply": {
     "message": "약관이 적용됩니다."
@@ -5306,6 +5357,9 @@
     "message": "사용 가능",
     "description": "is the available balance amount"
   },
+  "perpsAvailableBalance": {
+    "message": "사용 가능한 잔액 잔액: "
+  },
   "perpsAvailableToClose": {
     "message": "청산 가능"
   },
@@ -5362,7 +5416,7 @@
     "message": "방향"
   },
   "perpsDisclaimer": {
-    "message": "무기한 선물 거래에는 상당한 위험이 따르며, 초기 투자금보다 더 큰 손실이 발생할 수 있습니다. 본 내용은 투자 자문이 아닙니다."
+    "message": "무기한 선물 계약은 매우 위험하며, 예고 없이 투자금 전액을 갑자기 잃을 수 있습니다. 모든 거래는 전적으로 본인의 책임입니다. Hyperliquid에서 제공하는 서비스입니다. 가격 차트는 TradingView에서 제공합니다."
   },
   "perpsEmptyDescription": {
     "message": "레버리지를 이용해 무기한 선물 거래하세요. 첫 번째 포지션을 열고 시작하세요."
@@ -5372,6 +5426,14 @@
   },
   "perpsEstSize": {
     "message": "예상 규모"
+  },
+  "perpsEstimatedPnlAtStopLoss": {
+    "message": "손절 시 예상 손익",
+    "description": "Label for estimated profit or loss when stop loss is hit"
+  },
+  "perpsEstimatedPnlAtTakeProfit": {
+    "message": "익절 시 예상 손익",
+    "description": "Label for estimated profit or loss when take profit is hit"
   },
   "perpsExploreMarkets": {
     "message": "시장 살펴보기"
@@ -5433,8 +5495,14 @@
   "perpsLimitPrice": {
     "message": "지정가"
   },
+  "perpsLimitPriceAboveCurrentPrice": {
+    "message": "지정가가 현재 가격보다 높습니다"
+  },
+  "perpsLimitPriceBelowCurrentPrice": {
+    "message": "지정가가 현재 가격보다 낮습니다"
+  },
   "perpsLiquidationDistance": {
-    "message": "청산가와의 차이"
+    "message": "청산 가격과의 차이"
   },
   "perpsLiquidationPrice": {
     "message": "청산 가격"
@@ -5525,6 +5593,9 @@
   },
   "perpsReduceExposureDescriptionShort": {
     "message": "숏 포지션 규모를 줄입니다"
+  },
+  "perpsRemoveFromFavorites": {
+    "message": "즐겨찾기에서 제거"
   },
   "perpsRemoveMargin": {
     "message": "마진 제거"
@@ -5670,6 +5741,25 @@
   },
   "perpsWithdraw": {
     "message": "출금"
+  },
+  "perpsWithdrawEstimatedTime": {
+    "message": "예상 시간"
+  },
+  "perpsWithdrawFee": {
+    "message": "공급자 수수료"
+  },
+  "perpsWithdrawMinutesApprox": {
+    "message": "~최소 $1",
+    "description": "$1 is the estimated number of minutes"
+  },
+  "perpsWithdrawReceive": {
+    "message": "받기"
+  },
+  "perpsWithdrawToastErrorTitle": {
+    "message": "출금 실패"
+  },
+  "perpsYouReceive": {
+    "message": "받음:"
   },
   "perpsYouWillReceive": {
     "message": "받을 금액:"
@@ -6471,7 +6561,7 @@
     "message": "보안 및 비밀번호"
   },
   "securityAndPrivacy": {
-    "message": "보안 및 프라이버시"
+    "message": "보안 및 개인정보 보호"
   },
   "securityChangePassword": {
     "message": "비밀번호 변경"
@@ -6655,8 +6745,15 @@
   "settings": {
     "message": "설정"
   },
+  "settingsSearchCantFindSetting": {
+    "message": "설정을 찾으세요? $1",
+    "description": "$1 is a link to request a setting"
+  },
   "settingsSearchMatchingNotFound": {
     "message": "검색 결과가 없습니다."
+  },
+  "settingsSearchRequestHere": {
+    "message": "여기에서 요청하세요"
   },
   "shieldClaim": {
     "message": "청구하기"
@@ -7724,7 +7821,7 @@
     "message": "문제가 발생했습니다. 페이지를 다시 로드하세요."
   },
   "somethingWentWrong": {
-    "message": "죄송합니다! 문제가 생겼습니다."
+    "message": "페이지를 로드할 수 없습니다."
   },
   "sortBy": {
     "message": "정렬 기준:"
@@ -8616,6 +8713,9 @@
   "transactionErrorNoContract": {
     "message": "비계약 주소에서 함수를 호출하고 있습니다."
   },
+  "transactionFailed": {
+    "message": "트랜잭션 실패"
+  },
   "transactionFee": {
     "message": "트랜잭션 수수료"
   },
@@ -8655,6 +8755,9 @@
   },
   "transactionShield": {
     "message": "트랜잭션 실드"
+  },
+  "transactionSubmitted": {
+    "message": "트랜잭션 제출 완료"
   },
   "transactionTotalGasFee": {
     "message": "가스비 합계",

@@ -69,6 +69,9 @@
   "about": {
     "message": "बारे में"
   },
+  "aboutMetaMask": {
+    "message": "MetaMask के बारे में"
+  },
   "accept": {
     "message": "स्वीकार करें"
   },
@@ -339,8 +342,17 @@
   "addWallet": {
     "message": "वॉलेट जोड़ें"
   },
+  "addedProtectionDescription": {
+    "message": "आप किसी अज्ञात एड्रेस से इंटरैक्ट कर रहे हैं। इससे बुरी नीयत वाले ट्रांसेक्शन को रोकने में मदद मिलती है।"
+  },
   "addedProtectionOptionalBadge": {
     "message": "वैकल्पिक"
+  },
+  "addedProtectionTitle": {
+    "message": "अतिरिक्त सुरक्षा"
+  },
+  "addedProtectionTooltip": {
+    "message": "अगर फ़ाइनल ट्रांसेक्शन इस प्रीव्यू से मैच नहीं करता है, तो यह पूरा नहीं होगा। आपको सिर्फ़ नेटवर्क फ़ीस देनी होगी।"
   },
   "additionalNetworks": {
     "message": "अतिरिक्त नेटवर्क"
@@ -1404,9 +1416,6 @@
   "clearActivityButton": {
     "message": "एक्टिविटी टैब डेटा हटाएं"
   },
-  "clearActivityDescription": {
-    "message": "यह अकाउंट के nonce को रीसेट करता है और आपके वॉलेट में एक्टिविटी टैब से डेटा मिटा देता है। केवल मौजूदा अकाउंट और नेटवर्क प्रभावित होंगे। आपका बैलेंस और आने वाले ट्रांसेक्शन नहीं बदलेंगे।"
-  },
   "clearFilters": {
     "message": "फिल्टर हटाएं"
   },
@@ -2023,6 +2032,12 @@
   "dappConnections": {
     "message": "Dapp कनेक्शन्स"
   },
+  "dappScanMaliciousTitle": {
+    "message": "बुरी नीयत वाली वेबसाइट का पता चला"
+  },
+  "dappScanMaliciousWarning": {
+    "message": "इस वेबसाइट को खतरनाक माना गया है। अगर आप अपना सीक्रेट रिकवरी फ्रेज़ बताते हैं, तो आप अपने फंड्स को खतरे में डाल सकते हैं।"
+  },
   "dappSuggested": {
     "message": "सुझावित साइट"
   },
@@ -2179,6 +2194,12 @@
   },
   "deepLink_theOnboardingPage": {
     "message": "ऑनबोर्डिंग पेज"
+  },
+  "deepLink_thePerpsMarketDetailPage": {
+    "message": "द पर्प्स मार्केट पेज"
+  },
+  "deepLink_thePerpsMarketListPage": {
+    "message": "द पर्प्स मार्केट लिस्ट पेज"
   },
   "deepLink_thePerpsPage": {
     "message": "पर्प्स पेज"
@@ -3103,10 +3124,6 @@
   },
   "hardwareWalletErrorRecoveryTitle": {
     "message": "सुनिश्चित करते रहें कि:"
-  },
-  "hardwareWalletErrorRecoveryUnlock1": {
-    "message": "आपका $1 अनलॉक है",
-    "description": "$1 is the hardware wallet type"
   },
   "hardwareWalletErrorRecoveryUnlock2": {
     "message": "इथेरियम ऐप खुला है"
@@ -4033,6 +4050,18 @@
     "message": "$1 $2 Snaps का उपयोग करना चाहता है",
     "description": "$1 is the dapp and $2 is the number of snaps it wants to connect to."
   },
+  "musdBonusExplanation": {
+    "message": "अपने स्टेबलकॉइन्स को mUSD में बदलें और $1% तक वार्षिक बोनस कमाएं, जिसे आप रोज़ाना क्लेम कर सकते हैं।$2",
+    "description": "$1 is the bonus APY percentage, $2 is the 'Terms apply' link"
+  },
+  "musdBonusPoweredByRelay": {
+    "message": "Relay द्वारा संचालित",
+    "description": "Attribution shown below mUSD bonus explanation on the conversion confirmation info popover"
+  },
+  "musdBoostDescription": {
+    "message": "अपने स्टेबलकॉइन्स को mUSD में बदलें और $1% वार्षिक बोनस प्राप्त करें।",
+    "description": "$1 is the bonus percentage (e.g., 3)"
+  },
   "musdBoostTitle": {
     "message": "अपने स्टेबलकॉइन्स पर $1% पाएं",
     "description": "$1 is the bonus percentage (e.g., 3)"
@@ -4049,12 +4078,20 @@
     "description": "Label for the claimable bonus row in the mUSD conversion confirmation screen"
   },
   "musdClaimableBonusTooltip": {
-    "message": "mUSD रखने पर आपको मिला सालाना बोनस। आपका बोनस Linea पर रोज़ाना क्लेम किया जा सकता है। $1",
+    "message": "mUSD रखने पर आपको मिलने वाला वार्षिक बोनस। आपका बोनस Linea पर रोज़ाना क्लेम किया जा सकता है। $1",
     "description": "$1 is the 'Terms apply' link"
+  },
+  "musdClaimableBonusTooltipAria": {
+    "message": "क्लेम करने लायक बोनस का विवरण",
+    "description": "Accessible name for the info control that opens the claimable bonus explanation popover"
   },
   "musdConversionActivityTitle": {
     "message": "$1 को mUSD में कन्वर्ट करें",
     "description": "$1 is the source token symbol (e.g., USDC)"
+  },
+  "musdConversionBonusTooltipAria": {
+    "message": "बोनस का विवरण",
+    "description": "Accessible name for the info control that opens the mUSD conversion bonus explanation popover"
   },
   "musdConversionTitle": {
     "message": "mUSD में कन्वर्ट किया गया",
@@ -4067,12 +4104,22 @@
     "message": "$1 → mUSD में कन्वर्ट किया जा रहा है",
     "description": "$1 is the source token symbol (e.g., USDC)"
   },
+  "musdConversionToastSuccess": {
+    "message": "mUSD कन्वर्शन सफल रहा"
+  },
+  "musdConversionToastSuccessDescription": {
+    "message": "बोनस एक दिन के भीतर क्लेम किया जा सकेगा।"
+  },
   "musdConvert": {
     "message": "कन्वर्ट करें"
   },
   "musdConvertAndGetBonus": {
     "message": "कन्वर्ट करें और $1% पाएं",
     "description": "$1 is the bonus percentage (e.g., 3)"
+  },
+  "musdEarnBonusPercentage": {
+    "message": "$1% बोनस कमाएं",
+    "description": "$1 is the bonus percentage (e.g., 3). Subtitle on the home token list mUSD Buy/Get CTA."
   },
   "musdEducationGetStarted": {
     "message": "शुरू करें"
@@ -4090,6 +4137,10 @@
   },
   "musdGetMusd": {
     "message": "mUSD प्राप्त करें"
+  },
+  "musdMetaMaskUsd": {
+    "message": "MetaMask USD",
+    "description": "Product name shown as the title line on the home token list mUSD Buy/Get CTA"
   },
   "musdTermsApply": {
     "message": "नियम लागू।"
@@ -5306,6 +5357,9 @@
     "message": "उपलब्ध",
     "description": "is the available balance amount"
   },
+  "perpsAvailableBalance": {
+    "message": "उपलब्ध पर्प्स बैलेंस: "
+  },
   "perpsAvailableToClose": {
     "message": "क्लोज़ करने के लिए उपलब्ध है"
   },
@@ -5362,7 +5416,7 @@
     "message": "दिशा"
   },
   "perpsDisclaimer": {
-    "message": "परपेचुअल्स की ट्रेडिंग में काफी रिस्क होता है। आप अपने शुरुआती इन्वेस्टमेंट से ज़्यादा खो सकते हैं। यह फाइनेंशियल सलाह नहीं है।"
+    "message": "परपेचुअल कॉन्ट्रैक्ट्स बहुत जोखिम भरे होते हैं, और आप अचानक और बिना किसी चेतावनी के अपनी पूरी निवेश राशि खो सकते हैं। आप पूरी तरह से अपने जोखिम पर ट्रेड करते हैं। हाइपरलिक्विड द्वारा संचालित। प्राइस चार्ट ट्रेडिंगव्यू के द्वारा संचालित है।"
   },
   "perpsEmptyDescription": {
     "message": "लेवरेज के साथ परपेचुअल्स ट्रेड करें। शुरू करने के लिए अपनी पहली पोज़िशन खोलें।"
@@ -5372,6 +5426,14 @@
   },
   "perpsEstSize": {
     "message": "अनुमानित साइज़"
+  },
+  "perpsEstimatedPnlAtStopLoss": {
+    "message": "स्टॉप लॉस पर अनुमानित पी एंड एल",
+    "description": "Label for estimated profit or loss when stop loss is hit"
+  },
+  "perpsEstimatedPnlAtTakeProfit": {
+    "message": "टेक प्रॉफ़िट पर अनुमानित पी एंड एल",
+    "description": "Label for estimated profit or loss when take profit is hit"
   },
   "perpsExploreMarkets": {
     "message": "मार्केट एक्सप्लोर करें"
@@ -5433,8 +5495,14 @@
   "perpsLimitPrice": {
     "message": "लिमिट प्राइस"
   },
+  "perpsLimitPriceAboveCurrentPrice": {
+    "message": "लिमिट प्राइस वर्तमान प्राइस से ऊपर है"
+  },
+  "perpsLimitPriceBelowCurrentPrice": {
+    "message": "लिमिट प्राइस वर्तमान प्राइस से नीचे है"
+  },
   "perpsLiquidationDistance": {
-    "message": "Liq. डिस्टेंस"
+    "message": "लिक्विडेशन डिस्टेन्स"
   },
   "perpsLiquidationPrice": {
     "message": "लिक्विडेशन प्राइस"
@@ -5525,6 +5593,9 @@
   },
   "perpsReduceExposureDescriptionShort": {
     "message": "अपनी शॉर्ट पोज़िशन का साइज़ घटाएं"
+  },
+  "perpsRemoveFromFavorites": {
+    "message": "पसंदीदा से हटाएं"
   },
   "perpsRemoveMargin": {
     "message": "मार्जिन हटाएं"
@@ -5670,6 +5741,25 @@
   },
   "perpsWithdraw": {
     "message": "निकालें"
+  },
+  "perpsWithdrawEstimatedTime": {
+    "message": "अनुमानित समय"
+  },
+  "perpsWithdrawFee": {
+    "message": "प्रदाता फीस"
+  },
+  "perpsWithdrawMinutesApprox": {
+    "message": "~$1 न्यूनतम",
+    "description": "$1 is the estimated number of minutes"
+  },
+  "perpsWithdrawReceive": {
+    "message": "प्राप्त करें"
+  },
+  "perpsWithdrawToastErrorTitle": {
+    "message": "विदड्रॉवल नहीं हो पाया"
+  },
+  "perpsYouReceive": {
+    "message": "आप प्राप्त करते हैं"
   },
   "perpsYouWillReceive": {
     "message": "आपको प्राप्त होगा"
@@ -6655,8 +6745,15 @@
   "settings": {
     "message": "सेटिंग्स"
   },
+  "settingsSearchCantFindSetting": {
+    "message": "सेटिंग नहीं मिल रही है? $1",
+    "description": "$1 is a link to request a setting"
+  },
   "settingsSearchMatchingNotFound": {
     "message": "कोई मिलान परिणाम नहीं मिला"
+  },
+  "settingsSearchRequestHere": {
+    "message": "यहां रिक्वेस्ट करें"
   },
   "shieldClaim": {
     "message": "क्लेम सबमिट करें"
@@ -7724,7 +7821,7 @@
     "message": "कुछ गड़बड़ हो गया है। पेज को फिर से लोड करने की कोशिश करें।"
   },
   "somethingWentWrong": {
-    "message": "हम यह पेज लोड नहीं कर सके।"
+    "message": "हम इस पेज को लोड नहीं कर सके।"
   },
   "sortBy": {
     "message": "इसके अनुसार क्रमबद्ध करें"
@@ -8616,6 +8713,9 @@
   "transactionErrorNoContract": {
     "message": "एक गैर-कॉन्ट्रैक्ट वाले एड्रेस पर एक फंक्शन को कॉल करने की कोशिश की जा रही है।"
   },
+  "transactionFailed": {
+    "message": "ट्रांसेक्शन नहीं हो पाया"
+  },
   "transactionFee": {
     "message": "ट्रांसेक्शन फ़ीस"
   },
@@ -8655,6 +8755,9 @@
   },
   "transactionShield": {
     "message": "ट्रांसेक्शन शील्ड"
+  },
+  "transactionSubmitted": {
+    "message": "ट्रांसेक्शन सबमिट किया गया"
   },
   "transactionTotalGasFee": {
     "message": "कुल गैस फीस",

@@ -69,6 +69,9 @@
   "about": {
     "message": "Tungkol Dito"
   },
+  "aboutMetaMask": {
+    "message": "Tungkol sa MetaMask"
+  },
   "accept": {
     "message": "Tanggapin"
   },
@@ -339,8 +342,17 @@
   "addWallet": {
     "message": "Magdagdag ng wallet"
   },
+  "addedProtectionDescription": {
+    "message": "Nakikipag-ugnayan ka sa hindi kilalang address. Nakakatulong ito na maiwasan ang mga mapaminsalang transaksyon."
+  },
   "addedProtectionOptionalBadge": {
     "message": "Opsyonal"
+  },
+  "addedProtectionTitle": {
+    "message": "Idinagdag na proteksyon"
+  },
+  "addedProtectionTooltip": {
+    "message": "Kung ang panghuling transaksyon ay hindi tumutugma sa preview na ito, hindi ito magpapatuloy. Magbabayad ka lamang para sa network."
   },
   "additionalNetworks": {
     "message": "Mga karagdagang network"
@@ -1404,9 +1416,6 @@
   "clearActivityButton": {
     "message": "I-clear ang data ng tab ng aktibidad"
   },
-  "clearActivityDescription": {
-    "message": "Nire-reset nito ang nonce ng account at binubura ang data mula sa tab ng aktibidad sa iyong wallet. Tanging ang kasalukuyang account at network lamang ang maaapektuhan. Ang iyong mga balanse at mga papasok na transaksyon ay hindi magbabago."
-  },
   "clearFilters": {
     "message": "I-clear ang mga filter"
   },
@@ -2023,6 +2032,12 @@
   "dappConnections": {
     "message": "Mga koneksyon ng Dapp"
   },
+  "dappScanMaliciousTitle": {
+    "message": "Natukoy ang mapanganib na website"
+  },
+  "dappScanMaliciousWarning": {
+    "message": "Na-flag ang website na ito bilang potensyal na mapanganib. Kapag ipinakita mo ang iyong Secret Recovery Phrase, maaari mong mailagay sa panganib ang mga pondo mo."
+  },
   "dappSuggested": {
     "message": "Iminungkahing site"
   },
@@ -2179,6 +2194,12 @@
   },
   "deepLink_theOnboardingPage": {
     "message": "ang page para sa onboarding"
+  },
+  "deepLink_thePerpsMarketDetailPage": {
+    "message": "ang page ng perps market"
+  },
+  "deepLink_thePerpsMarketListPage": {
+    "message": "ang listahan ng page ng perps market"
   },
   "deepLink_thePerpsPage": {
     "message": "pahina ng perps"
@@ -3103,10 +3124,6 @@
   },
   "hardwareWalletErrorRecoveryTitle": {
     "message": "Patuloy na tiyaking:"
-  },
-  "hardwareWalletErrorRecoveryUnlock1": {
-    "message": "Naka-unlock ang $1 mo",
-    "description": "$1 is the hardware wallet type"
   },
   "hardwareWalletErrorRecoveryUnlock2": {
     "message": "Bukas ang app ng Ethereum"
@@ -4033,6 +4050,18 @@
     "message": "Si $1 ay gustong gumamit ng $2 Snaps",
     "description": "$1 is the dapp and $2 is the number of snaps it wants to connect to."
   },
+  "musdBonusExplanation": {
+    "message": "I-convert ang mga stablecoin mo sa mUSD at kumita\nng hanggang $1% taunang bonus na puwede mong\nma-claim araw-araw. $2",
+    "description": "$1 is the bonus APY percentage, $2 is the 'Terms apply' link"
+  },
+  "musdBonusPoweredByRelay": {
+    "message": "Pinapagana ng Relay",
+    "description": "Attribution shown below mUSD bonus explanation on the conversion confirmation info popover"
+  },
+  "musdBoostDescription": {
+    "message": "I-convert ang mga stablecoin mo sa mUSD at makakuha ng $1% taunang bonus.",
+    "description": "$1 is the bonus percentage (e.g., 3)"
+  },
   "musdBoostTitle": {
     "message": "Makakuha ng $1% sa mga stablecoin mo",
     "description": "$1 is the bonus percentage (e.g., 3)"
@@ -4049,12 +4078,20 @@
     "description": "Label for the claimable bonus row in the mUSD conversion confirmation screen"
   },
   "musdClaimableBonusTooltip": {
-    "message": "Ang taunang bonus na kinita mo sa pagho-hold ng mUSD. Pwedeng i-claim ang bonus mo sa Linea araw-araw. $1",
+    "message": "Ang kinita mong taunang bonus para sa pag-hold ng mUSD. Puwedeng ma-claim ang bonus mo sa Linea araw-araw.$1",
     "description": "$1 is the 'Terms apply' link"
+  },
+  "musdClaimableBonusTooltipAria": {
+    "message": "Mga detalye ng bonus na pwedeng i-claim",
+    "description": "Accessible name for the info control that opens the claimable bonus explanation popover"
   },
   "musdConversionActivityTitle": {
     "message": "I-convert ang $1 sa mUSD",
     "description": "$1 is the source token symbol (e.g., USDC)"
+  },
+  "musdConversionBonusTooltipAria": {
+    "message": "Mga detalye ng bonus",
+    "description": "Accessible name for the info control that opens the mUSD conversion bonus explanation popover"
   },
   "musdConversionTitle": {
     "message": "Na-convert sa mUSD",
@@ -4067,6 +4104,12 @@
     "message": "Ikino-convert ang $1 → mUSD",
     "description": "$1 is the source token symbol (e.g., USDC)"
   },
+  "musdConversionToastSuccess": {
+    "message": "Matagumpay ang pag-convert ng mUSD"
+  },
+  "musdConversionToastSuccessDescription": {
+    "message": "Puwedeng ma-claim ang bonus sa loob ng isang araw."
+  },
   "musdConvert": {
     "message": "I-convert"
   },
@@ -4074,11 +4117,15 @@
     "message": "I-convert at makakuha ng $1%",
     "description": "$1 is the bonus percentage (e.g., 3)"
   },
+  "musdEarnBonusPercentage": {
+    "message": "Kumita ng $1% bonus",
+    "description": "$1 is the bonus percentage (e.g., 3). Subtitle on the home token list mUSD Buy/Get CTA."
+  },
   "musdEducationGetStarted": {
     "message": "Magsimula"
   },
   "musdEducationHeadline": {
-    "message": "MAKAKUHA NG $1% SA MGA STABLECOIN",
+    "message": "MAKAKUHA NG $1% SA\nMGA STABLECOIN",
     "description": "$1 is the bonus APY percentage. Line break between ON and STABLECOINS matches splash layout."
   },
   "musdEducationNotNow": {
@@ -4090,6 +4137,10 @@
   },
   "musdGetMusd": {
     "message": "Kumuha ng mUSD"
+  },
+  "musdMetaMaskUsd": {
+    "message": "MetaMask USD",
+    "description": "Product name shown as the title line on the home token list mUSD Buy/Get CTA"
   },
   "musdTermsApply": {
     "message": "Nalalapat ang mga tuntunin."
@@ -5306,6 +5357,9 @@
     "message": "available",
     "description": "is the available balance amount"
   },
+  "perpsAvailableBalance": {
+    "message": "Available na balanse sa Perps: "
+  },
   "perpsAvailableToClose": {
     "message": "Available para isara"
   },
@@ -5362,7 +5416,7 @@
     "message": "Direksyon"
   },
   "perpsDisclaimer": {
-    "message": "Ang mga perpetual na pagti-trade ay may kasamang malaking panganib. Maaari kang malugi nang higit sa paunang puhunan mo. Hindi ito payong pinansyal."
+    "message": "Napakamapanganib ng mga perpetual contract, at maaaring mawala sa iyo ang buong pamumuhunan sa isang iglap nang walang abiso. Nagti-trade ka sa sarili mong pananagutan. Pinapagana ng Hyperliquid. Ang presyo ng chart ay pinapagana ng TradingView."
   },
   "perpsEmptyDescription": {
     "message": "Mag-trade ng mga perpetual na may leverage. Buksan ang una mong posisyon para magsimula."
@@ -5372,6 +5426,14 @@
   },
   "perpsEstSize": {
     "message": "Tinatayang laki"
+  },
+  "perpsEstimatedPnlAtStopLoss": {
+    "message": "Tinatayang P&L sa stop loss",
+    "description": "Label for estimated profit or loss when stop loss is hit"
+  },
+  "perpsEstimatedPnlAtTakeProfit": {
+    "message": "Tinatayang P&L sa take profit",
+    "description": "Label for estimated profit or loss when take profit is hit"
   },
   "perpsExploreMarkets": {
     "message": "Suriin ang mga market"
@@ -5433,8 +5495,14 @@
   "perpsLimitPrice": {
     "message": "Limit Price"
   },
+  "perpsLimitPriceAboveCurrentPrice": {
+    "message": "Ang limit price ay mataas sa kasalukuyang presyo"
+  },
+  "perpsLimitPriceBelowCurrentPrice": {
+    "message": "Ang limit price ay mababa sa kasalukuyang presyo"
+  },
   "perpsLiquidationDistance": {
-    "message": "Distansya ng liq."
+    "message": "Layo sa liquidation"
   },
   "perpsLiquidationPrice": {
     "message": "Liquidation price"
@@ -5525,6 +5593,9 @@
   },
   "perpsReduceExposureDescriptionShort": {
     "message": "Bawasan ang laki ng short na posisyon mo"
+  },
+  "perpsRemoveFromFavorites": {
+    "message": "Alisin sa mga paborito"
   },
   "perpsRemoveMargin": {
     "message": "Alisin ang margin"
@@ -5670,6 +5741,25 @@
   },
   "perpsWithdraw": {
     "message": "Mag-withdraw"
+  },
+  "perpsWithdrawEstimatedTime": {
+    "message": "Tinatayang oras"
+  },
+  "perpsWithdrawFee": {
+    "message": "Bayad sa Provider"
+  },
+  "perpsWithdrawMinutesApprox": {
+    "message": "~$1 min",
+    "description": "$1 is the estimated number of minutes"
+  },
+  "perpsWithdrawReceive": {
+    "message": "Tumanggap"
+  },
+  "perpsWithdrawToastErrorTitle": {
+    "message": "Pumalya ang pag-withdraw"
+  },
+  "perpsYouReceive": {
+    "message": "Nakatanggap ka ng"
   },
   "perpsYouWillReceive": {
     "message": "Makakatanggap ka ng"
@@ -6655,8 +6745,15 @@
   "settings": {
     "message": "Mga Setting"
   },
+  "settingsSearchCantFindSetting": {
+    "message": "Hindi makahanap ng setting? $1",
+    "description": "$1 is a link to request a setting"
+  },
   "settingsSearchMatchingNotFound": {
     "message": "Walang nakitang katugmang resulta."
+  },
+  "settingsSearchRequestHere": {
+    "message": "Humiling dito"
   },
   "shieldClaim": {
     "message": "Magsumite ng claim"
@@ -7724,7 +7821,7 @@
     "message": "May nangyaring mali. Subukang muling i-load ang pahina."
   },
   "somethingWentWrong": {
-    "message": "Oops! Nagkaproblema."
+    "message": "Hindi namin mai-load ang page na ito."
   },
   "sortBy": {
     "message": "I-sort ayon sa"
@@ -8616,6 +8713,9 @@
   "transactionErrorNoContract": {
     "message": "Sinusubukang i-call ang isang function sa isang address na hindi kontrata."
   },
+  "transactionFailed": {
+    "message": "Nabigo ang transaksyon"
+  },
   "transactionFee": {
     "message": "Bayad sa transaksyon"
   },
@@ -8655,6 +8755,9 @@
   },
   "transactionShield": {
     "message": "Transaction Shield"
+  },
+  "transactionSubmitted": {
+    "message": "Naisumite ang transaksyon"
   },
   "transactionTotalGasFee": {
     "message": "Kabuuang bayad sa gas",

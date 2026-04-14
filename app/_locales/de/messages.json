@@ -69,6 +69,9 @@
   "about": {
     "message": "Über"
   },
+  "aboutMetaMask": {
+    "message": "Über MetaMask"
+  },
   "accept": {
     "message": "Akzeptieren"
   },
@@ -339,8 +342,17 @@
   "addWallet": {
     "message": "Wallet hinzufügen"
   },
+  "addedProtectionDescription": {
+    "message": "Sie interagieren mit einer unbekannten Adresse. Dies hilft, betrügerische Transaktionen zu verhindern."
+  },
   "addedProtectionOptionalBadge": {
     "message": "Optional"
+  },
+  "addedProtectionTitle": {
+    "message": "Zusätzlicher Schutz"
+  },
+  "addedProtectionTooltip": {
+    "message": "Wenn die endgültige Transaktion nicht mit dieser Vorschau übereinstimmt, wird sie nicht durchgeführt. Sie zahlen lediglich die Netzwerkgebühr."
   },
   "additionalNetworks": {
     "message": "Zusätzliche Netzwerke"
@@ -1404,9 +1416,6 @@
   "clearActivityButton": {
     "message": "Aktivitäten-Tab-Daten löschen"
   },
-  "clearActivityDescription": {
-    "message": "Dies setzt die Nonce des Kontos zurück und löscht Daten aus dem Aktivitäten-Tab in Ihrer Wallet. Nur das aktuelle Konto und Netzwerk sind betroffen. Ihr Guthaben und eingehenden Transaktionen ändern sich nicht."
-  },
   "clearFilters": {
     "message": "Filter löschen"
   },
@@ -2023,6 +2032,12 @@
   "dappConnections": {
     "message": "dApp-Verbindungen"
   },
+  "dappScanMaliciousTitle": {
+    "message": "Schädliche Website erkannt"
+  },
+  "dappScanMaliciousWarning": {
+    "message": "Diese Website ist als potenziell gefährlich gekennzeichnet. Wenn Sie Ihre geheime Wiederherstellungsphrase preisgeben, gefährden Sie Ihr Guthaben."
+  },
   "dappSuggested": {
     "message": "Website vorgeschlagen"
   },
@@ -2179,6 +2194,12 @@
   },
   "deepLink_theOnboardingPage": {
     "message": "die Onboarding-Seite"
+  },
+  "deepLink_thePerpsMarketDetailPage": {
+    "message": "die Tätermarktseite"
+  },
+  "deepLink_thePerpsMarketListPage": {
+    "message": "die Seite mit der Tätermarktliste"
   },
   "deepLink_thePerpsPage": {
     "message": "die Perps-Seite"
@@ -3103,10 +3124,6 @@
   },
   "hardwareWalletErrorRecoveryTitle": {
     "message": "Fahren Sie fort, um Folgendes sicherzustellen:"
-  },
-  "hardwareWalletErrorRecoveryUnlock1": {
-    "message": "Ihr $1 ist entsperrt",
-    "description": "$1 is the hardware wallet type"
   },
   "hardwareWalletErrorRecoveryUnlock2": {
     "message": "Die Ethereum-App ist geöffnet"
@@ -4033,6 +4050,18 @@
     "message": "$1 möchte $2 Snaps verwenden",
     "description": "$1 is the dapp and $2 is the number of snaps it wants to connect to."
   },
+  "musdBonusExplanation": {
+    "message": "Tauschen Sie Ihre Stablecoins in mUSD um und sichern Sie sich\neinen jährlichen Bonus von bis zu $1 %, den Sie täglich \neinfordern können. $2",
+    "description": "$1 is the bonus APY percentage, $2 is the 'Terms apply' link"
+  },
+  "musdBonusPoweredByRelay": {
+    "message": "Unterstützt von Relay",
+    "description": "Attribution shown below mUSD bonus explanation on the conversion confirmation info popover"
+  },
+  "musdBoostDescription": {
+    "message": "Tauschen Sie Ihre Stablecoins in mUSD um und erhalten Sie einen jährlichen Bonus von $1 %.",
+    "description": "$1 is the bonus percentage (e.g., 3)"
+  },
   "musdBoostTitle": {
     "message": "Erhalten Sie $1 % auf Ihre Stablecoins",
     "description": "$1 is the bonus percentage (e.g., 3)"
@@ -4049,12 +4078,20 @@
     "description": "Label for the claimable bonus row in the mUSD conversion confirmation screen"
   },
   "musdClaimableBonusTooltip": {
-    "message": "Der annualisierte Bonus, den Sie für das Halten von mUSD verdient haben. Ihr Bonus kann täglich auf Linea eingefordert werden. $1",
+    "message": "Sie haben den jährlichen Bonus für das Halten von mUSD verdient. Ihr Bonus kann täglich auf Linea eingefordert werden. $1",
     "description": "$1 is the 'Terms apply' link"
+  },
+  "musdClaimableBonusTooltipAria": {
+    "message": "Details zum anrechenbaren Bonus",
+    "description": "Accessible name for the info control that opens the claimable bonus explanation popover"
   },
   "musdConversionActivityTitle": {
     "message": "$1 zu mUSD konvertieren",
     "description": "$1 is the source token symbol (e.g., USDC)"
+  },
+  "musdConversionBonusTooltipAria": {
+    "message": "Bonusdetails",
+    "description": "Accessible name for the info control that opens the mUSD conversion bonus explanation popover"
   },
   "musdConversionTitle": {
     "message": "Zu mUSD konvertiert",
@@ -4067,6 +4104,12 @@
     "message": "Konvertierung von $1 → mUSD",
     "description": "$1 is the source token symbol (e.g., USDC)"
   },
+  "musdConversionToastSuccess": {
+    "message": "mUSD-Konvertierung erfolgreich"
+  },
+  "musdConversionToastSuccessDescription": {
+    "message": "Der Bonus kann innerhalb eines Tages eingefordert werden."
+  },
   "musdConvert": {
     "message": "Konvertieren"
   },
@@ -4074,11 +4117,15 @@
     "message": "Konvertieren und $1 % erhalten",
     "description": "$1 is the bonus percentage (e.g., 3)"
   },
+  "musdEarnBonusPercentage": {
+    "message": "Verdienen Sie einen Bonus von $1 %",
+    "description": "$1 is the bonus percentage (e.g., 3). Subtitle on the home token list mUSD Buy/Get CTA."
+  },
   "musdEducationGetStarted": {
     "message": "Erste Schritte"
   },
   "musdEducationHeadline": {
-    "message": "ERHALTEN SIE $1 % AUF STABLECOINS",
+    "message": "ERHALTEN SIE $1 % \nAUF STABLECOINS",
     "description": "$1 is the bonus APY percentage. Line break between ON and STABLECOINS matches splash layout."
   },
   "musdEducationNotNow": {
@@ -4090,6 +4137,10 @@
   },
   "musdGetMusd": {
     "message": "mUSD erhalten"
+  },
+  "musdMetaMaskUsd": {
+    "message": "MetaMask USD",
+    "description": "Product name shown as the title line on the home token list mUSD Buy/Get CTA"
   },
   "musdTermsApply": {
     "message": "Es gelten die Nutzungsbedingungen."
@@ -5306,6 +5357,9 @@
     "message": "verfügbar",
     "description": "is the available balance amount"
   },
+  "perpsAvailableBalance": {
+    "message": "Verfügbares Perps-Guthaben: "
+  },
   "perpsAvailableToClose": {
     "message": "Zum Schließen verfügbar"
   },
@@ -5362,7 +5416,7 @@
     "message": "Richtung"
   },
   "perpsDisclaimer": {
-    "message": "Der Handel mit Perpetuals birgt erhebliche Risiken. Sie können mehr als Ihre ursprüngliche Investition verlieren. Dies ist keine Finanzberatung."
+    "message": "Perpetual-Kontrakte sind sehr riskant, und Sie können Ihr gesamtes Investment plötzlich und ohne Vorwarnung verlieren. Sie handeln ausschließlich auf eigenes Risiko. Bereitgestellt von Hyperliquid. Kursdiagramm bereitgestellt von TradingView."
   },
   "perpsEmptyDescription": {
     "message": "Handeln Sie Perpetuals mit Hebelwirkung. Eröffnen Sie Ihre erste Position, um loszulegen."
@@ -5372,6 +5426,14 @@
   },
   "perpsEstSize": {
     "message": "Geschätzte Größe"
+  },
+  "perpsEstimatedPnlAtStopLoss": {
+    "message": "Geschätzter Gewinn und Verlust bei Stop-Loss",
+    "description": "Label for estimated profit or loss when stop loss is hit"
+  },
+  "perpsEstimatedPnlAtTakeProfit": {
+    "message": "Geschätzter Gewinn und Verlust bei Take-Profit",
+    "description": "Label for estimated profit or loss when take profit is hit"
   },
   "perpsExploreMarkets": {
     "message": "Märkte erkunden"
@@ -5432,6 +5494,12 @@
   },
   "perpsLimitPrice": {
     "message": "Limitpreis"
+  },
+  "perpsLimitPriceAboveCurrentPrice": {
+    "message": "Limit-Preis liegt über dem aktuellen Preis"
+  },
+  "perpsLimitPriceBelowCurrentPrice": {
+    "message": "Limit-Preis liegt unter dem aktuellen Preis"
   },
   "perpsLiquidationDistance": {
     "message": "Liquidationsdistanz"
@@ -5525,6 +5593,9 @@
   },
   "perpsReduceExposureDescriptionShort": {
     "message": "Reduzieren Sie den Umfang Ihrer Short-Position"
+  },
+  "perpsRemoveFromFavorites": {
+    "message": "Aus Favoriten entfernen"
   },
   "perpsRemoveMargin": {
     "message": "Margin entfernen"
@@ -5670,6 +5741,25 @@
   },
   "perpsWithdraw": {
     "message": "Auszahlen"
+  },
+  "perpsWithdrawEstimatedTime": {
+    "message": "Geschätzte Zeit"
+  },
+  "perpsWithdrawFee": {
+    "message": "Anbietergebühr"
+  },
+  "perpsWithdrawMinutesApprox": {
+    "message": "~$1 Minute",
+    "description": "$1 is the estimated number of minutes"
+  },
+  "perpsWithdrawReceive": {
+    "message": "Empfangen"
+  },
+  "perpsWithdrawToastErrorTitle": {
+    "message": "Auszahlung fehlgeschlagen"
+  },
+  "perpsYouReceive": {
+    "message": "Sie empfangen"
   },
   "perpsYouWillReceive": {
     "message": "Sie empfangen"
@@ -6655,8 +6745,15 @@
   "settings": {
     "message": "Einstellungen"
   },
+  "settingsSearchCantFindSetting": {
+    "message": "Können Sie eine Einstellung nicht finden? $1",
+    "description": "$1 is a link to request a setting"
+  },
   "settingsSearchMatchingNotFound": {
     "message": "Keine passenden Ergebnisse gefunden."
+  },
+  "settingsSearchRequestHere": {
+    "message": "Hier anfordern"
   },
   "shieldClaim": {
     "message": "Anspruch einreichen"
@@ -8616,6 +8713,9 @@
   "transactionErrorNoContract": {
     "message": "Das Abrufen einer Funktion bei einer Nicht-Contract-Adresse wird versucht."
   },
+  "transactionFailed": {
+    "message": "Transaktion fehlgeschlagen"
+  },
   "transactionFee": {
     "message": "Transaktionsgebühr"
   },
@@ -8655,6 +8755,9 @@
   },
   "transactionShield": {
     "message": "Transaktionsschutz"
+  },
+  "transactionSubmitted": {
+    "message": "Transaktion abgesendet"
   },
   "transactionTotalGasFee": {
     "message": "Gesamte Gasgebühr",

@@ -69,6 +69,9 @@
   "about": {
     "message": "О MetaMask"
   },
+  "aboutMetaMask": {
+    "message": "О MetaMask"
+  },
   "accept": {
     "message": "Согласиться"
   },
@@ -339,8 +342,17 @@
   "addWallet": {
     "message": "Добавить кошелек"
   },
+  "addedProtectionDescription": {
+    "message": "Вы взаимодействуете с неизвестным адресом. Это помогает предотвратить вредоносные транзакции."
+  },
   "addedProtectionOptionalBadge": {
     "message": "Необязательно"
+  },
+  "addedProtectionTitle": {
+    "message": "Дополнительная защита"
+  },
+  "addedProtectionTooltip": {
+    "message": "Если итоговая транзакция не будет соответствовать этому предварительному просмотру, она не будет выполнена. Вы оплачиваете только комиссию сети."
   },
   "additionalNetworks": {
     "message": "Дополнительные сети"
@@ -1404,9 +1416,6 @@
   "clearActivityButton": {
     "message": "Очистить данные вкладки активности"
   },
-  "clearActivityDescription": {
-    "message": "Это приведет к сбросу одноразового номера для счета и удалению данных со вкладки \"Активность\" в вашем кошельке. Это затронет только текущий счет и сеть. Ваши балансы и входящие транзакции не изменятся."
-  },
   "clearFilters": {
     "message": "Очистить все фильтры"
   },
@@ -2023,6 +2032,12 @@
   "dappConnections": {
     "message": "Соединения dapp"
   },
+  "dappScanMaliciousTitle": {
+    "message": "Обнаружен вредоносный веб-сайт"
+  },
+  "dappScanMaliciousWarning": {
+    "message": "Этот веб-сайт помечен как потенциально опасный. Раскрытие вашей секретной фразы для восстановления может поставить под угрозу ваши средства."
+  },
   "dappSuggested": {
     "message": "Рекомендовано сайтом"
   },
@@ -2179,6 +2194,12 @@
   },
   "deepLink_theOnboardingPage": {
     "message": "вводная страница"
+  },
+  "deepLink_thePerpsMarketDetailPage": {
+    "message": "страницу рынка перпов"
+  },
+  "deepLink_thePerpsMarketListPage": {
+    "message": "страницу списка рынков перпов"
   },
   "deepLink_thePerpsPage": {
     "message": "страница перпов"
@@ -3103,10 +3124,6 @@
   },
   "hardwareWalletErrorRecoveryTitle": {
     "message": "Продолжите, чтобы убедиться в следующем:"
-  },
-  "hardwareWalletErrorRecoveryUnlock1": {
-    "message": "Ваш $1 разблокирован",
-    "description": "$1 is the hardware wallet type"
   },
   "hardwareWalletErrorRecoveryUnlock2": {
     "message": "Приложение Ethereum открыто"
@@ -4033,6 +4050,18 @@
     "message": "$1 хочет использовать $2 Snaps",
     "description": "$1 is the dapp and $2 is the number of snaps it wants to connect to."
   },
+  "musdBonusExplanation": {
+    "message": "Конвертируйте стейблкоины в mUSD и зарабатывайте\nбонус до $1% годовых, который можно\nполучать ежедневно. $2",
+    "description": "$1 is the bonus APY percentage, $2 is the 'Terms apply' link"
+  },
+  "musdBonusPoweredByRelay": {
+    "message": "При поддержке Relay",
+    "description": "Attribution shown below mUSD bonus explanation on the conversion confirmation info popover"
+  },
+  "musdBoostDescription": {
+    "message": "Конвертируйте свои стейблкоины в mUSD и получите годовой бонус $1%.",
+    "description": "$1 is the bonus percentage (e.g., 3)"
+  },
   "musdBoostTitle": {
     "message": "Получите $1% на свои стейблкоины",
     "description": "$1 is the bonus percentage (e.g., 3)"
@@ -4049,12 +4078,20 @@
     "description": "Label for the claimable bonus row in the mUSD conversion confirmation screen"
   },
   "musdClaimableBonusTooltip": {
-    "message": "Годовой бонус, который вы получили за владение mUSD. Ваш бонус можно получать ежедневно на Linea. $1",
+    "message": "Годовой бонус, который вы заработали за владение mUSD. Его можно получать ежедневно на Linea. $1",
     "description": "$1 is the 'Terms apply' link"
+  },
+  "musdClaimableBonusTooltipAria": {
+    "message": "Детали доступного для получения бонуса",
+    "description": "Accessible name for the info control that opens the claimable bonus explanation popover"
   },
   "musdConversionActivityTitle": {
     "message": "Конвертировать $1 в mUSD",
     "description": "$1 is the source token symbol (e.g., USDC)"
+  },
+  "musdConversionBonusTooltipAria": {
+    "message": "Детали бонуса",
+    "description": "Accessible name for the info control that opens the mUSD conversion bonus explanation popover"
   },
   "musdConversionTitle": {
     "message": "Конвертировано в mUSD",
@@ -4067,6 +4104,12 @@
     "message": "Выполняется конвертация $1 → mUSD",
     "description": "$1 is the source token symbol (e.g., USDC)"
   },
+  "musdConversionToastSuccess": {
+    "message": "Конвертация в mUSD прошла успешно"
+  },
+  "musdConversionToastSuccessDescription": {
+    "message": "Бонус можно будет получить в течение дня."
+  },
   "musdConvert": {
     "message": "Конвертировать"
   },
@@ -4074,11 +4117,15 @@
     "message": "Конвертируйте и получите $1%",
     "description": "$1 is the bonus percentage (e.g., 3)"
   },
+  "musdEarnBonusPercentage": {
+    "message": "Заработайте бонус $1%",
+    "description": "$1 is the bonus percentage (e.g., 3). Subtitle on the home token list mUSD Buy/Get CTA."
+  },
   "musdEducationGetStarted": {
     "message": "С чего начать"
   },
   "musdEducationHeadline": {
-    "message": "ПОЛУЧИТЕ $1% НА СТЕЙБЛКОИНАХ",
+    "message": "ПОЛУЧИТЕ $1% НА\nСТЕЙБЛКОИНАХ",
     "description": "$1 is the bonus APY percentage. Line break between ON and STABLECOINS matches splash layout."
   },
   "musdEducationNotNow": {
@@ -4090,6 +4137,10 @@
   },
   "musdGetMusd": {
     "message": "Получить mUSD"
+  },
+  "musdMetaMaskUsd": {
+    "message": "MetaMask USD",
+    "description": "Product name shown as the title line on the home token list mUSD Buy/Get CTA"
   },
   "musdTermsApply": {
     "message": "Применяются условия."
@@ -5306,6 +5357,9 @@
     "message": "доступные",
     "description": "is the available balance amount"
   },
+  "perpsAvailableBalance": {
+    "message": "Доступный баланс перпов: "
+  },
   "perpsAvailableToClose": {
     "message": "Доступно для закрытия"
   },
@@ -5362,7 +5416,7 @@
     "message": "Направление"
   },
   "perpsDisclaimer": {
-    "message": "Торговля перпами сопряжена со значительным риском. Вы можете потерять больше, чем ваши первоначальные инвестиции. Это не является финансовой рекомендацией."
+    "message": "Бессрочные контракты очень рискованны, и вы можете внезапно и без предупреждения потерять все свои инвестиции. Вы торгуете исключительно на свой страх и риск. На базе Hyperliquid. График цен предоставляется TradingView."
   },
   "perpsEmptyDescription": {
     "message": "Торгуйте перпами с использованием кредитного плеча. Откройте свою первую позицию, чтобы начать."
@@ -5372,6 +5426,14 @@
   },
   "perpsEstSize": {
     "message": "Расч. размер"
+  },
+  "perpsEstimatedPnlAtStopLoss": {
+    "message": "Прим. П/У при стоп-лоссе",
+    "description": "Label for estimated profit or loss when stop loss is hit"
+  },
+  "perpsEstimatedPnlAtTakeProfit": {
+    "message": "Прим. П/У при тейк-профите",
+    "description": "Label for estimated profit or loss when take profit is hit"
   },
   "perpsExploreMarkets": {
     "message": "Обзор рынков"
@@ -5433,8 +5495,14 @@
   "perpsLimitPrice": {
     "message": "Предельная цена"
   },
+  "perpsLimitPriceAboveCurrentPrice": {
+    "message": "Предельная цена выше текущей цены"
+  },
+  "perpsLimitPriceBelowCurrentPrice": {
+    "message": "Предельная цена ниже текущей цены"
+  },
   "perpsLiquidationDistance": {
-    "message": "Расст. до ликв."
+    "message": "Расстояние ликвидации"
   },
   "perpsLiquidationPrice": {
     "message": "Цена ликвидации"
@@ -5525,6 +5593,9 @@
   },
   "perpsReduceExposureDescriptionShort": {
     "message": "Уменьшить размер вашей короткой позиции"
+  },
+  "perpsRemoveFromFavorites": {
+    "message": "Удалить из избранного"
   },
   "perpsRemoveMargin": {
     "message": "Удалить маржу"
@@ -5670,6 +5741,21 @@
   },
   "perpsWithdraw": {
     "message": "Вывести средства"
+  },
+  "perpsWithdrawEstimatedTime": {
+    "message": "Предполагаемое время"
+  },
+  "perpsWithdrawFee": {
+    "message": "Комиссия поставщика"
+  },
+  "perpsWithdrawReceive": {
+    "message": "Получить"
+  },
+  "perpsWithdrawToastErrorTitle": {
+    "message": "Ошибка вывода средств"
+  },
+  "perpsYouReceive": {
+    "message": "Вы получаете"
   },
   "perpsYouWillReceive": {
     "message": "Вы получите"
@@ -6655,8 +6741,15 @@
   "settings": {
     "message": "Настройки"
   },
+  "settingsSearchCantFindSetting": {
+    "message": "Не удается найти настройку? $1",
+    "description": "$1 is a link to request a setting"
+  },
   "settingsSearchMatchingNotFound": {
     "message": "Совпадений не найдено."
+  },
+  "settingsSearchRequestHere": {
+    "message": "Запросить здесь"
   },
   "shieldClaim": {
     "message": "Отправить претензию"
@@ -7724,7 +7817,7 @@
     "message": "Что-то пошло не так. Попробуйте перезагрузить страницу."
   },
   "somethingWentWrong": {
-    "message": "Ой! Что-то пошло не так."
+    "message": "Нам не удалось загрузить эту страницу."
   },
   "sortBy": {
     "message": "Сортировать по"
@@ -8616,6 +8709,9 @@
   "transactionErrorNoContract": {
     "message": "Попытка вызвать функцию на неконтрактном адресе."
   },
+  "transactionFailed": {
+    "message": "Не удалось выполнить транзакцию"
+  },
   "transactionFee": {
     "message": "Комиссия за транзакцию"
   },
@@ -8655,6 +8751,9 @@
   },
   "transactionShield": {
     "message": "Защита транзакций"
+  },
+  "transactionSubmitted": {
+    "message": "Транзакция отправлена"
   },
   "transactionTotalGasFee": {
     "message": "Итого платы за газ",
